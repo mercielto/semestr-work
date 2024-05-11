@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+      <html lang="en">
+      <head>
+      <meta charset="UTF-8">
+      <title>Create</title>
+  <style>
+    #main-body {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 20px;
+      border: solid;
+      height: 1000px;
+      position: relative;
+    }
+
+    .chapter {
+      border: solid;
+      border-radius: 10px;
+      width: 40rem;
+      height: 3rem;
+      padding-left: 10px;
+      margin-bottom: 10px;
+    }
+
+    .chapter-name {
+      display: block;
+    }
+
+    .chapter-add {
+      display: none;
+      position: absolute;
+      left: 0;
+    }
+
+    .chapter-divider {
+      height: 0.1rem;
+      width: 100%;
+    }
+
+    .chapter-divider:hover .chapter-add {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<div id="main-body">
+  <h1>Title</h1>
+
+  <div class="chapter">
+    <a class="chapter-name" href="">
+      <p>Chapter name</p>
+    </a>
+  </div>
+
+  <div class="chapter">
+    <a class="chapter-name" href="">
+      <p>Chapter name</p>
+    </a>
+  </div>
+
+  <div class="chapter-divider">
+    <input type="submit" class="chapter-add" value="Новая глава">
+  </div>
+
+  <div class="chapter">
+    <a class="chapter-name" href="">
+      <p>Chapter name</p>
+    </a>
+  </div>
+
+  <input type="submit" id="chapter-add-main" class="chapter-add" value="Новая глава">
+
+</div>
+
+<script>
+  const chapterContainer = document.querySelector('#main-body');
+
+  chapterContainer.addEventListener('mouseleave', function() {
+    const chapterAdd = document.querySelector('.chapter-add');
+    chapterAdd.style.display = 'none';
+  });
+</script>
+</body>
+</html>
+</title>
+</head>
+<body>
+
+</body>
+</html>

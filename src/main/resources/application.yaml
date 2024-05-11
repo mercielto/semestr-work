@@ -1,0 +1,27 @@
+spring:
+    application:
+        name: semestrovka-course2sem2-oris
+
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/semestrovka01
+        username: postgres
+        password: 22345
+
+    jpa:
+        show-sql: true
+        hibernate:
+            ddl-auto: validate
+
+    liquibase:
+        change-log: liquibase/changlelog.xml
+
+    freemarker:
+        expose-request-attributes: true
+        enabled: true
+        suffix: .ftlh
+        content-type: text/html
+
+
+path:
+    post: C:\Works\ORIS\SemestrovkaDataBase

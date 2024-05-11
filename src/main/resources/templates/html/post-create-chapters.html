@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #settings-body {
+            position: fixed;
+            top: 40%;
+            margin-left: 1rem;
+            z-index: 1;
+        }
+
+        #settings-body a {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        #settings-body a:hover {
+            background-color: #f9f9f9;
+        }
+
+        #main-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .chapter {
+            width: 100%;
+            max-width: 600px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chapter a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .delete-chapter-btn {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-chapter-btn:hover {
+            background-color: #c82333;
+        }
+
+        .chapter-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-bottom: 20px;
+            height: 20px; /* Добавим высоту для отображения */
+            width: 100%; /* Добавим ширину */
+            position: relative;
+        }
+
+        .chapter-add {
+            display: none;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            position: absolute;
+            top: -15%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #chapter-add-main {
+            margin-top: 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 40px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="settings-body">
+    <a href="/post/***">Настройки</a>
+    <a href="/post/***">Главы</a>
+</div>
+
+<div id="main-body">
+    <h1>Title</h1>
+
+    <div class="chapter">
+        <a class="chapter-name" href="">
+            <p>Chapter name</p>
+        </a>
+        <button class="delete-chapter-btn">Delete</button>
+    </div>
+
+    <div class="chapter-divider">
+        <input type="submit" class="chapter-add" value="Новая глава">
+    </div>
+
+    <div class="chapter">
+        <a class="chapter-name" href="">
+            <p>Chapter name</p>
+        </a>
+        <button class="delete-chapter-btn">Delete</button>
+    </div>
+
+    <div class="chapter-divider">
+        <input type="submit" class="chapter-add" value="Новая глава">
+    </div>
+
+    <div class="chapter">
+        <a class="chapter-name" href="">
+            <p>Chapter name</p>
+        </a>
+        <button class="delete-chapter-btn">Delete</button>
+    </div>
+
+    <div class="chapter-divider">
+        <input type="submit" class="chapter-add" value="Новая глава">
+    </div>
+
+    <input type="submit" id="chapter-add-main" class="chapter-add" value="Новая глава">
+</div>
+
+<script>
+    const chapterDividers = document.querySelectorAll('.chapter-divider');
+
+    chapterDividers.forEach(divider => {
+        const addButton = divider.querySelector('.chapter-add');
+
+        divider.addEventListener('mouseenter', function() {
+            addButton.style.display = 'inline-block';
+        });
+
+        divider.addEventListener('mouseleave', function() {
+            addButton.style.display = 'none';
+        });
+    });
+
+    const deleteButtons = document.querySelectorAll('.delete-chapter-btn');
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const chapter = button.closest('.chapter');
+            chapter.remove();
+        });
+    });
+</script>
+</body>
+</html>
