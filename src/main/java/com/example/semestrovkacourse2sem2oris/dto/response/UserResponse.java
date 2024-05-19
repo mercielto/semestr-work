@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 public class UserResponse {
 
-    private String name;
+    private String username;
     private String login;
     private String email;
     private Role role;

@@ -14,7 +14,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function (result) {
-                window.location.href = '/post/create/' + result + "?part=chapters";
+                window.location.href = '/post/create/chapters/' + result;
             },
             error: function (xhr, status, error) {
                 console.log("Ошибка: " + error)

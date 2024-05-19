@@ -29,4 +29,6 @@ public interface PostService {
     PostShortResponse getShortByLink(String link);
 
     void publish(PostRequest request, String link);
+
+    PostShortResponse getShortByBranchLink(String branchLink);
 }

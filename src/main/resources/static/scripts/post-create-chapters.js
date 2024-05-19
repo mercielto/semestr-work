@@ -1,17 +1,28 @@
-function replaceBody(data) {
-    const mainBody = document.getElementById("main-body");
+function updateChapterNumbers() {
+    const chapters = document.querySelectorAll('.chapter');
+    chapters.forEach((chapter, index) => {
+        const chapterName = chapter.querySelector('.chapter-name p');
+        const chapterTitle = chapterName.innerText.split('. ')[1];
+        chapterName.innerText = `${index + 1}. ${chapterTitle}`;
+    });
+}
 
-    while (mainBody.firstChild) {
-        mainBody.removeChild(mainBody.firstChild);
+function replaceBody(button) {
+    const chapterElement = button.closest('.chapter');
+    if (chapterElement) {
+        chapterElement.remove();
+
+        updateChapterNumbers();
     }
-
-    mainBody.insertAdjacentHTML("beforeend", data);
 }
 
 
 $(document).ready(function() {
     $(".chapter-add").click(function(){
-        window.location.href = updateQueryStringParameter(window.location.href, "part", "chapter-add");
+        const linkElement = document.getElementById('branchName');
+        const hrefValue = linkElement.getAttribute('href');
+        const branchLink = hrefValue.split('/').pop();
+        window.location.href = "/post/create/chapter-add/" + branchLink;
     });
 });
 
@@ -37,15 +48,15 @@ deleteButtons.forEach(button => {
         const confirmDelete = window.confirm('Вы уверены, что хотите удалить эту главу?');
 
         if (confirmDelete) {
-            const chapterLink = chapter.querySelector('.chapter-name').href.split("/").pop;
+            const chapterLink = chapter.querySelector('.chapter-name').href.split("/").pop();
 
             $.ajax({
-                url: "/post/ajax/chapter/" + chapterLink,
+                url: "/chapter/ajax/" + chapterLink,
                 type: "delete",
                 contentType: "application/json",
                 success: function(data) {
                     console.log("Success");
-                    replaceBody(data);
+                    replaceBody(button);
                 },
                 error: function(xhr, status, error) {
                     console.error("Error:", error);

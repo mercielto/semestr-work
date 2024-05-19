@@ -37,9 +37,11 @@ public class PostEntity {
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "account_id")
     )
+    @Builder.Default
     private List<UserEntity> editors = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)
+    @Builder.Default
     private List<BranchEntity> branches = new ArrayList<>();
 
     @ManyToOne

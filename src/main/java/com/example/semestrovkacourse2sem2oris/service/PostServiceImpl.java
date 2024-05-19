@@ -15,6 +15,7 @@ import com.example.semestrovkacourse2sem2oris.repository.PostRepository;
 import com.example.semestrovkacourse2sem2oris.util.LinkGenerator;
 import com.example.semestrovkacourse2sem2oris.util.ObjectCopier;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class PostServiceImpl implements PostService {
     private final UserService userService;
     private final LinkGenerator generator;
     private final ChapterService chapterService;
-    private final BranchRepository branchRepository;
+    private final BranchService branchService;
 
     @Override
     public void create(PostRequest request) {
@@ -55,16 +56,18 @@ public class PostServiceImpl implements PostService {
         return postRepository.findByWebLink(link).orElseThrow(() -> new PostNotFoundException(link));
     }
 
+    @Transactional
     @Override
     public PostResponse create() {
-        BranchEntity branchEntity =
-        PostEntity entity = PostEntity.builder()
+        PostEntity postEntity = PostEntity.builder()
                 .webLink(generator.generateLink())
                 .imagePath("default")
                 .build();
-        setCreator(entity);
-        postRepository.save(entity);
-        return mapper.toResponse(entity);
+        setCreator(postEntity);
+        postRepository.save(postEntity);
+        postEntity.getBranches().add(branchService.create(postEntity));
+        postRepository.save(postEntity);
+        return mapper.toResponse(postEntity);
     }
 
     @Override
@@ -111,8 +114,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostShortResponse getByChapterLink(String chapterLink) {
         ChapterEntity chapterEntity = chapterService.getEntityByLink(chapterLink);
-        PostEntity postEntity = postRepository.findById(chapterEntity.getId()).orElseThrow(() -> new PostNotFoundException("null"));
-        return mapper.toShortResponse(postEntity);
+        return mapper.toShortResponse(chapterEntity.getBranch().getPost());
     }
 
     @Override
@@ -130,6 +132,11 @@ public class PostServiceImpl implements PostService {
         postEntity.setCreator(savedPostEntity.getCreator());
         postEntity.setPublished(true);
         postRepository.save(postEntity);
+    }
+
+    @Override
+    public PostShortResponse getShortByBranchLink(String branchLink) {
+        return mapper.toShortResponse(branchService.getEntityByLink(branchLink).getPost());
     }
 
     public void setCreator(PostEntity postEntity) {

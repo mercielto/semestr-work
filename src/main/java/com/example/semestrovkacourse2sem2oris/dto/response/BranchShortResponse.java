@@ -9,14 +9,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BranchResponse {
+public class BranchShortResponse {
 
     private String name;
     private String link;
     private String postLink;
+    private String postName;
     private UserResponse creator;
-    private List<ChapterResponse> chapters;
-    private ChapterResponse mainChapter;
     private boolean main;
     private String description;
     private float rating;

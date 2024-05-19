@@ -15,15 +15,19 @@
 
 <div id="main-body">
     <h1><#if post.getTitle()??>${post.getTitle()}<#else >Title</#if></h1>
+
     <#assign branch = post.getBranches()[0]>
-    <#list branch.getChapters() as chapter>
-
-        <#if chapter.getNumber() != 1>
-            <div class="chapter-divider">
-                <input type="submit" class="chapter-add" value="Новая глава">
-            </div>
+    <#list post.getBranches() as br>
+        <#if br.getLink() == branchLink>
+            <#assign branch = br>
         </#if>
+    </#list>
 
+    <h4>
+<#--        TODO: добавить /post/create/branch/settings/${branch.getLink()}-->
+        <a style="visibility: hidden" id="branchName" href="/post/create/branch/settings/${branch.getLink()}"><#if branch.getName()??>${branch.getName()}<#else >Branch name</#if></a>
+    </h4>
+    <#list branch.getChapters() as chapter>
         <div class="chapter">
             <a class="chapter-name" href="/post/create/chapter/${chapter.getLink()}">
                 <p>${chapter.getNumber()}. ${chapter.getTitle()}</p>

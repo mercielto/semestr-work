@@ -42,7 +42,7 @@ $(document).ready(function() {
 
         console.log(data);
         $.ajax({
-            url: "/post/ajax/settings/save",
+            url: "/post/ajax/settings/save/" + getLink(),
             type: "Post",
             data: data,
             contentType: "application/json",

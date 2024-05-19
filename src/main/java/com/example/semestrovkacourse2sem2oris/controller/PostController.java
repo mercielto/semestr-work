@@ -1,9 +1,11 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
 import com.example.semestrovkacourse2sem2oris.dto.request.PostRequest;
+import com.example.semestrovkacourse2sem2oris.dto.response.BranchResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostShortResponse;
+import com.example.semestrovkacourse2sem2oris.service.BranchService;
 import com.example.semestrovkacourse2sem2oris.service.ChapterService;
 import com.example.semestrovkacourse2sem2oris.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class PostController {
 
     private final PostService postService;
+    private final BranchService branchService;
     private final ChapterService chapterService;
 
     @GetMapping("/create")
@@ -37,16 +40,27 @@ public class PostController {
 
     @GetMapping("/create/chapters/{link}")
     public String chapters(@PathVariable("link") String link,
+                            @RequestParam(value = "branch", required = false) String branchLink,
                             Model model) {
-        PostResponse response = postService.getByLink(link);
-        model.addAttribute("post", response);
+        PostResponse postResponse = postService.getByLink(link);
+        if (branchLink == null) {
+            branchLink = branchService.getMain(postResponse.getBranches()).getLink();
+        }
+        model.addAttribute("post", postResponse);
+        model.addAttribute("branchLink", branchLink);
         return  "normal/post-create-chapters";
     }
 
+    @GetMapping("/create/chapters/redir/{link}")
+    public RedirectView chapters(@PathVariable("link") String link) {
+        BranchResponse response = branchService.getByPostLink(link);
+        return new RedirectView("/create/chapters/%s?branch=%s".formatted(link, response.getLink()));
+    }
+
     @GetMapping("/create/chapter-add/{link}")
-    public String chapterAdd(@PathVariable("link") String link,
+    public String chapterAdd(@PathVariable("link") String branchLink,
                              Model model) {
-        PostShortResponse response = postService.getShortByLink(link);
+        PostShortResponse response = postService.getShortByBranchLink(branchLink);
         model.addAttribute("post", response);
         return "normal/post-create-chapter-add";
     }

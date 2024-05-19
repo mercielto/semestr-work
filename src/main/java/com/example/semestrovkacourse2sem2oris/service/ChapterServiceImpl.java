@@ -5,7 +5,6 @@ import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
 import com.example.semestrovkacourse2sem2oris.exception.BranchNotFoundException;
 import com.example.semestrovkacourse2sem2oris.exception.ChapterNotFoundException;
 import com.example.semestrovkacourse2sem2oris.exception.CouldNotSaveChapterOnDisk;
-import com.example.semestrovkacourse2sem2oris.exception.PostNotFoundException;
 import com.example.semestrovkacourse2sem2oris.mapper.ChapterMapper;
 import com.example.semestrovkacourse2sem2oris.model.BranchEntity;
 import com.example.semestrovkacourse2sem2oris.model.ChapterEntity;
@@ -14,11 +13,14 @@ import com.example.semestrovkacourse2sem2oris.model.UserEntity;
 import com.example.semestrovkacourse2sem2oris.repository.BranchRepository;
 import com.example.semestrovkacourse2sem2oris.repository.ChapterRepository;
 import com.example.semestrovkacourse2sem2oris.util.CustomFileWorker;
+import com.example.semestrovkacourse2sem2oris.util.LinkGenerator;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -29,6 +31,7 @@ public class ChapterServiceImpl implements ChapterService {
     private final CustomFileWorker fileWorker;
     private final BranchRepository branchRepository;
     private final ChapterMapper mapper;
+    private final LinkGenerator linkGenerator;
 
     // название пользователя, название поста, название ветки, название главы
     private final String fileStructure = "%s\\%s\\%s\\%s.txt";
@@ -64,7 +67,9 @@ public class ChapterServiceImpl implements ChapterService {
         String fileName = UUID.randomUUID().toString();
         chapterEntity.setLink(fileName);
         saveFileOnDisk(chapterEntity, request.getText());
-        chapterRepository.save(chapterEntity);
+        chapterEntity = chapterRepository.save(chapterEntity);
+        branchEntity.getChapters().add(chapterEntity);
+        branchRepository.save(branchEntity);
         chapterRepository.increaseNumber(chapterEntity.getId(), chapterEntity.getNumber());
     }
 
@@ -97,20 +102,38 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
-    public ChapterResponse put(String chapterLink, ChapterRequest chapterRequest) {
+    public String put(String chapterLink, ChapterRequest chapterRequest) {
         ChapterEntity entity = getEntityByLink(chapterLink);
         entity.setNumber(chapterRequest.getNumber());
         entity.setTitle(chapterRequest.getTitle());
         saveFileOnDisk(entity, chapterRequest.getText());
         chapterRepository.save(entity);
         chapterRepository.increaseNumber(entity.getId(), entity.getNumber());
-        return mapper.toResponse(entity);
+        return entity.getBranch().getPost().getWebLink();
     }
 
     @Transactional
     @Override
     public void deleteChapter(String chapterLink) {
         ChapterEntity chapter = getEntityByLink(chapterLink);
-        // TODO: сделать удаление с понидением номера главы
+        BranchEntity branchEntity = chapter.getBranch();
+        chapterRepository.decreaseNumber(chapter.getId(), chapter.getNumber());
+        branchEntity.getChapters().remove(chapter);
+        branchRepository.save(branchEntity);
+        chapterRepository.delete(chapter);
+    }
+
+    @Override
+    public ChapterEntity create(BranchEntity branch) {
+        Optional<ChapterEntity> lastChapter = branch.getChapters().stream()
+                .max(Comparator.comparing(ChapterEntity::getNumber));
+        ChapterEntity chapter = ChapterEntity.builder()
+                .branch(branch)
+                .number(lastChapter.map(entity -> entity.getNumber() + 1).orElse(1))
+                .title("Default")
+                .link(linkGenerator.generateLink())
+                .build();
+        chapterRepository.save(chapter);
+        return chapter;
     }
 }

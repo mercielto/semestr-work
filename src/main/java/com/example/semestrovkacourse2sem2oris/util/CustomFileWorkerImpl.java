@@ -24,7 +24,11 @@ public class CustomFileWorkerImpl implements CustomFileWorker {
                 builder.append(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                save(path, "");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
 
         return builder;

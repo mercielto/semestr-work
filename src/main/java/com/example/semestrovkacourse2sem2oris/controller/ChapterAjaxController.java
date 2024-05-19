@@ -17,11 +17,10 @@ public class ChapterAjaxController {
     @PutMapping("/{link}")
     private String put(@RequestBody ChapterRequest chapterRequest,
                      @PathVariable("link") String chapterLink) {
-        ChapterResponse response = chapterService.put(chapterLink, chapterRequest);
-        return response.getBranchLink();
+        return chapterService.put(chapterLink, chapterRequest);
     }
 
-    @DeleteMapping("/chapter/{link}/{number}")
+    @DeleteMapping("/{link}")
     public void deleteChapter(@PathVariable("link") String postLink) {
         chapterService.deleteChapter(postLink);
     }

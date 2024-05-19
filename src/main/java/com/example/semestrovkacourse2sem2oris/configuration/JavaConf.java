@@ -43,9 +43,4 @@ public class JavaConf implements WebMvcConfigurer {
     public UserParamsChecker userParamsChecker() {
         return new UserParamsCheckerImpl();
     }
-
-    @Bean
-    public LinkGenerator generator() {
-        return new LinkGeneratorImpl();
-    }
 }
