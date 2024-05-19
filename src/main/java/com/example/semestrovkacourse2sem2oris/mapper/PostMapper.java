@@ -3,6 +3,7 @@ package com.example.semestrovkacourse2sem2oris.mapper;
 import com.example.semestrovkacourse2sem2oris.dto.request.PostRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostResponse;
+import com.example.semestrovkacourse2sem2oris.dto.response.PostShortResponse;
 import com.example.semestrovkacourse2sem2oris.model.ChapterEntity;
 import com.example.semestrovkacourse2sem2oris.model.PostEntity;
 import com.example.semestrovkacourse2sem2oris.model.PostStatus;
@@ -26,4 +27,6 @@ public interface PostMapper {
     }
 
     PostResponse toResponse(PostEntity entity);
+
+    PostShortResponse toShortResponse(PostEntity entity);
 }

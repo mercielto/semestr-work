@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Reviews</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+      color: #333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #comment {
+      resize: none;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .reviews {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .review {
+      border-bottom: 1px solid #ddd;
+      padding: 20px 0;
+      margin-bottom: 20px;
+    }
+
+    .review:last-child {
+      border-bottom: none;
+    }
+
+    .review .user-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .review .user-info img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .review .user-info p {
+      margin: 0;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .review .content {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .review .timestamp {
+      color: #777;
+      font-size: 0.8em;
+    }
+
+    .load-more {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .load-more button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .load-more button:hover {
+      background-color: #0056b3;
+    }
+
+    form {
+      background-color: #f8f8f8;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form div {
+      margin-bottom: 20px;
+    }
+
+    form label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    form input[type="text"],
+    form textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+    form input[type="text"]:focus,
+    form textarea:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+
+    form button[type="submit"] {
+      width: 100%;
+      padding: 10px 0;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    form button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Отзывы</h1>
+
+  <ul class="reviews" id="reviews-list">
+    <!-- Reviews will be dynamically added here -->
+  </ul>
+
+  <div class="load-more">
+    <button id="load-more-btn">Load More</button>
+  </div>
+
+  <hr>
+
+  <h2>Add Your Review</h2>
+  <form id="review-form">
+    <div>
+      <label for="comment">Your Comment:</label>
+      <textarea id="comment" name="comment" rows="4" required></textarea>
+    </div>
+    <div>
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  const reviewsList = document.getElementById('reviews-list');
+  const loadMoreBtn = document.getElementById('load-more-btn');
+  const reviewForm = document.getElementById('review-form');
+
+  // Dummy data for reviews
+  const reviewsData = [
+    { username: 'User1', avatar: 'https://via.placeholder.com/50', comment: 'Great product!', timestamp: '1 hour ago' },
+    { username: 'User2', avatar: 'https://via.placeholder.com/50', comment: 'Nice service!', timestamp: '2 hours ago' },
+    { username: 'User3', avatar: 'https://via.placeholder.com/50', comment: 'Amazing experience!', timestamp: '3 hours ago' }
+  ];
+
+  // Function to create a review element
+  function createReviewElement(review) {
+    const li = document.createElement('li');
+    li.classList.add('review');
+    li.innerHTML = `
+            <div class="user-info">
+                <img src="${review.avatar}" alt="User Avatar" class="avatar">
+                <p class="username">${review.username}</p>
+            </div>
+            <div class="content">
+                <p>${review.comment}</p>
+                <p class="timestamp">${review.timestamp}</p>
+            </div>
+        `;
+    return li;
+  }
+
+  // Function to render reviews
+  function renderReviews(reviews) {
+    reviews.forEach(review => {
+      const reviewElement = createReviewElement(review);
+      reviewsList.appendChild(reviewElement);
+    });
+  }
+
+  // Load initial reviews
+  renderReviews(reviewsData);
+
+  // Event listener for review form submission
+  reviewForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const avatar = document.getElementById('avatar').value;
+    const comment = document.getElementById('comment').value;
+    const timestamp = 'Just now'; // Simulate real timestamp
+    const newReview = { username, avatar, comment, timestamp };
+    const reviewElement = createReviewElement(newReview);
+    reviewsList.insertBefore(reviewElement, reviewsList.firstChild);
+    reviewForm.reset();
+  });
+
+  // Dummy function to load more reviews
+  function loadMoreReviews() {
+    const moreReviews = [
+      { username: 'User4', avatar: 'https://via.placeholder.com/50', comment: 'Excellent support!', timestamp: '4 hours ago' },
+      { username: 'User5', avatar: 'https://via.placeholder.com/50', comment: 'Fantastic product!', timestamp: '5 hours ago' },
+      { username: 'User6', avatar: 'https://via.placeholder.com/50', comment: 'Love it!', timestamp: '6 hours ago' }
+    ];
+    renderReviews(moreReviews);
+  }
+
+  // Event listener for load more button click
+  loadMoreBtn.addEventListener('click', loadMoreReviews);
+</script>
+
+</body>
+</html>

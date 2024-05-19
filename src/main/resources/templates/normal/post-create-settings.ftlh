@@ -12,6 +12,8 @@
     <button id="chapters-button">Главы</button>
 </div>
 
+<#--TODO: нормальную вставку картинки -->
+
 <form id="main-body" method="post">
     <input type="text" id="title-input" placeholder="Title" value="<#if post.getTitle()??>${post.getTitle()}</#if>">
 

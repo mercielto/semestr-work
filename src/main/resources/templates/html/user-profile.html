@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    .profile-container {
+      max-width: 800px;
+      margin: 50px auto;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .profile-avatar img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-right: 20px;
+      object-fit: cover;
+    }
+
+    .profile-info {
+      flex: 1;
+    }
+
+    .profile-name {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .profile-bio {
+      color: #666;
+    }
+
+    .profile-stats {
+      display: flex;
+      margin-top: 10px;
+    }
+
+    .stat {
+      margin-right: 20px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: #888;
+    }
+
+    .stat-value {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .profile-body {
+      padding: 20px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .post img {
+      width: 200px;
+      height: 150px;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .post:hover img {
+      transform: scale(1.1);
+    }
+
+    .profile-footer {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      border-top: 1px solid #ddd;
+    }
+
+    .btn-follow {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .btn-follow {
+      background-color: #4caf50;
+      color: #fff;
+      width: -moz-available;
+    }
+
+    .recent-posts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-gap: 20px;
+      padding: 20px;
+      border-top: 1px solid #ddd;
+    }
+
+    .recent-post {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      text-align: center;
+    }
+
+    .recent-post:hover {
+      transform: translateY(-5px);
+    }
+
+    .recent-post img {
+      width: 100%;
+      height: auto;
+      max-width: 150px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .recent-post-content {
+      padding: 10px;
+    }
+
+    .recent-post-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .recent-post-description {
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="profile-avatar">
+      <img src="/static/images/1183669.png" alt="Avatar">
+    </div>
+    <div class="profile-info">
+      <h1 class="profile-name">John Doe</h1>
+      <p class="profile-bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <div class="profile-stats">
+        <div class="stat">
+          <span class="stat-label">Posts</span>
+          <span class="stat-value">128</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Followers</span>
+          <span class="stat-value">534</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Following</span>
+          <span class="stat-value">210</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="profile-footer">
+    <button class="btn-follow">Follow</button>
+  </div>
+
+  <div class="profile-body">
+    <h2 class="section-title">Recent Posts</h2>
+    <div class="recent-posts">
+      <div class="recent-post">
+        <img src="/static/images/1183669.png" alt="Post 1">
+        <div class="recent-post-content">
+          <h3 class="recent-post-title">Amazing Sunset</h3>
+          <p class="recent-post-description">Stunning view of the sunset over the mountains. 🌄</p>
+        </div>
+      </div>
+      <div class="recent-post">
+        <img src="/static/images/samuraj_voin_siluet_216195_2560x1600.jpg" alt="Post 2">
+        <div class="recent-post-content">
+          <h3 class="recent-post-title">Exploring the City</h3>
+          <p class="recent-post-description">Wandering through the streets of the city, discovering hidden gems. 🏙️</p>
+        </div>
+      </div>
+      <div class="recent-post">
+        <img src="/static/images/fff.jpg" alt="Post 3">
+        <div class="recent-post-content">
+          <h3 class="recent-post-title">Nature Walk</h3>
+          <p class="recent-post-description">Refreshing walk in the forest, surrounded by lush greenery. 🌿</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+</body>
+</html>

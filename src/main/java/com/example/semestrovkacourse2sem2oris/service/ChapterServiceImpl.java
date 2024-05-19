@@ -1,65 +1,116 @@
 package com.example.semestrovkacourse2sem2oris.service;
 
 import com.example.semestrovkacourse2sem2oris.dto.request.ChapterRequest;
+import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
+import com.example.semestrovkacourse2sem2oris.exception.BranchNotFoundException;
+import com.example.semestrovkacourse2sem2oris.exception.ChapterNotFoundException;
 import com.example.semestrovkacourse2sem2oris.exception.CouldNotSaveChapterOnDisk;
+import com.example.semestrovkacourse2sem2oris.exception.PostNotFoundException;
 import com.example.semestrovkacourse2sem2oris.mapper.ChapterMapper;
+import com.example.semestrovkacourse2sem2oris.model.BranchEntity;
 import com.example.semestrovkacourse2sem2oris.model.ChapterEntity;
 import com.example.semestrovkacourse2sem2oris.model.PostEntity;
 import com.example.semestrovkacourse2sem2oris.model.UserEntity;
-import com.example.semestrovkacourse2sem2oris.repository.ChapterRespository;
+import com.example.semestrovkacourse2sem2oris.repository.BranchRepository;
+import com.example.semestrovkacourse2sem2oris.repository.ChapterRepository;
 import com.example.semestrovkacourse2sem2oris.util.CustomFileWorker;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class ChapterServiceImpl implements ChapterService {
 
-    private final ChapterRespository repository;
+    private final ChapterRepository chapterRepository;
     private final CustomFileWorker fileWorker;
-    private final PostService postService;
+    private final BranchRepository branchRepository;
     private final ChapterMapper mapper;
+
+    // название пользователя, название поста, название ветки, название главы
+    private final String fileStructure = "%s\\%s\\%s\\%s.txt";
 
     @Override
     public String downloadText(ChapterEntity chapterEntity) {
-        PostEntity postEntity = chapterEntity.getPost();
-        UserEntity userEntity = postEntity.getCreator();
-
-        // TODO: подумать, как организовать файлы на диске
-        String path = "%s/%s/%s".formatted(userEntity.getLogin(), postEntity.getPostId(),
-                chapterEntity.getId());
-
+        String path = generateFilePath(chapterEntity);
         StringBuilder builder = fileWorker.read(path);
 
         return builder.toString();
     }
 
-    public String generateFilePath(PostEntity post, ChapterEntity chapter) {
-        UserEntity userEntity = post.getCreator();
-        return "/%s/%s/%s.txt".formatted(userEntity.getLogin(), post.getPostId(), chapter.getId());
+    public String generateFilePath(ChapterEntity chapter) {
+        BranchEntity branchEntity = chapter.getBranch();
+        UserEntity userEntity = branchEntity.getCreator();
+        PostEntity postEntity = branchEntity.getPost();
+
+        return fileStructure.formatted(userEntity.getLogin(), postEntity.getPostId(), branchEntity.getBranchId(),
+                chapter.getLink());
     }
 
+    @Transactional
     @Override
-    public void add(ChapterRequest request, String link) {
-        PostEntity postEntity = postService.getEntityByLink(link);
-        ChapterEntity chapterEntity = mapper.toEntity(request);
-        chapterEntity.setPost(postEntity);
-        chapterEntity = repository.save(chapterEntity);
+    public void add(ChapterRequest request, String branchLink) {
+        BranchEntity branchEntity = branchRepository.findByLink(branchLink)
+                .orElseThrow(() -> new BranchNotFoundException(branchLink));
+        ChapterEntity chapterEntity = ChapterEntity.builder()
+                .title(request.getTitle())
+                .number(request.getNumber())
+                .branch(branchEntity)
+                .build();
 
-        String filePath = generateFilePath(postEntity, chapterEntity);
+        String fileName = UUID.randomUUID().toString();
+        chapterEntity.setLink(fileName);
+        saveFileOnDisk(chapterEntity, request.getText());
+        chapterRepository.save(chapterEntity);
+        chapterRepository.increaseNumber(chapterEntity.getId(), chapterEntity.getNumber());
+    }
+
+    private void saveFileOnDisk(ChapterEntity chapterEntity, String text) {
+        String filePath = generateFilePath(chapterEntity);
         try {
-            fileWorker.save(filePath, request.getText());
-            chapterEntity.setFilePath(filePath);
-            repository.save(chapterEntity);
+            fileWorker.save(filePath, text);
         } catch (IOException e) {
-            throw new CouldNotSaveChapterOnDisk(postEntity.getPostId(), chapterEntity.getId(), filePath);
+            throw new CouldNotSaveChapterOnDisk(generateFilePath(chapterEntity));
         }
     }
 
     @Override
     public void delete(Long chapterId) {
-        repository.deleteById(chapterId);
+        chapterRepository.deleteById(chapterId);
+    }
+
+    @Override
+    public ChapterResponse getByLink(String link) {
+        ChapterEntity entity = getEntityByLink(link);
+        String text = downloadText(entity);
+        ChapterResponse response = mapper.toResponse(entity);
+        response.setText(text);
+        return response;
+    }
+
+    @Override
+    public ChapterEntity getEntityByLink(String link) {
+        return chapterRepository.findByLink(link).orElseThrow(() -> new ChapterNotFoundException(link));
+    }
+
+    @Override
+    public ChapterResponse put(String chapterLink, ChapterRequest chapterRequest) {
+        ChapterEntity entity = getEntityByLink(chapterLink);
+        entity.setNumber(chapterRequest.getNumber());
+        entity.setTitle(chapterRequest.getTitle());
+        saveFileOnDisk(entity, chapterRequest.getText());
+        chapterRepository.save(entity);
+        chapterRepository.increaseNumber(entity.getId(), entity.getNumber());
+        return mapper.toResponse(entity);
+    }
+
+    @Transactional
+    @Override
+    public void deleteChapter(String chapterLink) {
+        ChapterEntity chapter = getEntityByLink(chapterLink);
+        // TODO: сделать удаление с понидением номера главы
     }
 }

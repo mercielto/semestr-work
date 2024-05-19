@@ -106,7 +106,7 @@
         <!-- Sample user -->
         <div class="user">
             <div class="user-info">
-                <img src="/static/images/fff.jpg" alt="user profile picture" class="user-image">
+                <img src="/static/images/1183669.png" alt="user profile picture" class="user-image">
                 <div>
                     <p class="user-name">User Name</p>
                     <p class="user-id">5324112562</p>
@@ -117,14 +117,11 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/static/scripts/jquery-3.6.0.min.js"></script>
 <script>
-    // Function to fetch user data and populate the user list
     function fetchUsers(searchQuery) {
-        // This is a placeholder function, replace it with actual logic to fetch users
-        // For now, we'll just add a few sample users
         const userList = document.getElementById('user-list');
-        userList.innerHTML = ''; // Clear previous users
+        userList.innerHTML = '';
 
         const sampleUsers = [
             { name: 'John Doe', id: '123456', active: true },
@@ -167,7 +164,6 @@
         });
     }
 
-    // Event listener for search form submission
     document.getElementById('search-form').addEventListener('submit', function(event) {
         event.preventDefault();
         const searchInput = document.getElementById('search-input');
@@ -175,7 +171,7 @@
         fetchUsers(searchQuery);
     });
 
-    // Event listener for state change button click
+
     $(document).on('click', '.user-state-btn', function() {
         const userStateBtn = this;
         const userId = $(this).closest('.user').find('.user-id').text();

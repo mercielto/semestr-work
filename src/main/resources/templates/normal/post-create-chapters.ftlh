@@ -15,8 +15,8 @@
 
 <div id="main-body">
     <h1><#if post.getTitle()??>${post.getTitle()}<#else >Title</#if></h1>
-
-    <#list post.getChapters() as chapter>
+    <#assign branch = post.getBranches()[0]>
+    <#list branch.getChapters() as chapter>
 
         <#if chapter.getNumber() != 1>
             <div class="chapter-divider">
@@ -25,7 +25,7 @@
         </#if>
 
         <div class="chapter">
-            <a class="chapter-name" href="">
+            <a class="chapter-name" href="/post/create/chapter/${chapter.getLink()}">
                 <p>${chapter.getNumber()}. ${chapter.getTitle()}</p>
             </a>
             <button class="delete-chapter-btn">Delete</button>

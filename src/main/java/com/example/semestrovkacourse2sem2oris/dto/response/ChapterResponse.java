@@ -11,7 +11,8 @@ public class ChapterResponse {
 
     private Long id;
     private String title;
-    private String filePath;
+    private String text;
     private Integer number;
-    private PostResponse post;
+    private String branchLink;
+    private String link;
 }

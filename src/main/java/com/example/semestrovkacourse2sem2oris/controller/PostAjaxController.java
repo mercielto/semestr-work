@@ -42,18 +42,9 @@ public class PostAjaxController {
         return "post-create-chapter-add-ajax";
     }
 
-    @PostMapping(value = "/settings/save", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String save(@RequestBody PostRequest postRequest) {
-        postService.saveChanges(postRequest);
-        return "saved";
-    }
-
-    @DeleteMapping("/chapter/{link}")
-    public String deleteChapter(@RequestBody int chapterNumber,
-                              @PathVariable("link") String postLink,
-                                Model model) {
-        PostResponse response = postService.deleteChapter(postLink, chapterNumber);
-        model.addAttribute("post", response);
-        return "normal/post-create-chapters-ajax";
+    @PostMapping(value = "/settings/save/{link}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void save(@RequestBody PostRequest postRequest,
+                       @PathVariable("link") String link) {
+        postService.saveChanges(postRequest, link);
     }
 }

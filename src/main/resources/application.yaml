@@ -23,5 +23,12 @@ spring:
         content-type: text/html
 
 
+logging:
+    level:
+        root: INFO
+        com.mypackage: ERROR
+    file:
+        name: app.log
+
 path:
     post: C:\Works\ORIS\SemestrovkaDataBase

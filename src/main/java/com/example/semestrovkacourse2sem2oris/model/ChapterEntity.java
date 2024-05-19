@@ -1,11 +1,12 @@
 package com.example.semestrovkacourse2sem2oris.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,11 +22,10 @@ public class ChapterEntity {
     @GeneratedValue
     private Long id;
     private String title;
-    private String filePath;
+    private String link;
     private Integer number;     // номер в последовательности
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "postId")
-    @JsonIgnore
-    private PostEntity post;
+    @JoinColumn(name = "branch_id")
+    private BranchEntity branch;
 }

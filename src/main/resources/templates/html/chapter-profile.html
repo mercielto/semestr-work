@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chapter profile</title>
+
+  <style>
+    .body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .main-div {
+      width: 600px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .user-info img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .description {
+      margin-bottom: 20px;
+    }
+
+    .author-comment {
+      margin-bottom: 20px;
+      font-style: italic;
+      color: #777;
+    }
+
+    .rating {
+      unicode-bidi: bidi-override;
+      direction: rtl;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .rating > input {
+      display: none;
+    }
+
+    .rating > label {
+      display: inline-block;
+      padding: 0 1px;
+      font-size: 40px;
+      color: #ddd;
+      cursor: pointer;
+    }
+
+    .rating > label:hover,
+    .rating > label:hover ~ label,
+    .rating > input:checked ~ label {
+      color: #fdd835;
+    }
+
+    /*Navigation css*/
+
+    #settings-body {
+      position: fixed;
+      top: 40%;
+      margin-left: 1rem;
+    }
+
+    #settings-body button {
+      display: block;
+      color: #333;
+      text-decoration: none;
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+      width: -moz-available;
+    }
+
+    #settings-body a:hover {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+
+<div id="settings-body">
+  <button href="">Обзор</button>
+  <button href="">Читать</button>
+  <button href="">Отзывы</button>
+</div>
+
+<div class="body">
+
+  <div class="main-div">
+    <h1>12. Название главы</h1>
+
+    <a class="user-info" href="">
+      <img src="/static/images/1183669.png" id="user-image">
+      <p>Name</p>
+    </a>
+
+    <div class="description">
+
+      <p>Название произведения: <a href="">Лилипуты</a></p>
+
+      <p>Прочитано: 100500</p>
+      <p>Оценка: 8.96</p>
+    </div>
+
+    <p class="author-comment">слова автора о ветке
+      ыдвшаоывшащшыв твыоадывоаоывлаыва
+      ылыовпшщрволтаыдощушаыло ыпа ышоуша ы
+      ыо шуоашуыод ашоыуд одышкопшдв аолдпоык п
+      ыпо щвшапыотукдлаодывоа шщыощушао дыоплдв пыаышщ ушщао щышопшщ одалпощшыоушщ ощшур п оаалдмо щуадгш крпщшрпыжщвгар защшур зщцурщшар ыр ашщыр</p>
+
+    <p>Оценить:</p>
+    <div class="rating">
+      <input type="radio" id="star10" name="rating" value="10" />
+      <label for="star10">☆</label>
+      <input type="radio" id="star9" name="rating" value="9" />
+      <label for="star9">☆</label>
+      <input type="radio" id="star8" name="rating" value="8" />
+      <label for="star8">☆</label>
+      <input type="radio" id="star7" name="rating" value="7" />
+      <label for="star7">☆</label>
+      <input type="radio" id="star6" name="rating" value="6" />
+      <label for="star6">☆</label>
+      <input type="radio" id="star5" name="rating" value="5" />
+      <label for="star5">☆</label>
+      <input type="radio" id="star4" name="rating" value="4" />
+      <label for="star4">☆</label>
+      <input type="radio" id="star3" name="rating" value="3" />
+      <label for="star3">☆</label>
+      <input type="radio" id="star2" name="rating" value="2" />
+      <label for="star2">☆</label>
+      <input type="radio" id="star1" name="rating" value="1" />
+      <label for="star1">☆</label>
+    </div>
+  </div>
+
+
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const stars = document.querySelectorAll('.rating input[type="radio"]');
+
+    stars.forEach(function(star) {
+      star.addEventListener("click", function() {
+        const clickedStarValue = parseInt(this.value);
+        // Send rating data
+        // Replace the following line with your actual logic for sending data
+        console.log("User rated:", clickedStarValue);
+      });
+    });
+  });
+</script>
+</body>
+</html>

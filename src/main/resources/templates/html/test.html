@@ -2,94 +2,119 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><!DOCTYPE html>
-      <html lang="en">
-      <head>
-      <meta charset="UTF-8">
-      <title>Create</title>
-  <style>
-    #main-body {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      gap: 20px;
-      border: solid;
-      height: 1000px;
-      position: relative;
-    }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add chapter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
 
-    .chapter {
-      border: solid;
-      border-radius: 10px;
-      width: 40rem;
-      height: 3rem;
-      padding-left: 10px;
-      margin-bottom: 10px;
-    }
+        #main-body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+        }
 
-    .chapter-name {
-      display: block;
-    }
+        #text-form {
+            max-width: 800px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
-    .chapter-add {
-      display: none;
-      position: absolute;
-      left: 0;
-    }
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    .chapter-divider {
-      height: 0.1rem;
-      width: 100%;
-    }
+        .chapter-params {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
 
-    .chapter-divider:hover .chapter-add {
-      display: block;
-    }
-  </style>
+        #number {
+            width: 100px;
+            height: 40px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        #chapterName {
+            flex: 1;
+            height: 50px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        #text {
+            width: 100%;
+            height: 400px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            resize: none;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        #number {
+            width: 150px; /* Устанавливаем фиксированную ширину для поля номера */
+        }
+
+        #chapterName {
+            flex: 1; /* Занимает оставшееся пространство */
+        }
+
+        #submit-input {
+            width: 120px;
+            height: 50px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #submit-input:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
 <div id="main-body">
-  <h1>Title</h1>
-
-  <div class="chapter">
-    <a class="chapter-name" href="">
-      <p>Chapter name</p>
-    </a>
-  </div>
-
-  <div class="chapter">
-    <a class="chapter-name" href="">
-      <p>Chapter name</p>
-    </a>
-  </div>
-
-  <div class="chapter-divider">
-    <input type="submit" class="chapter-add" value="Новая глава">
-  </div>
-
-  <div class="chapter">
-    <a class="chapter-name" href="">
-      <p>Chapter name</p>
-    </a>
-  </div>
-
-  <input type="submit" id="chapter-add-main" class="chapter-add" value="Новая глава">
-
+    <form id="text-form" method="post">
+        <a href="/post/****">
+            <h1>Title</h1>
+        </a>
+        <div class="chapter-params">
+            <input id="number" name="number" value="Номер главы" type="number">
+            <input id="chapterName" value="Название главы" name="chapterName" type="text">
+        </div>
+        <textarea id="text" name="text" placeholder="Введите текст главы..."></textarea>
+        <input type="submit" id="submit-input" value="Добавить">
+    </form>
 </div>
 
-<script>
-  const chapterContainer = document.querySelector('#main-body');
-
-  chapterContainer.addEventListener('mouseleave', function() {
-    const chapterAdd = document.querySelector('.chapter-add');
-    chapterAdd.style.display = 'none';
-  });
-</script>
-</body>
-</html>
-</title>
-</head>
-<body>
-
+<script src="/scripts/chapter-add.js"></script>
 </body>
 </html>

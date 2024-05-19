@@ -14,7 +14,6 @@ public class PostRequest {
 
     private String title;
     private String universeName;
-    private String webLink;
 
     private List<String> editorsLogins;
 

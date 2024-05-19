@@ -3,27 +3,19 @@ package com.example.semestrovkacourse2sem2oris.dto.response;
 import com.example.semestrovkacourse2sem2oris.model.PostStatus;
 import lombok.*;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostResponse {
+public class PostShortResponse {
 
     private String imagePath;
-    private Integer readCount;
     private String title;
     private String webLink;
-
-    private List<UserResponse> editors;
-    private List<BranchResponse> branches;
-
     private UserResponse creator;
     private String universe;
-
     private String description;
-    private String creatorComment;
     private PostStatus status;
+    private String creatorComment;
 }

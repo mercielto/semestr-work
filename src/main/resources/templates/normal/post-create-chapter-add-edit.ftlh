@@ -14,22 +14,22 @@
 </div>
 
 <div id="main-body">
-    <form id="text-form" method="POST" action="/chapter/??">
-        <a href="/post/****">
+    <div id="text-form">
+        <a href="/post/create/${post.getWebLink()}?part=settings">
             <h1><#if post.getTitle()??>${post.getTitle()}<#else >Title</#if></h1>
         </a>
         <div class="chapter-param">
-            <input id="number" name="number" value="1" type="number" required>
-            <input id="title" value="Название главы" name="title" type="text" required>
+            <input id="number" name="number" value="${chapter.getNumber()}" type="number" required>
+            <input id="title" value="${chapter.getTitle()}" name="title" type="text" required>
         </div>
-        <textarea id="text" name="text" placeholder="Введите текст главы..."></textarea>
-        <input type="submit" id="submit-input" value="Добавить">
-    </form>
+        <textarea id="text" name="text" placeholder="Введите текст главы...">${chapter.getText()}</textarea>
+        <input type="submit" id="submit-input" value="Обновить">
+    </div>
 </div>
 
 <script src="/scripts/chapter-add-default.js"></script>
 <script src="/scripts/jquery-3.6.0.min.js"></script>
 <script src="/scripts/post-create-navigation.js"></script>
-<script src="/scripts/chapter-add.js"></script>
+<script src="/scripts/chapter-edit.js"></script>
 </body>
 </html>

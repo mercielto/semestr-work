@@ -74,6 +74,11 @@
         #submit-input:hover {
             background-color: #0056b3;
         }
+
+        .chapter-params {
+            display: flex;
+            flex-direction: row;
+        }
     </style>
 </head>
 <body>
@@ -82,8 +87,10 @@
         <a href="/post/****">
             <h1>Title</h1>
         </a>
-        <input id="chapterName" value="Название главы" name="chapterName" type="text">
-
+        <div class="chapter-params">
+            <input id="number" name="number" value="Номер главы" type="number">
+            <input id="chapterName" value="Название главы" name="chapterName" type="text">
+        </div>
         <textarea id="text" name="text" placeholder="Введите текст главы..."></textarea>
         <input type="submit" id="submit-input" value="Добавить">
     </form>

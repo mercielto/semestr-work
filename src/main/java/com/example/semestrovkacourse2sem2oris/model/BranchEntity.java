@@ -3,6 +3,8 @@ package com.example.semestrovkacourse2sem2oris.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "branch")
 @Builder
@@ -17,7 +19,8 @@ public class BranchEntity {
     private Long branchId;
 
     private String name;
-    private String sourcePath;
+    private String link;
+    private boolean main;
 
     @ManyToOne
     @JoinColumn(name = "postId")
@@ -26,6 +29,10 @@ public class BranchEntity {
     @ManyToOne
     @JoinColumn(name = "userId")
     private UserEntity creator;
+
+    @OrderBy("number ASC")
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<ChapterEntity> chapters;       // главы в ветке
 }
 
 

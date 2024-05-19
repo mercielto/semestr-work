@@ -37,18 +37,11 @@ deleteButtons.forEach(button => {
         const confirmDelete = window.confirm('Вы уверены, что хотите удалить эту главу?');
 
         if (confirmDelete) {
-            const chapterNameText = chapter.querySelector('.chapter-name p')
-                .textContent.split(".");
-            var data = {
-                "chapterNumber": parseInt(chapterNameText[0])
-            };
-
-            console.log(data);
+            const chapterLink = chapter.querySelector('.chapter-name').href.split("/").pop;
 
             $.ajax({
-                url: "/post/ajax/chapter/" + getLink(),
+                url: "/post/ajax/chapter/" + chapterLink,
                 type: "delete",
-                data: JSON.stringify(data),
                 contentType: "application/json",
                 success: function(data) {
                     console.log("Success");

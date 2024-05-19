@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote for Text Excerpts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f8f8f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .excerpt {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .rating {
+      unicode-bidi: bidi-override;
+      direction: rtl;
+      text-align: left;
+      margin: 10px auto;
+    }
+
+    .rating > input {
+      display: none;
+    }
+
+    .rating > label {
+      display: inline-block;
+      padding: 0 1px;
+      font-size: 20px;
+      color: #ddd;
+      cursor: pointer;
+    }
+
+    .rating > label:hover,
+    .rating > label:hover ~ label {
+      color: #fdd835;
+    }
+
+    .rating > input:checked ~ label {
+      color: #fdd835;
+    }
+
+    .rating-info {
+      font-size: 16px;
+      margin-top: 5px;
+    }
+
+    .sort-dropdown {
+      margin-bottom: 20px;
+    }
+
+    select {
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      outline: none;
+    }
+
+    select:focus {
+      border-color: #007bff;
+    }
+
+    .load-more-btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .load-more-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .post-navigation {
+      position: fixed;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      top: 30%;
+    }
+
+    .post-navigation button {
+      padding: 8px 16px;
+      border: solid 0.5px;
+      border-radius: 5px;
+      color: black;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .post-navigation button:hover {
+      background-color: #fbc02d;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<div class="post-navigation">
+  <button id="post-overview">Обзор</button>
+  <button id="post-read">Читать</button>
+  <button id="post-vote">Голосование</button>
+  <button id="post-feedbacks">Отзывы</button>
+</div>
+
+<div class="container">
+  <div class="sort-dropdown">
+    <label for="sort">Sort By:</label>
+    <select id="sort">
+      <option value="averageRatingAsc">Average Rating (Low to High)</option>
+      <option value="averageRatingDesc">Average Rating (High to Low)</option>
+      <option value="numVotesAsc">Number of Votes (Low to High)</option>
+      <option value="numVotesDesc">Number of Votes (High to Low)</option>
+    </select>
+  </div>
+
+  <div class="excerpt" data-rating="0" data-votes="0">
+    <h2>Excerpt 1: Title of Excerpt 1</h2>
+
+    <div class="rating">
+      <!-- Stars for excerpt 1 -->
+    </div>
+
+    <p class="rating-info">Average Rating: <span class="average-rating">0</span> (<span class="num-votes">0</span> votes)</p>
+
+    <div class="excerpt-content">
+      <p>This is a sample text for excerpt 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Donec eget elit augue. Donec blandit orci quis nunc interdum tristique. Aliquam erat volutpat. Nulla facilisi. Sed nec lorem vel dui varius varius.</p>
+    </div>
+  </div>
+
+  <div class="excerpt" data-rating="0" data-votes="0">
+    <h2>Excerpt 2: Title of Excerpt 2</h2>
+
+    <div class="rating">
+      <!-- Stars for excerpt 2 -->
+    </div>
+
+    <p class="rating-info">Average Rating: <span class="average-rating">0</span> (<span class="num-votes">0</span> votes)</p>
+
+    <div class="excerpt-content">
+      <p>This is a sample text for excerpt 2. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+  </div>
+
+  <button class="load-more-btn" id="load-more-btn">Load More</button>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const excerpts = document.querySelectorAll('.excerpt');
+    const sortDropdown = document.getElementById('sort');
+
+    excerpts.forEach(function(excerpt, index) {
+      const stars = excerpt.querySelector('.rating');
+
+      for (let i = 10; i > 0; i--) {
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.id = `star-${index + 1}-${i}`;
+        input.name = `rating-${index + 1}`;
+        input.value = i;
+        stars.appendChild(input);
+
+        const label = document.createElement('label');
+        label.htmlFor = `star-${index + 1}-${i}`;
+        label.textContent = '☆';
+        stars.appendChild(label);
+      }
+
+      stars.addEventListener('click', function(e) {
+        if (e.target.tagName === 'INPUT') {
+          const ratingContainer = e.target.parentNode;
+          const ratings = ratingContainer.querySelectorAll('input:checked').length;
+          const averageRating = calculateAverageRating(ratingContainer);
+          updateRatingInfo(ratingContainer, ratings, averageRating);
+          sortExcerpts();
+        }
+      });
+    });
+
+    sortDropdown.addEventListener('change', function() {
+      sortExcerpts();
+    });
+
+    function calculateAverageRating(ratingContainer) {
+      const total = Array.from(ratingContainer.querySelectorAll('input:checked'))
+              .reduce((acc, curr) => acc + parseInt(curr.value), 0);
+      return total / ratingContainer.querySelectorAll('input:checked').length;
+    }
+
+    function updateRatingInfo(ratingContainer, ratings, averageRating) {
+      const ratingInfo = ratingContainer.nextElementSibling;
+      const averageRatingElement = ratingInfo.querySelector('.average-rating');
+      const numVotesElement = ratingInfo.querySelector('.num-votes');
+      averageRatingElement.textContent = averageRating.toFixed(2);
+      numVotesElement.textContent = ratings;
+      ratingContainer.parentNode.dataset.rating = averageRating;
+      ratingContainer.parentNode.dataset.votes = ratings;
+    }
+
+    function sortExcerpts() {
+      const sortValue = sortDropdown.value;
+
+      const sortedExcerpts = Array.from(excerpts).sort((a, b) => {
+        if (sortValue === 'averageRatingAsc') {
+          return a.dataset.rating - b.dataset.rating;
+        } else if (sortValue === 'averageRatingDesc') {
+          return b.dataset.rating - a.dataset.rating;
+        } else if (sortValue === 'numVotesAsc') {
+          return a.dataset.votes - b.dataset.votes;
+        } else if (sortValue === 'numVotesDesc') {
+          return b.dataset.votes - a.dataset.votes;
+        }
+      });
+
+      sortedExcerpts.forEach((excerpt, index) => {
+        excerpt.style.order = index + 1;
+      });
+    }
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const excerptsContainer = document.querySelector('.container');
+    const loadMoreBtn = document.getElementById('load-more-btn');
+
+    loadMoreBtn.addEventListener('click', function() {
+
+      //     reauest
+    });
+  });
+</script>
+
+</body>
+</html>
