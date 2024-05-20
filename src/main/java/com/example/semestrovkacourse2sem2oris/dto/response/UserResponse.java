@@ -16,4 +16,5 @@ public class UserResponse {
     private Role role;
     private boolean active;
     private String link;
+    private String imageName;
 }

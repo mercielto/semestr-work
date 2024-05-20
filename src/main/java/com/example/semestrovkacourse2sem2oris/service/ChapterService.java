@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.service;
 
+import com.example.semestrovkacourse2sem2oris.dto.request.BranchRateRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.ChapterRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
 import com.example.semestrovkacourse2sem2oris.model.BranchEntity;

@@ -31,6 +31,11 @@ public class UserServiceImpl implements UserService {
         return repository.save(user);
     }
 
+    @Override
+    public UserEntity getCurrent() {
+        String login = SecurityContextHolder.getContext().getAuthentication().getName();
+        return getByLogin(login);
+    }
 
     @Override
     public UserEntity create(UserRequest request) {

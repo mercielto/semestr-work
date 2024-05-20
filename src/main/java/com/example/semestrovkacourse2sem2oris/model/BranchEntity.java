@@ -24,13 +24,8 @@ public class BranchEntity {
     private boolean main;
     private String description;
 
-    @Column(columnDefinition = "float default 0")
-    @Builder.Default
-    private float rating = 0;
-
-    @Column(columnDefinition = "bigint default 0")
-    @Builder.Default
-    private Long readCount = 0L;
+    @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY)
+    private List<BranchRateEntity> branchRates = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "postId")
@@ -40,10 +35,24 @@ public class BranchEntity {
     @JoinColumn(name = "userId")
     private UserEntity creator;
 
+    @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY)
+    private List<BranchCommentEntity> comments;
+
     @OrderBy("number ASC")
     @OneToMany(fetch = FetchType.LAZY)
     @Builder.Default
     private List<ChapterEntity> chapters = new ArrayList<>();       // главы в ветке
+
+    public float getAverageRating() {
+        if (branchRates == null || branchRates.isEmpty()) {
+            return 0;
+        }
+        float sum = 0;
+        for (BranchRateEntity rate : branchRates) {
+            sum += rate.getRating();
+        }
+        return sum / branchRates.size();
+    }
 }
 
 

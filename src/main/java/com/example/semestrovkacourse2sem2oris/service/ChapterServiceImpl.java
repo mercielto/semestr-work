@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.service;
 
+import com.example.semestrovkacourse2sem2oris.dto.request.BranchRateRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.ChapterRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
 import com.example.semestrovkacourse2sem2oris.exception.BranchNotFoundException;
@@ -10,6 +11,7 @@ import com.example.semestrovkacourse2sem2oris.model.BranchEntity;
 import com.example.semestrovkacourse2sem2oris.model.ChapterEntity;
 import com.example.semestrovkacourse2sem2oris.model.PostEntity;
 import com.example.semestrovkacourse2sem2oris.model.UserEntity;
+import com.example.semestrovkacourse2sem2oris.repository.BranchRateRepository;
 import com.example.semestrovkacourse2sem2oris.repository.BranchRepository;
 import com.example.semestrovkacourse2sem2oris.repository.ChapterRepository;
 import com.example.semestrovkacourse2sem2oris.util.CustomFileWorker;

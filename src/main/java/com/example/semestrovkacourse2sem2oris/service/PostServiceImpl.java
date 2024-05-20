@@ -38,7 +38,7 @@ public class PostServiceImpl implements PostService {
     public void create(PostRequest request) {
         PostEntity postEntity = mapper.toEntity(request);
         postEntity.setWebLink(generator.generateLink());
-        setCreator(postEntity);
+        postEntity.setCreator(userService.getCurrentUser());
         postEntity.setPublished(true);
 
         postRepository.save(postEntity);
@@ -62,8 +62,8 @@ public class PostServiceImpl implements PostService {
         PostEntity postEntity = PostEntity.builder()
                 .webLink(generator.generateLink())
                 .imagePath("default")
+                .creator(userService.getCurrentUser())
                 .build();
-        setCreator(postEntity);
         postRepository.save(postEntity);
         postEntity.getBranches().add(branchService.create(postEntity));
         postRepository.save(postEntity);
@@ -83,7 +83,8 @@ public class PostServiceImpl implements PostService {
     public void saveChanges(PostRequest postRequest, String link) {
         PostEntity savedPostEntity = getEntityByLink(link);
         PostEntity postEntity = mapper.toEntity(postRequest);
-
+        postEntity.setBranches(savedPostEntity.getBranches());
+        postEntity.setEditors(savedPostEntity.getEditors());
         ObjectCopier.copyNotNullFields(savedPostEntity, postEntity);
 
         postEntity.setPostId(savedPostEntity.getPostId());
@@ -137,11 +138,5 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostShortResponse getShortByBranchLink(String branchLink) {
         return mapper.toShortResponse(branchService.getEntityByLink(branchLink).getPost());
-    }
-
-    public void setCreator(PostEntity postEntity) {
-        String login = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserEntity userEntity = userService.getByLogin(login);
-        postEntity.setCreator(userEntity);
     }
 }

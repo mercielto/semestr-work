@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Reviews</title>
   <style>
-    body {
+    #body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
@@ -147,21 +147,20 @@
       background-color: #0056b3;
     }
   </style>
+  <link rel="stylesheet" href="/static/styles/post-create-navigation.css">
 </head>
 <body>
 
+<div id="settings-body">
+  <button id="overview-btn">Обзор</button>
+  <button id="read-btn">Читать</button>
+  <button id="comments-btn">Отзывы</button>
+</div>
+
+<div id="body">
+
 <div class="container">
   <h1>Отзывы</h1>
-
-  <ul class="reviews" id="reviews-list">
-    <!-- Reviews will be dynamically added here -->
-  </ul>
-
-  <div class="load-more">
-    <button id="load-more-btn">Load More</button>
-  </div>
-
-  <hr>
 
   <h2>Add Your Review</h2>
   <form id="review-form">
@@ -173,6 +172,19 @@
       <button type="submit">Submit</button>
     </div>
   </form>
+
+  <hr>
+
+  <ul class="reviews" id="reviews-list">
+    <!-- Reviews will be dynamically added here -->
+  </ul>
+
+  <div class="load-more">
+    <button id="load-more-btn">Load More</button>
+  </div>
+
+</div>
+
 </div>
 
 <script>
@@ -241,6 +253,5 @@
   // Event listener for load more button click
   loadMoreBtn.addEventListener('click', loadMoreReviews);
 </script>
-
 </body>
 </html>

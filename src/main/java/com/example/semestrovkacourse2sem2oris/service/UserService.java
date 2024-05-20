@@ -25,4 +25,6 @@ public interface UserService {
     boolean check(UserRequest request);
 
     UserEntity save(UserEntity user);
+
+    UserEntity getCurrent();
 }

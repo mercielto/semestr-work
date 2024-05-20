@@ -3,6 +3,6 @@ document.getElementById('submit-input').addEventListener('click', function() {
 });
 
 const form = document.getElementById('text-form');
-const link = window.location.pathname.split('/').pop();
+const link = window.location.href.split("/").pop().split("?")[0];
 const newAction = `/chapter/${link}`;
 form.action = newAction;

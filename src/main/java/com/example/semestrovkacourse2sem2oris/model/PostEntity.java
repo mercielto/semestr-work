@@ -22,7 +22,9 @@ public class PostEntity {
     @Column(columnDefinition = "varchar(255) default 'default.png'", nullable = false)
     private String imagePath = "default.png";
     private Integer readCount;      // количество прочитанных
-    private String title;
+
+    @Builder.Default
+    private String title = "Post";
 
     @Column(columnDefinition = "boolean default false")
     private boolean published = false;      // видимость для других пользователей, если public
@@ -39,6 +41,9 @@ public class PostEntity {
     )
     @Builder.Default
     private List<UserEntity> editors = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post")
+    private List<RatedPostEntity> ratedPosts;
 
     @OneToMany(fetch = FetchType.LAZY)
     @Builder.Default
