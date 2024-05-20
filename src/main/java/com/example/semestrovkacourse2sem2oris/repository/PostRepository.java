@@ -14,4 +14,6 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<PostEntity, Long> {
 
     Optional<PostEntity> findByWebLink(String link);
+
+    void deleteByWebLink(String link);
 }

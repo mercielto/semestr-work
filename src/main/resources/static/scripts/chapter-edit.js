@@ -9,7 +9,7 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            url: '/chapter/ajax/' + window.location.pathname.split('/').pop(),
+            url: '/chapter/ajax/' + window.location.pathname.split('/').pop().split("?")[0],
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(formData),

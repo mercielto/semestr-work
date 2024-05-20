@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.service;
 
+import com.example.semestrovkacourse2sem2oris.dto.request.BranchRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.BranchResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.BranchShortResponse;
 import com.example.semestrovkacourse2sem2oris.exception.BranchNotFoundException;
@@ -72,5 +73,10 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public BranchShortResponse getShortByLink(String link) {
         return mapper.toShortResponse(getEntityByLink(link));
+    }
+
+    @Override
+    public void update(String link, BranchRequest request) {
+        repository.updateByLink(link, request.getDescription(), request.getName());
     }
 }

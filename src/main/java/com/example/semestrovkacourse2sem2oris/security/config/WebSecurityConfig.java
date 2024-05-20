@@ -38,7 +38,7 @@ public class WebSecurityConfig {
                     ).permitAll();
 
                     authorizationManagerRequestMatcherRegistry.requestMatchers(
-                            "/styles/*", "/scripts/*", "/images/*"
+                            "/styles/*", "/scripts/*", "/images/*", "/uploads/*"
                     ).permitAll();
 
                     authorizationManagerRequestMatcherRegistry.requestMatchers(

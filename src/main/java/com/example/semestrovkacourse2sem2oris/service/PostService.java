@@ -22,8 +22,6 @@ public interface PostService {
 
     void saveChanges(PostRequest postRequest, String link);
 
-    PostResponse deleteChapter(String postLink, Integer chapterNumber);
-
     PostShortResponse getByChapterLink(String chapterLink);
 
     PostShortResponse getShortByLink(String link);
@@ -31,4 +29,6 @@ public interface PostService {
     void publish(PostRequest request, String link);
 
     PostShortResponse getShortByBranchLink(String branchLink);
+
+    void delete(String link);
 }

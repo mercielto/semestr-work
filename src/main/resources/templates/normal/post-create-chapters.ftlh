@@ -24,8 +24,7 @@
     </#list>
 
     <h4>
-<#--        TODO: добавить /post/create/branch/settings/${branch.getLink()}-->
-        <a style="visibility: hidden" id="branchName" href="/post/create/branch/settings/${branch.getLink()}"><#if branch.getName()??>${branch.getName()}<#else >Branch name</#if></a>
+        <a id="branchName" href="/post/create/branch/profile/${branch.getLink()}"><#if branch.getName()??>${branch.getName()}<#else >Branch name</#if></a>
     </h4>
     <#list branch.getChapters() as chapter>
         <div class="chapter">

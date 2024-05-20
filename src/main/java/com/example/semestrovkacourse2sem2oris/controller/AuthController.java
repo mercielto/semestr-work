@@ -1,6 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
-import com.example.semestrovkacourse2sem2oris.dto.request.UserRequest;
+import com.example.semestrovkacourse2sem2oris.dto.request.UserRegistrationRequest;
 import com.example.semestrovkacourse2sem2oris.model.Role;
 import com.example.semestrovkacourse2sem2oris.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public RedirectView signUp(@ModelAttribute UserRequest request) {
+    public RedirectView signUp(@ModelAttribute UserRegistrationRequest request) {
         System.out.println("CREATION STARTED");
         if (!userService.check(request)) {
             return new RedirectView("/sign-up");
@@ -37,7 +37,7 @@ public class AuthController {
     }
 
     @PostMapping("/sign-in")
-    public RedirectView signIn(@ModelAttribute UserRequest request) {
+    public RedirectView signIn(@ModelAttribute UserRegistrationRequest request) {
         System.out.println("post method");
         return new RedirectView("profile");
     }

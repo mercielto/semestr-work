@@ -61,7 +61,6 @@ public class PostServiceImpl implements PostService {
     public PostResponse create() {
         PostEntity postEntity = PostEntity.builder()
                 .webLink(generator.generateLink())
-                .imagePath("default")
                 .creator(userService.getCurrentUser())
                 .build();
         postRepository.save(postEntity);
@@ -93,26 +92,6 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponse deleteChapter(String postLink, Integer chapterNumber) {
-//        PostEntity postEntity = getEntityByLink(postLink);
-//        List<ChapterEntity> chapters = postEntity.getChapters();
-//
-//        ChapterEntity chapterToRemove = null;
-//        for (ChapterEntity chapter : chapters) {
-//            if (Objects.equals(chapter.getNumber(), chapterNumber)) {
-//                chapterToRemove = chapter;
-//            } else if (chapterToRemove != null) {
-//                chapter.setNumber(chapter.getNumber() - 1);
-//            }
-//        }
-//        chapters.remove(chapterToRemove);
-//        chapterRepository.delete(chapterToRemove);
-//        postEntity = postRepository.save(postEntity);
-//        return mapper.toResponse(postEntity);
-        return null;
-    }
-
-    @Override
     public PostShortResponse getByChapterLink(String chapterLink) {
         ChapterEntity chapterEntity = chapterService.getEntityByLink(chapterLink);
         return mapper.toShortResponse(chapterEntity.getBranch().getPost());
@@ -138,5 +117,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostShortResponse getShortByBranchLink(String branchLink) {
         return mapper.toShortResponse(branchService.getEntityByLink(branchLink).getPost());
+    }
+
+    @Override
+    public void delete(String link) {
+        postRepository.deleteByWebLink(link);
     }
 }

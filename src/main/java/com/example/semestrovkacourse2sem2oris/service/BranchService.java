@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.service;
 
+import com.example.semestrovkacourse2sem2oris.dto.request.BranchRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.BranchResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.BranchShortResponse;
 import com.example.semestrovkacourse2sem2oris.model.BranchEntity;
@@ -21,4 +22,6 @@ public interface BranchService {
     BranchResponse getMain(List<BranchResponse> branches);
 
     BranchShortResponse getShortByLink(String link);
+
+    void update(String link, BranchRequest request);
 }

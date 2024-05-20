@@ -97,6 +97,69 @@
     #settings-body a:hover {
       background-color: #f9f9f9;
     }
+
+    textarea {
+      width: 100%;
+      max-width: 100%;
+      height: 150px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      resize: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    textarea:focus {
+      border-color: #66afe9;
+      outline: none;
+      box-shadow: 0 0 5px rgba(102, 175, 233, 0.5);
+    }
+
+    /* Стили для branch-name */
+    #branch-name {
+      width: 80%;
+      padding: 10px;
+      font-size: 24px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #branch-name:focus {
+      border-color: #66afe9;
+      outline: none;
+      box-shadow: 0 0 5px rgba(102, 175, 233, 0.5);
+    }
+
+    /* Стили для save-button */
+    #save-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    #save-button:hover {
+      background-color: #0056b3;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #save-button:active {
+      background-color: #004494;
+    }
+
   </style>
 </head>
 <body>
@@ -110,8 +173,9 @@
 <div class="body">
 
   <div class="main-div">
-    <h1>12. Название главы</h1>
-
+    <h1>
+      <input id="branch-name" value="12. Название главы">
+    </h1>
     <a class="user-info" href="">
       <img src="/static/images/1183669.png" id="user-image">
       <p>Name</p>
@@ -125,11 +189,13 @@
       <p>Оценка: 8.96</p>
     </div>
 
-    <p class="author-comment">слова автора о ветке
-      ыдвшаоывшащшыв твыоадывоаоывлаыва
-      ылыовпшщрволтаыдощушаыло ыпа ышоуша ы
-      ыо шуоашуыод ашоыуд одышкопшдв аолдпоык п
-      ыпо щвшапыотукдлаодывоа шщыощушао дыоплдв пыаышщ ушщао щышопшщ одалпощшыоушщ ощшур п оаалдмо щуадгш крпщшрпыжщвгар защшур зщцурщшар ыр ашщыр</p>
+<!--    <p class="author-comment">слова автора о ветке-->
+<!--      ыдвшаоывшащшыв твыоадывоаоывлаыва-->
+<!--      ылыовпшщрволтаыдощушаыло ыпа ышоуша ы-->
+<!--      ыо шуоашуыод ашоыуд одышкопшдв аолдпоык п-->
+<!--      ыпо щвшапыотукдлаодывоа шщыощушао дыоплдв пыаышщ ушщао щышопшщ одалпощшыоушщ ощшур п оаалдмо щуадгш крпщшрпыжщвгар защшур зщцурщшар ыр ашщыр</p>-->
+
+    <textarea></textarea>
 
     <p>Оценить:</p>
     <div class="rating">
@@ -154,6 +220,9 @@
       <input type="radio" id="star1" name="rating" value="1" />
       <label for="star1">☆</label>
     </div>
+
+
+    <button id="save-button">Сохранить</button>
   </div>
 
 

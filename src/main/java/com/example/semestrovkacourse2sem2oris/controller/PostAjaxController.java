@@ -47,4 +47,9 @@ public class PostAjaxController {
                        @PathVariable("link") String link) {
         postService.saveChanges(postRequest, link);
     }
+
+    @DeleteMapping("/{link}")
+    public void delete(@PathVariable("link") String link) {
+        postService.delete(link);
+    }
 }

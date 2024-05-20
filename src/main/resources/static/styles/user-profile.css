@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.profile-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.profile-avatar img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-name {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.profile-bio {
+    color: #666;
+}
+
+.profile-stats {
+    display: flex;
+    margin-top: 10px;
+}
+
+.stat {
+    margin-right: 20px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #888;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.profile-body {
+    padding: 20px;
+}
+
+.section-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.post img {
+    width: 200px;
+    height: 150px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.post:hover img {
+    transform: scale(1.1);
+}
+
+.profile-footer {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+}
+
+#btn-follow {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#btn-follow {
+    background-color: #4caf50;
+    color: #fff;
+    width: -moz-available;
+}
+
+.recent-posts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    grid-gap: 20px;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.recent-post {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    text-align: center;
+}
+
+.recent-post:hover {
+    transform: translateY(-5px);
+}
+
+.recent-post img {
+    width: 100%;
+    height: auto;
+    max-width: 150px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.recent-post-content {
+    padding: 10px;
+}
+
+.recent-post-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.recent-post-description {
+    font-size: 14px;
+    color: #666;
+}

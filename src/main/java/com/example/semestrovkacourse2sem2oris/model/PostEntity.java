@@ -42,10 +42,10 @@ public class PostEntity {
     @Builder.Default
     private List<UserEntity> editors = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<RatedPostEntity> ratedPosts;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Builder.Default
     private List<BranchEntity> branches = new ArrayList<>();
 

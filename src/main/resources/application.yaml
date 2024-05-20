@@ -1,4 +1,10 @@
 spring:
+    web:
+        resources:
+            static-locations:
+                - file:./uploads/
+                - classpath:/static/
+
     application:
         name: semestrovka-course2sem2-oris
 
@@ -23,6 +29,7 @@ spring:
         content-type: text/html
 
 
+
 logging:
     level:
         root: INFO
@@ -32,3 +39,10 @@ logging:
 
 path:
     post: C:\Works\ORIS\SemestrovkaDataBase
+
+image:
+    default: default.png
+
+app:
+    upload:
+        dir: uploads/

@@ -40,6 +40,7 @@ public class UserEntity {
     @Column(unique = true)
     private String login;
     private String password;
+    private String bio;
 
     @Builder.Default
     private String imageName = "default.png";
@@ -55,6 +56,26 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
     private List<PostEntity> posts;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    }
+    )
+    @JoinTable(
+            name = "followers",
+            joinColumns = @JoinColumn(name = "follower_id"),
+            inverseJoinColumns = @JoinColumn(name = "following_id")
+    )
+    private List<UserEntity> followers = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            mappedBy = "followers",
+            cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    private List<UserEntity> following = new ArrayList<>();
 
     public boolean isActive() {
         return active;

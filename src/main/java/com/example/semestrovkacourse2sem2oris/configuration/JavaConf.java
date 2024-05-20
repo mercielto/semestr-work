@@ -37,6 +37,8 @@ public class JavaConf implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/scripts/");
         registry.addResourceHandler("/static/images/**")
                 .addResourceLocations("classpath:/static/images/");
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:./uploads/");
     }
 
     @Bean

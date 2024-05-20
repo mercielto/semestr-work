@@ -24,7 +24,7 @@ public class BranchEntity {
     private boolean main;
     private String description;
 
-    @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BranchRateEntity> branchRates = new ArrayList<>();
 
     @ManyToOne
@@ -35,11 +35,11 @@ public class BranchEntity {
     @JoinColumn(name = "userId")
     private UserEntity creator;
 
-    @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BranchCommentEntity> comments;
 
     @OrderBy("number ASC")
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Builder.Default
     private List<ChapterEntity> chapters = new ArrayList<>();       // главы в ветке
 
