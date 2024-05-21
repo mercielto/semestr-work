@@ -1,23 +1,20 @@
 package com.example.semestrovkacourse2sem2oris.service;
 
+import com.example.semestrovkacourse2sem2oris.dto.request.PostReadRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.PostRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostShortResponse;
+import com.example.semestrovkacourse2sem2oris.dto.response.PostUserShortResponse;
 import com.example.semestrovkacourse2sem2oris.exception.PostNotFoundException;
+import com.example.semestrovkacourse2sem2oris.exception.PostReadStatusNotFoundException;
 import com.example.semestrovkacourse2sem2oris.mapper.PostMapper;
-import com.example.semestrovkacourse2sem2oris.model.BranchEntity;
-import com.example.semestrovkacourse2sem2oris.model.ChapterEntity;
-import com.example.semestrovkacourse2sem2oris.model.PostEntity;
-import com.example.semestrovkacourse2sem2oris.model.UserEntity;
-import com.example.semestrovkacourse2sem2oris.repository.BranchRepository;
-import com.example.semestrovkacourse2sem2oris.repository.ChapterRepository;
+import com.example.semestrovkacourse2sem2oris.model.*;
 import com.example.semestrovkacourse2sem2oris.repository.PostRepository;
 import com.example.semestrovkacourse2sem2oris.util.LinkGenerator;
 import com.example.semestrovkacourse2sem2oris.util.ObjectCopier;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.management.AttributeNotFoundException;
@@ -27,7 +24,6 @@ import javax.management.AttributeNotFoundException;
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
-    private final ChapterRepository chapterRepository;
     private final PostMapper mapper;
     private final UserService userService;
     private final LinkGenerator generator;
@@ -122,5 +118,32 @@ public class PostServiceImpl implements PostService {
     @Override
     public void delete(String link) {
         postRepository.deleteByWebLink(link);
+    }
+
+    @Override
+    public void changeReadStatus(String link, PostReadRequest request) {
+        PostEntity post = getEntityByLink(link);
+        UserEntity user = userService.getCurrentUser();
+
+        switch (request.getStatus()) {
+            case VIEWED -> post.getReadUsers().add(user);
+            case NOT_VIEWED -> post.getReadUsers().remove(user);
+            default -> throw new PostReadStatusNotFoundException(request.getStatus());
+        }
+        postRepository.save(post);
+    }
+
+    @Override
+    public PostReadStatus isCurrentUserRead(PostEntity entity) {
+        UserEntity user = userService.getCurrentUser();
+        if (user.getReadPosts().contains(entity)) {
+            return PostReadStatus.VIEWED;
+        }
+        return PostReadStatus.NOT_VIEWED;
+    }
+
+    @Override
+    public PostUserShortResponse getUserShortByLink(String link) {
+        return mapper.toPostUserShortResponse(getEntityByLink(link), this);
     }
 }

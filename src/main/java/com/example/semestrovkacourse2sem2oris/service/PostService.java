@@ -1,9 +1,12 @@
 package com.example.semestrovkacourse2sem2oris.service;
 
+import com.example.semestrovkacourse2sem2oris.dto.request.PostReadRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.PostRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostShortResponse;
+import com.example.semestrovkacourse2sem2oris.dto.response.PostUserShortResponse;
 import com.example.semestrovkacourse2sem2oris.model.PostEntity;
+import com.example.semestrovkacourse2sem2oris.model.PostReadStatus;
 import jakarta.servlet.http.HttpSession;
 
 import javax.management.AttributeNotFoundException;
@@ -31,4 +34,10 @@ public interface PostService {
     PostShortResponse getShortByBranchLink(String branchLink);
 
     void delete(String link);
+
+    void changeReadStatus(String link, PostReadRequest request);
+
+    PostReadStatus isCurrentUserRead(PostEntity entity);
+
+    PostUserShortResponse getUserShortByLink(String link);
 }

@@ -12,7 +12,7 @@
 <div class="profile-container">
     <div class="profile-header">
         <div class="profile-avatar">
-            <img src="/static/images/${user.getImageName()}" alt="Avatar">
+            <img src="/uploads/user/${user.getImageName()}" alt="Avatar">
         </div>
         <div class="profile-info">
             <h1 class="profile-name">${user.getUsername()}</h1>
@@ -44,7 +44,7 @@
 
             <#list user.getPosts() as post>
                 <div class="recent-post">
-                    <img src="/images/${post.getImagePath()}" alt="Post 1">
+                    <img src="/uploads/post/${post.getImagePath()}" alt="Post 1">
                     <div class="recent-post-content">
                         <h3 class="recent-post-title"><a href="/post/profile/${post.getWebLink()}">${post.getTitle()}</a></h3>
                         <p class="recent-post-description">${post.getDescription()}</p>

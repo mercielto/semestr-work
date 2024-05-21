@@ -39,7 +39,7 @@
                 <#assign user = comment.getUser()>
                 <div class="review">
                     <div class="user-info">
-                        <img src="/static/images/${user.getImageName()}" alt="User Avatar" class="avatar">
+                        <img src="/uploads/user/${user.getImageName()}" alt="User Avatar" class="avatar">
                         <p class="username">${user.getUsername()}</p>
                     </div>
                     <div class="content">

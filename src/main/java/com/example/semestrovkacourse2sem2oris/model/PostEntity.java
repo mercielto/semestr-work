@@ -20,6 +20,7 @@ public class PostEntity {
     private Long postId;
 
     @Column(columnDefinition = "varchar(255) default 'default.png'", nullable = false)
+    @Builder.Default
     private String imagePath = "default.png";
     private Integer readCount;      // количество прочитанных
 
@@ -43,9 +44,10 @@ public class PostEntity {
     private List<UserEntity> editors = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<RatedPostEntity> ratedPosts;
+    private List<PostRateEntity> ratedPosts;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    // TODO: проверить удаление всех зависимых объектов при удалении поста
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "post")
     @Builder.Default
     private List<BranchEntity> branches = new ArrayList<>();
 
@@ -53,9 +55,33 @@ public class PostEntity {
     @JoinColumn(name = "userId", nullable = false)
     private UserEntity creator;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "post")
+    @Builder.Default
+    private List<PostRateEntity> postRates = new ArrayList<>();
+
     private String description;         // для генерации картинки через api, если получится
     private String creatorComment;      // в целом, скакой целью и тд (все что угодно)
 
     @Enumerated(value = EnumType.STRING)
     private PostStatus status;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_post_read",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "account_id")
+    )
+    @Builder.Default
+    private List<UserEntity> readUsers = new ArrayList<>();
+
+    public float getAverageRating() {
+        if (postRates == null || postRates.isEmpty()) {
+            return 0;
+        }
+        float sum = 0;
+        for (PostRateEntity rate : postRates) {
+            sum += rate.getRating();
+        }
+        return sum / postRates.size();
+    }
 }

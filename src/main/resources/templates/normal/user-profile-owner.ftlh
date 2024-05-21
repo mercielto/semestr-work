@@ -13,7 +13,7 @@
 <div class="profile-container">
     <div class="profile-header">
         <div class="profile-avatar" id="avatarContainer" onmouseover="showUploadButton()" onmouseout="hideUploadButton()">
-            <img src="/uploads/${user.getImageName()}" alt="Avatar">
+            <img id='avatar' src="/uploads/user/${user.getImageName()}" alt="Avatar">
             <div class="upload-avatar" id="uploadButton">
                 <label for="image-upload">
                     <i class="fas fa-upload"></i>

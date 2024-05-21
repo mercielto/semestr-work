@@ -21,7 +21,7 @@
 
         <#assign creator = branch.getCreator()>
         <a class="user-info" href="/user/${creator.getLink()}">
-            <img src="/images/${creator.getImageName()}" id="user-image">
+            <img src="/uploads/user/${creator.getImageName()}" id="user-image">
             <p>${creator.getUsername()}</p>
         </a>
 

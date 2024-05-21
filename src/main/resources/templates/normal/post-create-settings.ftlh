@@ -20,7 +20,7 @@
     <div id="image-div">
         <div id="image-div-overlay-parent">
 <#--            TODO: сделать ссылку на картинку -->
-            <img src="/images/fff.jpg" id="post-image">
+            <img src="/uploads/post/fff.jpg" id="post-image">
 
             <div id="overlay">
                 <input type="file" id="image-upload" accept="image/*">

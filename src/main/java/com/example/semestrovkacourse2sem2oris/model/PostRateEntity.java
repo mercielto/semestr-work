@@ -4,13 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "rated_post")
+@Table(name = "post_rate")
 @Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RatedPostEntity {
+public class PostRateEntity {
 
     @Id
     @GeneratedValue

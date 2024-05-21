@@ -18,4 +18,8 @@ public class PostShortResponse {
     private String description;
     private PostStatus status;
     private String creatorComment;
+    private int editorsCount;
+    private int branchesCount;
+    private int readCount;
+    private float rating;
 }

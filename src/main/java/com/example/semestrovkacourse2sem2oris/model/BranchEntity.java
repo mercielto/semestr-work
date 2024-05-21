@@ -39,7 +39,7 @@ public class BranchEntity {
     private List<BranchCommentEntity> comments;
 
     @OrderBy("number ASC")
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "branch")
     @Builder.Default
     private List<ChapterEntity> chapters = new ArrayList<>();       // главы в ветке
 

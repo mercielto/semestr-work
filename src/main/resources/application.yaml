@@ -28,8 +28,6 @@ spring:
         suffix: .ftlh
         content-type: text/html
 
-
-
 logging:
     level:
         root: INFO

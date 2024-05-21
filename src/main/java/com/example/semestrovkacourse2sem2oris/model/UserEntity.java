@@ -32,7 +32,7 @@ public class UserEntity {
     private List<BranchCommentEntity> branchComments;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<RatedPostEntity> ratedPosts = new ArrayList<>();
+    private List<PostRateEntity> ratedPosts = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<BranchRateEntity> ratedBranches = new ArrayList<>();
@@ -57,11 +57,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
     private List<PostEntity> posts;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    }
-    )
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "followers",
             joinColumns = @JoinColumn(name = "follower_id"),
@@ -71,11 +67,12 @@ public class UserEntity {
 
     @ManyToMany(fetch = FetchType.LAZY,
             mappedBy = "followers",
-            cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
+            cascade = CascadeType.ALL)
     private List<UserEntity> following = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "readUsers", fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<PostEntity> readPosts = new ArrayList<>();
 
     public boolean isActive() {
         return active;

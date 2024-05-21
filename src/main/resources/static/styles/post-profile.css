@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.main-div {
+    width: 750px;
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.post-navigation {
+    position: fixed;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    top: 30%;
+}
+
+.post-navigation button {
+    padding: 8px 16px;
+    border: solid 0.5px;
+    border-radius: 5px;
+    color: black;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.post-navigation button:hover {
+    background-color: #fbc02d;
+    color: #fff;
+}
+
+.image-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+    margin: 40px auto;
+}
+
+.image-div img {
+    max-width: 150px;
+    border-radius: 10px;
+}
+
+.characteristics {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.characteristics p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #666;
+}
+
+#author-post-description,
+#author-comment {
+    text-align: left;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+
+.rating > input {
+    display: none;
+}
+
+.rating > label {
+    display: inline-block;
+    padding: 5px;
+    font-size: 24px;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.rating > input:checked ~ label {
+    color: #fdd835;
+}
+
+.rating-value {
+    font-size: 16px;
+    margin-left: 10px;
+    padding-top: 5px;
+}
+
+#select-viewed {
+    margin-bottom: 20px;
+}
