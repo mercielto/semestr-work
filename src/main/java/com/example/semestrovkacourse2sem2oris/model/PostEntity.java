@@ -2,6 +2,7 @@ package com.example.semestrovkacourse2sem2oris.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Formula;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,12 @@ public class PostEntity {
     @Builder.Default
     private List<PostRateEntity> postRates = new ArrayList<>();
 
+    @Formula("(SELECT COALESCE(avg(rate.rating), 0) FROM post_rate rate WHERE rate.post_id = post_id)")
+    private Float averageRating;
+
+    @Formula("(SELECT COALESCE(count(rate.rating), 0) FROM post_rate rate WHERE rate.post_id = post_id)")
+    private int ratesCount;
+
     private String description;         // для генерации картинки через api, если получится
     private String creatorComment;      // в целом, скакой целью и тд (все что угодно)
 
@@ -73,15 +80,4 @@ public class PostEntity {
     )
     @Builder.Default
     private List<UserEntity> readUsers = new ArrayList<>();
-
-    public float getAverageRating() {
-        if (postRates == null || postRates.isEmpty()) {
-            return 0;
-        }
-        float sum = 0;
-        for (PostRateEntity rate : postRates) {
-            sum += rate.getRating();
-        }
-        return sum / postRates.size();
-    }
 }

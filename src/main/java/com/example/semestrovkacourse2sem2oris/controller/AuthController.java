@@ -22,7 +22,6 @@ public class AuthController {
 
     @PostMapping("/sign-up")
     public RedirectView signUp(@ModelAttribute UserRegistrationRequest request) {
-        System.out.println("CREATION STARTED");
         if (!userService.check(request)) {
             return new RedirectView("/sign-up");
         }

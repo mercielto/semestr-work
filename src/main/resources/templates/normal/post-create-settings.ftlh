@@ -15,26 +15,26 @@
 <#--TODO: нормальную вставку картинки -->
 
 <form id="main-body" method="post">
-    <input type="text" id="title-input" placeholder="Title" value="<#if post.getTitle()??>${post.getTitle()}</#if>">
+    <input type="text" name="title" id="title-input" placeholder="Title" value="<#if post.getTitle()??>${post.getTitle()}</#if>">
 
     <div id="image-div">
         <div id="image-div-overlay-parent">
 <#--            TODO: сделать ссылку на картинку -->
             <img src="/uploads/post/fff.jpg" id="post-image">
-
+<#--            TODO: сделать загрузку изображеня + генерацию-->
             <div id="overlay">
                 <input type="file" id="image-upload" accept="image/*">
                 <button id="upload-button">Загрузить</button>
                 <button class="generate-btn">Сгенерировать</button>
             </div>
         </div>
-        <textarea id="description-textarea" placeholder="Описание текста"><#if post.getDescription()??>${post.getDescription()}</#if></textarea>
+        <textarea id="description-textarea" name="description" placeholder="Описание текста"><#if post.getDescription()??>${post.getDescription()}</#if></textarea>
     </div>
 
     <div id="universe-name">
         <p>Выберите название вселенной</p>
 
-        <input type="text" id="universeSearchInput" list="searchList" value="<#if post.getUniverse()??>${post.getUniverse()}</#if>">
+        <input type="text" id="universeSearchInput" name="universeName" list="searchList" value="<#if post.getUniverse()??>${post.getUniverse()}</#if>">
 
         <datalist id="searchList">
             <option value="Похожий запрос 1">
@@ -43,12 +43,12 @@
         </datalist>
     </div>
 
-    <textarea id="comment" placeholder="Комментарий автора"><#if post.getCreatorComment()??>${post.getCreatorComment()}</#if></textarea>
+    <textarea id="comment" name="creatorComment" placeholder="Комментарий автора"><#if post.getCreatorComment()??>${post.getCreatorComment()}</#if></textarea>
 
     <div id="private-div">
         <p>Приветность:</p>
 
-        <select id="privateList">
+        <select id="privateList" name="status">
             <option value="PRIVATE">Приватный</option>
             <option value="PUBLIC">Публичный, с свободным редактированием</option>
             <option value="PUBLIC_WITH_LIMITS">Публичный, с редактированием по приглашению</option>

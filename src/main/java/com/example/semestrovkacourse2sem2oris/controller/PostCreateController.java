@@ -52,7 +52,7 @@ public class PostCreateController {
 
     @GetMapping("/chapters/redir/{link}")
     public RedirectView chapters(@PathVariable("link") String link) {
-        BranchResponse response = branchService.getByPostLink(link);
+        BranchResponse response = branchService.getMainBranchByPostLink(link);
         return new RedirectView("/create/chapters/%s?branch=%s".formatted(link, response.getLink()));
     }
 

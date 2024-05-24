@@ -11,16 +11,17 @@ function loadMoreReviews() {
     }
 
     $.ajax({
-        url: `/branch/ajax/comments/${link}/${data['from']}/${data['count']}`,
+        url: `/post/comment/ajax/${link}/${data['from']}/${data['count']}`,
         type: "Get",
         contentType: "application/json",
         success: function(response) {
             console.log(response);
             if (response.length !== pageSize) {
                 removeLoadMoreButton();
+
             }
             renderReviews(response);
-            },
+        },
         error: function(xhr, status, error) {
             console.log("Error: " + status)
         }
@@ -39,7 +40,7 @@ reviewForm.addEventListener('submit', function(event) {
     let link = window.location.href.split("/").pop().split("?")[0];
 
     $.ajax({
-        url: "/branch/ajax/comment/" + link,
+        url: "/post/comment/ajax/" + link,
         type: "POST",
         data: JSON.stringify(data),
         contentType: "application/json",

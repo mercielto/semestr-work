@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Post profile</title>
     <link rel="stylesheet" href="/static/styles/post-profile.css">
+    <link rel="stylesheet" href="/static/styles/post-navigation.css">
 </head>
 <body>
 
@@ -54,12 +55,12 @@
 
     <div>
         <h4>Описание:</h4>
-        <p id="author-post-description">${post.getDescription()}</p>
+        <p id="author-post-description"><#if post.getDescription()??>${post.getDescription()}</#if></p>
     </div>
 
     <div>
         <h4>Комментарий:</h4>
-        <p id="author-comment">${post.getCreatorComment()}</p>
+        <p id="author-comment"><#if post.getCreatorComment()??>${post.getCreatorComment()}</#if></p>
     </div>
 </div>
 

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding-top: 70px; /* Adjusted for the fixed navbar */
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-name {
+            margin-right: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: transform 0.3s;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background-color: #444;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid #555;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #555;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        .main-div {
+            width: 750px;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .post-navigation {
+            position: fixed;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            top: 30%;
+        }
+
+        .post-navigation button {
+            padding: 8px 16px;
+            border: solid 0.5px;
+            border-radius: 5px;
+            color: black;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .post-navigation button:hover {
+            background-color: #fbc02d;
+            color: #fff;
+        }
+
+        .image-div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 100px;
+            margin: 40px auto;
+        }
+
+        .image-div img {
+            max-width: 150px;
+            border-radius: 10px;
+        }
+
+        .characteristics {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .characteristics p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #666;
+        }
+
+        #author-post-description,
+        #author-comment {
+            text-align: left;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            margin-bottom: 20px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            unicode-bidi: bidi-override;
+            direction: rtl;
+        }
+
+        .rating > input {
+            display: none;
+        }
+
+        .rating > label {
+            display: inline-block;
+            padding: 5px;
+            font-size: 24px;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .rating > input:checked ~ label {
+            color: #fdd835;
+        }
+
+        .rating-value {
+            font-size: 16px;
+            margin-left: 10px;
+            padding-top: 5px;
+        }
+
+        .select-viewed {
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="navbar-brand">
+        <a href="#">My Website</a>
+    </div>
+    <div class="navbar-user">
+        <img src="/static/images/user-avatar.jpg" alt="User Avatar" class="user-avatar">
+        <span class="user-name" id="userName">John Doe</span>
+        <div class="dropdown">
+            <button class="dropdown-toggle" id="dropdownToggle">
+                ▼
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="#">My Posts</a>
+                <a href="#">Settings</a>
+                <a href="#">Logout</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="main-div">
+    <!-- Existing content from your provided HTML goes here -->
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dropdownToggle = document.getElementById('dropdownToggle');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const userName = document.getElementById('userName');
+
+        dropdownToggle.addEventListener('click', function () {
+            dropdownMenu.classList.toggle('show');
+            dropdownToggle.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function (event) {
+            if (!dropdownMenu.contains(event.target) && !dropdownToggle.contains(event.target) && !userName.contains(event.target)) {
+                dropdownMenu.classList.remove('show');
+                dropdownToggle.classList.remove('active');
+            }
+        });
+
+        const stars = document.querySelectorAll('.rating input[type="radio"]');
+
+        stars.forEach(function (star) {
+            star.addEventListener('click', function () {
+                const clickedStarValue = parseInt(this.value);
+
+                // Отправка данных
+                fetch('/submit-rating', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ rating: clickedStarValue }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
+
+        const viewedSelect = document.getElementById('viewed');
+
+        viewedSelect.addEventListener('change', function () {
+            const selectedValue = viewedSelect.value;
+
+            // Disable the select box while waiting for the response
+            viewedSelect.disabled = true;
+
+            // Отправка данных
+            fetch('/update-viewed-status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: selectedValue }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    // Re-enable the select box
+                    viewedSelect.disabled = false;
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    // Re-enable the select box even if there's an error
+                    viewedSelect.disabled = false;
+                });
+        });
+    });
+
+</script>
+</body>
+</html>

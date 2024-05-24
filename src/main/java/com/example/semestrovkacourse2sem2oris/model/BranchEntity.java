@@ -2,6 +2,7 @@ package com.example.semestrovkacourse2sem2oris.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Formula;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,9 @@ public class BranchEntity {
     private boolean main;
     private String description;
 
+    @Builder.Default
+    private boolean published = false;
+
     @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BranchRateEntity> branchRates = new ArrayList<>();
 
@@ -43,16 +47,11 @@ public class BranchEntity {
     @Builder.Default
     private List<ChapterEntity> chapters = new ArrayList<>();       // главы в ветке
 
-    public float getAverageRating() {
-        if (branchRates == null || branchRates.isEmpty()) {
-            return 0;
-        }
-        float sum = 0;
-        for (BranchRateEntity rate : branchRates) {
-            sum += rate.getRating();
-        }
-        return sum / branchRates.size();
-    }
+    @Formula("(SELECT COALESCE(avg(rate.rating), 0) FROM branch_rate rate WHERE rate.branch_id = branch_id)")
+    private Float averageRating;
+
+    @Formula("(SELECT COALESCE(count(rate.rating), 0) FROM branch_rate rate WHERE rate.branch_id = branch_id)")
+    private int ratesCount;
 }
 
 

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 
+// TODO: убрать, использовать boot
 @Configuration
 public class LiquibaseConfig {
 

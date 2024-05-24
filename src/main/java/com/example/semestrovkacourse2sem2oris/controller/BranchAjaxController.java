@@ -3,6 +3,8 @@ package com.example.semestrovkacourse2sem2oris.controller;
 import com.example.semestrovkacourse2sem2oris.dto.request.BranchCommentRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.BranchRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.BranchCommentResponse;
+import com.example.semestrovkacourse2sem2oris.dto.response.BranchUserShortResponse;
+import com.example.semestrovkacourse2sem2oris.model.SortType;
 import com.example.semestrovkacourse2sem2oris.service.BranchCommentService;
 import com.example.semestrovkacourse2sem2oris.service.BranchService;
 import lombok.RequiredArgsConstructor;
@@ -35,5 +37,13 @@ public class BranchAjaxController {
     public void putChanges(@RequestBody BranchRequest request,
                            @PathVariable("link") String link) {
         branchService.update(link, request);
+    }
+
+    @GetMapping("/{link}")
+    public List<BranchUserShortResponse> getBranches(@PathVariable("link") String link,
+                                                     @RequestParam("from") Integer from,
+                                                     @RequestParam("count") Integer count,
+                                                     @RequestParam("sort") String sort) {
+        return branchService.getPublishedUserShortByPostLinkWithPagination(link, from, count, SortType.valueOf(sort));
     }
 }

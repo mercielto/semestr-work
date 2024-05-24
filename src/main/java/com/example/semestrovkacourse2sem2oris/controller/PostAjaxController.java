@@ -1,12 +1,15 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
+import com.example.semestrovkacourse2sem2oris.dto.request.PostCommentRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.PostRateRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.PostReadRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.PostRequest;
+import com.example.semestrovkacourse2sem2oris.dto.response.PostCommentResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostResponse;
 import com.example.semestrovkacourse2sem2oris.model.PostEntity;
 import com.example.semestrovkacourse2sem2oris.model.UserEntity;
 import com.example.semestrovkacourse2sem2oris.service.ChapterService;
+import com.example.semestrovkacourse2sem2oris.service.PostCommentService;
 import com.example.semestrovkacourse2sem2oris.service.PostRateService;
 import com.example.semestrovkacourse2sem2oris.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post/ajax")
@@ -22,6 +27,7 @@ public class PostAjaxController {
 
     private final PostService postService;
     private final PostRateService postRateService;
+    private final PostCommentService postCommentService;
 
     @GetMapping("/settings/{link}")
     public String settings(@PathVariable("link") String link,

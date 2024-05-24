@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post profile</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    .navbar {
+      width: 100%;
+      background-color: #4A90E2;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand a {
+      color: white;
+      text-decoration: none;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .navbar-user {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .user-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .user-name {
+      margin-right: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-toggle {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      transition: transform 0.3s;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 45px;
+      right: 0;
+      background-color: #4A90E2;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 20px;
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px solid #367BB5;
+      transition: background-color 0.3s;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #367BB5;
+    }
+
+    .dropdown-menu a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-menu.show {
+      display: block;
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .hero {
+      background-color: #4A90E2;
+      color: #fff;
+      text-align: center;
+      padding: 100px 20px;
+      margin-top: 80px;
+    }
+
+    .hero h1 {
+      font-size: 52px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 24px;
+      margin-bottom: 40px;
+    }
+
+    .btn-primary {
+      background-color: #367BB5;
+      color: #fff;
+      padding: 15px 30px;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .btn-primary:hover {
+      background-color: #2B6AA1;
+      transform: scale(1.05);
+    }
+
+    .main-div {
+      width: 750px;
+      text-align: center;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 50px;
+    }
+
+    .post-navigation {
+      position: fixed;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      top: 30%;
+    }
+
+    .post-navigation button {
+      padding: 8px 16px;
+      border: solid 0.5px;
+      border-radius: 5px;
+      color: black;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .post-navigation button:hover {
+      background-color: #fbc02d;
+      color: #fff;
+    }
+
+    .image-div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 100px;
+      margin: 40px auto;
+    }
+
+    .image-div img {
+      max-width: 150px;
+      border-radius: 10px;
+    }
+
+    .characteristics {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .characteristics p {
+      margin: 5px 0;
+      font-size: 16px;
+      color: #666;
+    }
+
+    #author-post-description,
+    #author-comment {
+      text-align: left;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      background-color: #f9f9f9;
+      margin-bottom: 20px;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      unicode-bidi: bidi-override;
+      direction: rtl;
+    }
+
+    .rating > input {
+      display: none;
+    }
+
+    .rating > label {
+      display: inline-block;
+      padding: 5px;
+      font-size: 24px;
+      color: #ddd;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .rating > input:checked ~ label {
+      color: #fdd835;
+    }
+
+    .rating-value {
+      font-size: 16px;
+      margin-left: 10px;
+      padding-top: 5px;
+    }
+
+    .select-viewed {
+      margin-bottom: 20px;
+    }
+
+    .footer {
+      background-color: #4A90E2;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-brand">
+    <a href="#">StoryBranch</a>
+  </div>
+  <div class="navbar-user">
+    <img src="/static/images/user-avatar.jpg" alt="User Avatar" class="user-avatar">
+    <span class="user-name" id="userName">John Doe</span>
+    <div class="dropdown">
+      <button class="dropdown-toggle" id="dropdownToggle">
+        ▼
+      </button>
+      <div class="dropdown-menu" id="dropdownMenu">
+        <a href="#">My Stories</a>
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <h1>Welcome to StoryBranch</h1>
+  <p>Create and explore branching stories with endless possibilities.</p>
+  <a href="#features" class="btn-primary">Learn More</a>
+</header>
+
+<div class="main-div">
+
+  <h3>Title name</h3>
+
+  <div class="post-navigation">
+    <button id="post-overview">Обзор</button>
+    <button id="post-read">Читать</button>
+    <button id="post-vote">Голосование</button>
+    <button id="post-feedbacks">Отзывы</button>
+  </div>
+
+  <div class="image-div">
+    <img src="/static/images/1183669.png" alt="Изображение">
+    <div class="characteristics">
+      <p>Количество веток: 102</p>
+      <p>Количество редакторов: 1203</p>
+      <p>Прочитано: 102313</p>
+      <p>Создатель: @creator</p>
+      <p>Название вселенной: лохотрон</p>
+    </div>
+  </div>
+
+  <div class="rating">
+    <div class="rating-value">10.0</div>
+    <input type="radio" id="star10" name="rating" value="10" />
+    <label for="star10">☆</label>
+    <input type="radio" id="star9" name="rating" value="9" />
+    <label for="star9">☆</label>
+    <input type="radio" id="star8" name="rating" value="8" />
+    <label for="star8">☆</label>
+    <input type="radio" id="star7" name="rating" value="7" />
+    <label for="star7">☆</label>
+    <input type="radio" id="star6" name="rating" value="6" />
+    <label for="star6">☆</label>
+    <input type="radio" id="star5" name="rating" value="5" />
+    <label for="star5">☆</label>
+    <input type="radio" id="star4" name="rating" value="4" />
+    <label for="star4">☆</label>
+    <input type="radio" id="star3" name="rating" value="3" />
+    <label for="star3">☆</label>
+    <input type="radio" id="star2" name="rating" value="2" />
+    <label for="star2">☆</label>
+    <input type="radio" id="star1" name="rating" value="1" />
+    <label for="star1">☆</label>
+  </div>
+
+  <div class="select-viewed">
+    <label for="viewed">Отметка о просмотре:</label>
+    <select id="viewed">
+      <option value="viewed">Просмотрено</option>
+      <option value="not-viewed">Не просмотрено</option>
+    </select>
+  </div>
+
+  <div>
+    <h4>Описание:</h4>
+    <p id="author-post-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  </div>
+
+  <div>
+    <h4>Комментарий:</h4>
+    <p id="author-comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  </div>
+</div>
+
+<footer class="footer">
+  <p>&copy; 2024 StoryBranch. All rights reserved.</p>
+</footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const dropdownToggle = document.getElementById('dropdownToggle');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    dropdownToggle.addEventListener('click', function() {
+      dropdownMenu.classList.toggle('show');
+    });
+
+    window.addEventListener('click', function(event) {
+      if (!event.target.matches('.dropdown-toggle')) {
+        const dropdowns = document.getElementsByClassName('dropdown-menu');
+        for (let i = 0; i < dropdowns.length; i++) {
+          const dropdown = dropdowns[i];
+          if (dropdown.classList.contains('show')) {
+            dropdown.classList.remove('show');
+          }
+        }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
+

@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Reviews</title>
     <link rel="stylesheet" href="/styles/branch-comments.css">
-    <link rel="stylesheet" href="/styles/post-create-navigation.css">
+    <link rel="stylesheet" href="/styles/post-navigation.css">
 </head>
 <body>
 
-<div id="settings-body">
-    <button id="overview-btn">Обзор</button>
-    <button id="read-btn">Читать</button>
-    <button id="comments-btn">Отзывы</button>
+<div class="post-navigation">
+    <button id="post-overview">Обзор</button>
+    <button id="post-read">Читать</button>
+    <button id="post-vote">Голосование</button>
+    <button id="post-feedbacks">Отзывы</button>
 </div>
 
 <div id="body">
@@ -61,8 +62,8 @@
 </div>
 
 <script src="/scripts/jquery-3.6.0.min.js"></script>
-<script src="/scripts/branch-navigation.js"></script>
+<script src="/scripts/post-navigation.js"></script>
 <script src="/scripts/comments-default.js"></script>
-<script src="/scripts/branch-comments.js"></script>
+<script src="/scripts/post-comments.js"></script>
 </body>
 </html>

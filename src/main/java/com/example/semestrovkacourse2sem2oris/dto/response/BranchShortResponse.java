@@ -19,4 +19,5 @@ public class BranchShortResponse {
     private boolean main;
     private String description;
     private float rating;
+    private int votersCount;
 }

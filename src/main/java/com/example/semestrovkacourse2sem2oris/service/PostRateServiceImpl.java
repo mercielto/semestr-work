@@ -1,7 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.service;
 
 import com.example.semestrovkacourse2sem2oris.dto.request.PostRateRequest;
-import com.example.semestrovkacourse2sem2oris.model.BranchRateEntity;
 import com.example.semestrovkacourse2sem2oris.model.PostEntity;
 import com.example.semestrovkacourse2sem2oris.model.PostRateEntity;
 import com.example.semestrovkacourse2sem2oris.model.UserEntity;

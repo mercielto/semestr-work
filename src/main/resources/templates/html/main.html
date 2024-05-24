@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>StoryBranch</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #1f1f1f;
+      color: #f0f2f5;
+    }
+
+    .navbar {
+      width: 100%;
+      background-color: #111;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand a {
+      color: white;
+      text-decoration: none;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .navbar-user {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .user-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .user-name {
+      margin-right: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #f0f2f5;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-toggle {
+      background: none;
+      border: none;
+      color: #f0f2f5;
+      cursor: pointer;
+      font-size: 16px;
+      transition: transform 0.3s;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 45px;
+      right: 0;
+      background-color: #111;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 20px;
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px solid #333;
+      transition: background-color 0.3s;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #333;
+    }
+
+    .dropdown-menu a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-menu.show {
+      display: block;
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .hero {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 100px 20px;
+      margin-top: 80px;
+    }
+
+    .hero h1 {
+      font-size: 52px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 24px;
+      margin-bottom: 40px;
+    }
+
+    .btn-primary {
+      background-color: #0059b3;
+      color: #fff;
+      padding: 15px 30px;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .btn-primary:hover {
+      background-color: #004080;
+      transform: scale(1.05);
+    }
+
+    .features {
+      display: flex;
+      justify-content: space-around;
+      padding: 80px 20px;
+      background-color: #111;
+      text-align: center;
+    }
+
+    .feature {
+      width: 30%;
+    }
+
+    .feature i {
+      font-size: 60px;
+      color: #0099cc;
+      margin-bottom: 20px;
+    }
+
+    .feature h2 {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    .feature p {
+      font-size: 18px;
+      color: #ccc;
+    }
+
+    .cta {
+      background-color: #0059b3;
+      color: #fff;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .cta h2 {
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
+
+    .cta p {
+      font-size: 22px;
+      margin-bottom: 40px;
+    }
+
+    .btn-secondary {
+      background-color: #0066cc;
+      color: #fff;
+      padding: 15px 30px;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .btn-secondary:hover {
+      background-color: #004080;
+      transform: scale(1.05);
+    }
+
+    .footer {
+      background-color: #111;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .hero {
+      background-image: url('/static/images/samuraj_voin_siluet_216195_2560x1600.jpg');
+      background-size: cover; /* Подогнать изображение по размеру */
+      background-position: center; /* Выравнивание изображения по центру */
+      background-repeat: no-repeat; /* Запретить повторение изображения */
+      color: #fff; /* Цвет текста для контраста */
+      text-align: center; /* Выравнивание текста по центру */
+      padding: 100px 20px; /* Отступы */
+    }
+
+    .hero h1,
+    .hero p,
+    .hero a {
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8); /* Тень для текста */
+    }
+
+
+  </style>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-brand">
+    <a href="#">StoryBranch</a>
+  </div>
+  <div class="navbar-user">
+    <img src="/static/images/user-avatar.jpg" alt="User Avatar" class="user-avatar">
+    <span class="user-name" id="userName">John Doe</span>
+    <div class="dropdown">
+      <button class="dropdown-toggle" id="dropdownToggle">
+        ▼
+      </button>
+      <div class="dropdown-menu" id="dropdownMenu">
+        <a href="#">My Stories</a>
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <h1>Welcome to StoryBranch</h1>
+  <p>Create and explore branching stories with endless possibilities.</p>
+  <a href="#features" class="btn-primary">Learn More</a>
+</header>
+
+
+<section id="features" class="features">
+  <div class="feature">
+    <i class="fas fa-pencil-alt"></i>
+    <h2>Create</h2>
+    <p>Write your own stories and let others branch off from your chapters.</p>
+  </div>
+  <div class="feature">
+    <i class="fas fa-code-branch"></i>
+    <h2>Branch</h2>
+    <p>Explore different storylines and see where your imagination takes you.</p>
+  </div>
+  <div class="feature">
+    <i class="fas fa-users"></i>
+    <h2>Collaborate</h2>
+    <p>Work with other authors to create unique and engaging stories.</p>
+  </div>
+</section>
+
+<!--<section class="cta">-->
+<!--  <h2>Start Your Adventure</h2>-->
+<!--  <p>Join our community of writers and readers today!</p>-->
+<!--  <a href="#" class="btn-secondary">Get Started</a>-->
+<!--</section>-->
+
+<footer class="footer">
+  <p>&copy; 2024 StoryBranch. All rights reserved.</p>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const dropdownToggle = document.getElementById('dropdownToggle');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    const userName = document.getElementById('userName');
+
+    dropdownToggle.addEventListener('click', function () {
+      dropdownMenu.classList.toggle('show');
+      dropdownToggle.classList.toggle('active');
+    });
+
+    document.addEventListener('click', function (event) {
+      if (!dropdownMenu.contains(event.target) && !dropdownToggle.contains(event.target) && !userName.contains(event.target)) {
+        dropdownMenu.classList.remove('show');
+        dropdownToggle.classList.remove('active');
+      }
+    });
+  });
+
+</script>
+</body>
+</html>
+
