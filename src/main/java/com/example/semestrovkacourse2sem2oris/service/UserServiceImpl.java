@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
         String contentType = file.getContentType();
 
         if (contentType == null) {
-            throw new MultipartHasNoMimeType(file.getOriginalFilename());
+            throw new MultipartHasNoMimeTypeException(file.getOriginalFilename());
         }
 
         String[] splitContentType = contentType.split("/");

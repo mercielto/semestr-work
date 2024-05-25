@@ -2,9 +2,11 @@ package com.example.semestrovkacourse2sem2oris.service;
 
 import com.example.semestrovkacourse2sem2oris.dto.request.PostReadRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.PostRequest;
+import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostShortResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostUserShortResponse;
+import com.example.semestrovkacourse2sem2oris.exception.BranchNotFoundException;
 import com.example.semestrovkacourse2sem2oris.exception.PostNotFoundException;
 import com.example.semestrovkacourse2sem2oris.exception.PostReadStatusNotFoundException;
 import com.example.semestrovkacourse2sem2oris.mapper.PostMapper;
@@ -18,6 +20,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.management.AttributeNotFoundException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -145,5 +150,20 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostUserShortResponse getUserShortByLink(String link) {
         return mapper.toPostUserShortResponse(getEntityByLink(link), this);
+    }
+
+    @Override
+    public Map<Integer, List<ChapterResponse>> getOrderedContentByPostLinkAndBranchLink(String postLink, String branchLink) {
+        PostEntity post = getEntityByLink(postLink);
+        BranchEntity branch = branchService.getEntityByLink(branchLink);
+
+        // TODO: проверить
+        if (!post.getBranches().contains(branch)) {
+            throw new BranchNotFoundException(branchLink);
+        }
+
+        Map<Integer, List<ChapterResponse>> content = new HashMap<>();
+        chapterService.getAllChaptersRecursively(content, branch);
+        return content;
     }
 }

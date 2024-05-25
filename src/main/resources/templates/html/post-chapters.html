@@ -102,6 +102,25 @@
       text-align: center;
       margin-bottom: 3rem;
     }
+
+    #chapter-number-input {
+      margin-top: 10px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      width: calc(100% - 18px);
+    }
+
+    #create-branch-button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
   </style>
 </head>
 <body>
@@ -135,7 +154,12 @@
       <span class="chapter">Глава 4:</span> Conclusion
     </li>
   </ul>
+
+  <input id="chapter-number-input" type="number" min="1" max="4" placeholder="Номер главы">
+  <button id="create-branch-button">Создать новую ветку</button>
 </div>
+
+
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
@@ -146,6 +170,17 @@
         const dropdown = this.nextElementSibling;
         dropdown.classList.toggle("show");
       });
+    });
+
+    const chapterNumberInput = document.getElementById("chapter-number-input");
+    chapterNumberInput.addEventListener("input", function() {
+      const value = parseInt(this.value);
+      const maxChapterNumber = document.querySelectorAll(".contents .chapter").length;
+      if (value < 1 || value > maxChapterNumber) {
+        // Если введенное число меньше 1 или больше максимального номера главы,
+        // обнуляем значение поля ввода
+        this.value = "";
+      }
     });
   });
 </script>

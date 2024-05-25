@@ -20,10 +20,17 @@ public class BranchEntity {
     @GeneratedValue
     private Long branchId;
     // TODO: сделать проверку на доступ пользователям, не являющимся создателями
-    private String name;
+    @Builder.Default
+    private String name = "Default";
     private String link;
-    private boolean main;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_branch_id")
+    private BranchEntity parentBranch;
+
+    @OneToMany(mappedBy = "parentBranch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<BranchEntity> descendants;
 
     @Builder.Default
     private boolean published = false;
@@ -48,10 +55,16 @@ public class BranchEntity {
     private List<ChapterEntity> chapters = new ArrayList<>();       // главы в ветке
 
     @Formula("(SELECT COALESCE(avg(rate.rating), 0) FROM branch_rate rate WHERE rate.branch_id = branch_id)")
-    private Float averageRating;
+    @Builder.Default
+    private Float averageRating = 0.0F;
 
     @Formula("(SELECT COALESCE(count(rate.rating), 0) FROM branch_rate rate WHERE rate.branch_id = branch_id)")
-    private int ratesCount;
+    @Builder.Default
+    private int ratesCount = 0;
+
+    public boolean isMain() {
+        return parentBranch == null;
+    }
 }
 
 

@@ -1,10 +1,12 @@
 package com.example.semestrovkacourse2sem2oris.service;
 
-import com.example.semestrovkacourse2sem2oris.dto.request.BranchRateRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.ChapterRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
 import com.example.semestrovkacourse2sem2oris.model.BranchEntity;
 import com.example.semestrovkacourse2sem2oris.model.ChapterEntity;
+
+import java.util.List;
+import java.util.Map;
 
 public interface ChapterService {
 
@@ -23,4 +25,12 @@ public interface ChapterService {
     void deleteChapter(String chapterLink);
 
     ChapterEntity create(BranchEntity branch);
+
+    ChapterEntity create(BranchEntity branch, Integer number);
+
+    ChapterEntity getFirstChapter(BranchEntity branch);
+
+    void addChaptersFromOneEnd(Map<Integer, List<ChapterResponse>> content, BranchEntity branch);
+
+    void getAllChaptersRecursively(Map<Integer, List<ChapterResponse>> content, BranchEntity branch);
 }

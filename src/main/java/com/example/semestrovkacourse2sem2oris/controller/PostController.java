@@ -12,8 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -52,5 +55,22 @@ public class PostController {
                         link, 0, 5, SortType.AVERAGE_RATING_DESC);
         model.addAttribute("branchesUser", branches);
         return "normal/post-vote";
+    }
+
+    @GetMapping("/read/{link}")
+    public String getContent(@PathVariable("link") String postLink,
+                             @RequestParam(value = "branch") String branchLink,
+                             Model model) {
+
+        Map<Integer, List<ChapterResponse>> content =
+                postService.getOrderedContentByPostLinkAndBranchLink(postLink, branchLink);
+        model.addAttribute("chapters", content);
+        return "normal/post-chapters";
+    }
+
+    @GetMapping("/read/main/{link}")
+    public RedirectView redirectToMainBranch(@PathVariable("link") String postLink) {
+        BranchResponse branch = branchService.getMainBranchByPostLink(postLink);
+        return new RedirectView("/post/read/%s?branch=%s".formatted(postLink, branch.getLink()));
     }
 }

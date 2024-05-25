@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    text-align: left;
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 3rem auto 0;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.contents {
+    list-style: none;
+    padding: 0;
+}
+
+.contents li {
+    margin-bottom: 10px;
+}
+
+.chapter {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.chapter-select {
+    border: none;
+    background: none;
+    font-size: inherit;
+    font-family: inherit;
+    appearance: auto;
+    position: relative;
+}
+
+.chapter-select option {
+    font-size: inherit;
+    font-family: inherit;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #666;
+}
+
+a:focus {
+    outline: none
+}
+
+a:active {
+    transform: translateY(1px);
+}
+
+
+
+.post-navigation {
+    position: fixed;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    top: 30%;
+}
+
+.post-navigation button {
+    padding: 8px 16px;
+    border: solid 0.5px;
+    border-radius: 5px;
+    color: black;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.post-navigation button:hover {
+    background-color: #fbc02d;
+    color: #fff;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+#chapter-number-input {
+    margin-top: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: calc(100% - 18px);
+}
+
+#create-branch-button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}

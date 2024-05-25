@@ -87,14 +87,4 @@ public class PostCreateController {
         model.addAttribute("post", postShortResponse);
         return "normal/post-create-chapter-add-edit";
     }
-
-    @GetMapping("/branch/profile/{link}")
-    public String getBranchProfile(@PathVariable("link") String link,
-                                   Model model) {
-        BranchShortResponse response = branchService.getShortByLink(link);
-        Integer rate = branchRateService.getCurrentUserRate(link);
-        model.addAttribute("branch", response);
-        model.addAttribute("rating", rate);
-        return "normal/post-create-branch-profile";
-    }
 }

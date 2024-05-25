@@ -1,17 +1,16 @@
 package com.example.semestrovkacourse2sem2oris.service;
 
-import com.example.semestrovkacourse2sem2oris.dto.request.BranchRateRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.ChapterRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
 import com.example.semestrovkacourse2sem2oris.exception.BranchNotFoundException;
 import com.example.semestrovkacourse2sem2oris.exception.ChapterNotFoundException;
-import com.example.semestrovkacourse2sem2oris.exception.CouldNotSaveChapterOnDisk;
+import com.example.semestrovkacourse2sem2oris.exception.CouldNotSaveChapterOnDiskException;
+import com.example.semestrovkacourse2sem2oris.exception.NotFoundServiceException;
 import com.example.semestrovkacourse2sem2oris.mapper.ChapterMapper;
 import com.example.semestrovkacourse2sem2oris.model.BranchEntity;
 import com.example.semestrovkacourse2sem2oris.model.ChapterEntity;
 import com.example.semestrovkacourse2sem2oris.model.PostEntity;
 import com.example.semestrovkacourse2sem2oris.model.UserEntity;
-import com.example.semestrovkacourse2sem2oris.repository.BranchRateRepository;
 import com.example.semestrovkacourse2sem2oris.repository.BranchRepository;
 import com.example.semestrovkacourse2sem2oris.repository.ChapterRepository;
 import com.example.semestrovkacourse2sem2oris.util.CustomFileWorker;
@@ -21,9 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -80,7 +77,7 @@ public class ChapterServiceImpl implements ChapterService {
         try {
             fileWorker.save(filePath, text);
         } catch (IOException e) {
-            throw new CouldNotSaveChapterOnDisk(generateFilePath(chapterEntity));
+            throw new CouldNotSaveChapterOnDiskException(generateFilePath(chapterEntity));
         }
     }
 
@@ -137,5 +134,93 @@ public class ChapterServiceImpl implements ChapterService {
                 .build();
         chapterRepository.save(chapter);
         return chapter;
+    }
+
+    @Override
+    public ChapterEntity create(BranchEntity branch, Integer number) {
+        ChapterEntity chapter = ChapterEntity.builder()
+                .branch(branch)
+                .number(number)
+                .title("Default")
+                .link(linkGenerator.generateLink())
+                .build();
+        chapterRepository.save(chapter);
+        return chapter;
+    }
+
+    @Override
+    public ChapterEntity getFirstChapter(BranchEntity branch) {
+        return chapterRepository.findFirstByBranchOrderByNumberAsc(branch).orElseThrow(
+                () -> new ChapterNotFoundException("Branch link: <%s>".formatted(branch.getLink()))
+        );
+    }
+
+    @Override
+    public void addChaptersFromOneEnd(Map<Integer, List<ChapterResponse>> content, BranchEntity branch) {
+        // добавляем главы ветки
+        for (ChapterEntity chapter : branch.getChapters()) {
+            List<ChapterResponse> chapters = new ArrayList<>();
+            chapters.add(mapper.toResponse(chapter));
+            content.put(chapter.getNumber(), chapters);
+        }
+
+        // добавляем ветвления
+        for (BranchEntity descendant : branch.getDescendants()) {
+            ChapterEntity additionalChapter = getFirstChapter(descendant);
+            content.get(additionalChapter.getNumber()).add(mapper.toResponse(additionalChapter));
+        }
+    }
+
+
+    // рекурсия идет с хвоста
+    @Override
+    public void getAllChaptersRecursively(Map<Integer, List<ChapterResponse>> content, BranchEntity branch) {
+
+        if (content.size() == 0) {
+            addChaptersFromOneEnd(content, branch);
+        } else {
+
+            // добавляем от начала ветки до первого значения в content
+            ChapterEntity firstChapter = getFirstChapter(branch);
+            Integer start = firstChapter.getNumber();
+            Integer end = content.keySet().stream().min(Integer::compareTo).orElseThrow(
+                    () -> new NotFoundServiceException("Min value of key set not found to fill content Map"));
+
+            List<ChapterEntity> branchChapters = branch.getChapters();
+            for (int i = start; i < end; i++) {
+                ChapterEntity chapter = branchChapters.get(i - start);
+
+                List<ChapterResponse> chapters = new ArrayList<>();
+                chapters.add(mapper.toResponse(chapter));
+
+                content.put(chapter.getNumber(), chapters);
+            }
+
+            // end уже должен содержаться в content
+            ChapterEntity chapter = branchChapters.get(end - start);
+            content.get(end).add(mapper.toResponse(chapter));
+
+            // добавляем ветвления (включаем в диапазон end, чтобы можно было увидеть другие ветвления с этой главы)
+            for (BranchEntity descendant : branch.getDescendants()) {
+                ChapterEntity additionalChapter = getFirstChapter(descendant);
+                Integer additionalChapterNumber = additionalChapter.getNumber();
+
+                if (additionalChapterNumber >= start && additionalChapterNumber <= end) {
+                    ChapterResponse response = mapper.toResponse(additionalChapter);
+                    List<ChapterResponse> chapterResponses = content.get(additionalChapter.getNumber());
+
+                    if (!chapterResponses.contains(response)) {
+                        chapterResponses.add(response);
+                    }
+                }
+            }
+        }
+
+        BranchEntity parentBranch = branch.getParentBranch();
+        if (parentBranch == null) {
+            return;
+        }
+
+        getAllChaptersRecursively(content, parentBranch);
     }
 }

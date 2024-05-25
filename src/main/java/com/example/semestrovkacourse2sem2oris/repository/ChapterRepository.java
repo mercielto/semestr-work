@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.repository;
 
+import com.example.semestrovkacourse2sem2oris.model.BranchEntity;
 import com.example.semestrovkacourse2sem2oris.model.ChapterEntity;
 import com.example.semestrovkacourse2sem2oris.model.PostEntity;
 import jakarta.transaction.Transactional;
@@ -25,4 +26,6 @@ public interface ChapterRepository extends JpaRepository<ChapterEntity, Long> {
     @Transactional
     @Query("update ChapterEntity c set c.number = c.number - 1 where c.id != :id and c.number >= :addedNumber")
     void decreaseNumber(@Param("id")Long id, @Param("addedNumber") Integer number);
+
+    Optional<ChapterEntity> findFirstByBranchOrderByNumberAsc(BranchEntity branch);
 }

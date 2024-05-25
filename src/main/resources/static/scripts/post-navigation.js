@@ -11,7 +11,7 @@ const link = window.location.href.split("/").pop().split("?")[0];
 
 const buttonLinks = {
     'post-overview': '/post/profile/' + link,
-    'post-read': '/post/read/' + link,
+    'post-read': '/post/read/main/' + link,
     'post-vote': '/post/vote/' + link,
     'post-feedbacks': '/post/comments/' + link
 };

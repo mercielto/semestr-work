@@ -25,4 +25,5 @@ public class ChapterController {
         PostShortResponse response = postService.getShortByBranchLink(branchLink);
         return new RedirectView("/post/create/chapters/%s?branch=%s".formatted(response.getWebLink(), branchLink));
     }
+    
 }

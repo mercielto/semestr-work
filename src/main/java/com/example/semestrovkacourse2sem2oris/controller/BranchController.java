@@ -1,6 +1,7 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
 import com.example.semestrovkacourse2sem2oris.dto.response.BranchCommentResponse;
+import com.example.semestrovkacourse2sem2oris.dto.response.BranchResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.BranchShortResponse;
 import com.example.semestrovkacourse2sem2oris.service.BranchCommentService;
 import com.example.semestrovkacourse2sem2oris.service.BranchRateService;
@@ -11,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -40,5 +43,23 @@ public class BranchController {
                 branchCommentService.getByBranchLinkWithPagination(link, 0, 5);
         model.addAttribute("comments", comments);
         return "normal/branch-comments";
+    }
+
+
+    @GetMapping("/create/profile/{link}")
+    public String getBranchProfile(@PathVariable("link") String link,
+                                   Model model) {
+        BranchShortResponse response = branchService.getShortByLink(link);
+        Integer rate = branchRateService.getCurrentUserRate(link);
+        model.addAttribute("branch", response);
+        model.addAttribute("rating", rate);
+        return "normal/post-create-branch-profile";
+    }
+
+    @GetMapping("/create/profile")
+    public RedirectView createBranch(@RequestParam("branchLink") String link,
+                                     @RequestParam("number") Integer number) {
+        BranchResponse response = branchService.createByBranchLink(link, number);
+        return new RedirectView("/branch/create/profile/%s".formatted(response.getLink()));
     }
 }

@@ -2,6 +2,7 @@ package com.example.semestrovkacourse2sem2oris.service;
 
 import com.example.semestrovkacourse2sem2oris.dto.request.PostReadRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.PostRequest;
+import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostShortResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostUserShortResponse;
@@ -10,6 +11,8 @@ import com.example.semestrovkacourse2sem2oris.model.PostReadStatus;
 import jakarta.servlet.http.HttpSession;
 
 import javax.management.AttributeNotFoundException;
+import java.util.List;
+import java.util.Map;
 
 public interface PostService {
 
@@ -40,4 +43,6 @@ public interface PostService {
     PostReadStatus isCurrentUserRead(PostEntity entity);
 
     PostUserShortResponse getUserShortByLink(String link);
+
+    Map<Integer, List<ChapterResponse>> getOrderedContentByPostLinkAndBranchLink(String postLink, String branchLink);
 }

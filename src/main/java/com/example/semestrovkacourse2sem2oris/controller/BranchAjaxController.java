@@ -4,13 +4,16 @@ import com.example.semestrovkacourse2sem2oris.dto.request.BranchCommentRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.BranchRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.BranchCommentResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.BranchUserShortResponse;
+import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
 import com.example.semestrovkacourse2sem2oris.model.SortType;
 import com.example.semestrovkacourse2sem2oris.service.BranchCommentService;
 import com.example.semestrovkacourse2sem2oris.service.BranchService;
+import com.example.semestrovkacourse2sem2oris.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/branch/ajax")
@@ -45,5 +48,10 @@ public class BranchAjaxController {
                                                      @RequestParam("count") Integer count,
                                                      @RequestParam("sort") String sort) {
         return branchService.getPublishedUserShortByPostLinkWithPagination(link, from, count, SortType.valueOf(sort));
+    }
+
+    @GetMapping("/content/{link}")
+    public Map<Integer, List<ChapterResponse>> getContentOfBranch(@PathVariable("link") String branchLink) {
+        return branchService.getOrderedContentByBranchLink(branchLink);
     }
 }

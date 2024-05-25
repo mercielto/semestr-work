@@ -18,10 +18,6 @@ public class AdminAjaxController {
 
     @PutMapping("/users")
     public void banUser(@RequestBody String login) {
-        try {
-            adminService.changeActivityStatus(login);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден");
-        }
+        adminService.changeActivityStatus(login);
     }
 }

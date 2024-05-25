@@ -4,11 +4,13 @@ import com.example.semestrovkacourse2sem2oris.dto.request.BranchRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.BranchResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.BranchShortResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.BranchUserShortResponse;
+import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
 import com.example.semestrovkacourse2sem2oris.model.BranchEntity;
 import com.example.semestrovkacourse2sem2oris.model.PostEntity;
 import com.example.semestrovkacourse2sem2oris.model.SortType;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface BranchService {
@@ -31,4 +33,8 @@ public interface BranchService {
                                                                                 Integer from,
                                                                                 Integer count,
                                                                                 SortType sortType);
+
+    BranchResponse createByBranchLink(String link, Integer number);
+
+    Map<Integer, List<ChapterResponse>> getOrderedContentByBranchLink(String branchLink);
 }

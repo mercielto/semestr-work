@@ -24,7 +24,7 @@
     </#list>
 
     <h4>
-        <a id="branchName" href="/post/create/branch/profile/${branch.getLink()}"><#if branch.getName()??>${branch.getName()}<#else >Branch name</#if></a>
+        <a id="branchName" href="/branch/create/branch/profile/${branch.getLink()}"><#if branch.getName()??>${branch.getName()}<#else >Branch name</#if></a>
     </h4>
     <#list branch.getChapters() as chapter>
         <div class="chapter">
