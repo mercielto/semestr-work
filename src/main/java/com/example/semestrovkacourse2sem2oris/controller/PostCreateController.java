@@ -37,6 +37,13 @@ public class PostCreateController {
         return "normal/post-create-settings";
     }
 
+    @PostMapping("/settings/{link}")
+    public RedirectView publish(@PathVariable("link") String link,
+                                @RequestBody PostRequest postRequest) {
+        postService.publish(postRequest, link);
+        return new RedirectView("/post/profile/" + link);
+    }
+
     @GetMapping("/chapters/{link}")
     public String chapters(@PathVariable("link") String link,
                             @RequestParam(value = "branch", required = false) String branchLink,

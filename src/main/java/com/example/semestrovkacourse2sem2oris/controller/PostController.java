@@ -64,7 +64,9 @@ public class PostController {
 
         Map<Integer, List<ChapterResponse>> content =
                 postService.getOrderedContentByPostLinkAndBranchLink(postLink, branchLink);
+        BranchShortResponse branch = branchService.getShortByLink(branchLink);
         model.addAttribute("chapters", content);
+        model.addAttribute("branch", branch);
         return "normal/post-chapters";
     }
 

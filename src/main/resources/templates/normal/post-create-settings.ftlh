@@ -20,12 +20,12 @@
     <div id="image-div">
         <div id="image-div-overlay-parent">
 <#--            TODO: сделать ссылку на картинку -->
-            <img src="/uploads/post/fff.jpg" id="post-image">
+            <img src="/uploads/post/${post.getImagePath()}" id="post-image">
 <#--            TODO: сделать загрузку изображеня + генерацию-->
             <div id="overlay">
                 <input type="file" id="image-upload" accept="image/*">
                 <button id="upload-button">Загрузить</button>
-                <button class="generate-btn">Сгенерировать</button>
+                <button id="generate-btn">Сгенерировать</button>
             </div>
         </div>
         <textarea id="description-textarea" name="description" placeholder="Описание текста"><#if post.getDescription()??>${post.getDescription()}</#if></textarea>

@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
 
 
         if (!user.getImageName().equals(defaultImage)) {
-            Path oldpath = Paths.get(uploadDir + user.getImageName());
+            Path oldpath = Paths.get("%s/user/%s".formatted(uploadDir, user.getImageName()));
             try {
                 Files.delete(oldpath);
             } catch (IOException e) {
@@ -131,7 +131,7 @@ public class UserServiceImpl implements UserService {
         }
 
         String fileName = "%s.%s".formatted(user.getLogin(), splitContentType[1]);
-        Path path = Paths.get(uploadDir + fileName);
+        Path path = Paths.get("%s/user/%s".formatted(uploadDir, fileName));
 
         try {
             Files.createDirectories(path.getParent());

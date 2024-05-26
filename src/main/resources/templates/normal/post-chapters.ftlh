@@ -18,6 +18,8 @@
 <div class="container">
     <h1 class="title">Содержание</h1>
 
+    <h3><a id="branch-name" href="/branch/profile/${branch.getLink()}">${branch.getName()}</a></h3>
+
     <ul class="contents" id="contents">
 
         <#list chapters as key, chaptersList>

@@ -59,7 +59,7 @@
 
             <#list user.getPosts() as post>
                 <div class="recent-post">
-                    <img src="/images/${post.getImagePath()}" alt="Post 1">
+                    <img src="/uploads/post/${post.getImagePath()}" alt="Post 1">
                     <div class="recent-post-content">
                         <h3 class="recent-post-title"><a href="/post/profile/${post.getWebLink()}">${post.getTitle()}</a></h3>
                         <p class="recent-post-description">${post.getDescription()}</p>

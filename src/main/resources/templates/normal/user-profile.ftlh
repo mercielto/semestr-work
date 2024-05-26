@@ -47,7 +47,7 @@
                     <img src="/uploads/post/${post.getImagePath()}" alt="Post 1">
                     <div class="recent-post-content">
                         <h3 class="recent-post-title"><a href="/post/profile/${post.getWebLink()}">${post.getTitle()}</a></h3>
-                        <p class="recent-post-description">${post.getDescription()}</p>
+                        <p class="recent-post-description"><#if post.getDescription()??>${post.getDescription()}</#if></p>
                     </div>
                 </div>
             </#list>

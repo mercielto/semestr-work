@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: justify;
+    margin: 3rem auto 0;
+}
+
+#chapter-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.chapter-text {
+    margin-bottom: 20px;
+}
+
+.page-navigation {
+    text-align: center;
+}
+
+.page-navigation button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #5b9ae3;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.page-navigation button:hover {
+    background-color: #d28927;
+}
+
+.formatted-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    padding: 10px;
+}

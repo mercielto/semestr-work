@@ -34,10 +34,7 @@ public class CustomFileWorkerImpl implements CustomFileWorker {
         return builder;
     }
 
-    @Override
-    public void save(String path, String text) throws IOException {
-        File file = new File("%s\\%s".formatted(diskPath, path));
-
+    private void fileCheck(File file) throws IOException {
         File parentDir = file.getParentFile();
         if (!parentDir.exists()) {
             if (parentDir.mkdirs()) {
@@ -54,12 +51,17 @@ public class CustomFileWorkerImpl implements CustomFileWorker {
                 log.info("Файл создан:" + file.getPath());
             } else {
                 log.error("Не удалось создать файл: " + file.getPath());
-                return;
             }
         }
+    }
 
+    @Override
+    public void save(String path, String text) throws IOException {
+        File file = new File("%s\\%s".formatted(diskPath, path));
+        fileCheck(file);
         try (FileWriter writer = new FileWriter(file)) {
             writer.write(text);
+            log.info("Файл записан " + path);
         }
     }
 }

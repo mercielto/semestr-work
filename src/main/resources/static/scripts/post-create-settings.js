@@ -33,6 +33,24 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+
+    document.getElementById("generate-btn").addEventListener("click", function() {
+        var description = document.getElementById("description-textarea").value;
+
+        $.ajax({
+            url: "/image/generate/" + getLink(),
+            type: "POST",
+            data: description,
+            contentType: "application/json",
+            success: function(response) {
+                console.log("Success");
+                document.getElementById("post-image").src = "/uploads/post/" + response;
+            },
+            error: function(status, error) {
+                console.error("Error:", error);
+            }
+        });
+    });
 });
 
 $(document).ready(function() {

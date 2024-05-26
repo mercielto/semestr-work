@@ -1,11 +1,10 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
-import com.example.semestrovkacourse2sem2oris.dto.response.BranchCommentResponse;
-import com.example.semestrovkacourse2sem2oris.dto.response.BranchResponse;
-import com.example.semestrovkacourse2sem2oris.dto.response.BranchShortResponse;
+import com.example.semestrovkacourse2sem2oris.dto.response.*;
 import com.example.semestrovkacourse2sem2oris.service.BranchCommentService;
 import com.example.semestrovkacourse2sem2oris.service.BranchRateService;
 import com.example.semestrovkacourse2sem2oris.service.BranchService;
+import com.example.semestrovkacourse2sem2oris.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +22,7 @@ import java.util.List;
 public class BranchController {
 
     private final BranchService branchService;
+    private final PostService postService;
     private final BranchRateService branchRateService;
     private final BranchCommentService branchCommentService;
 
@@ -61,5 +61,11 @@ public class BranchController {
                                      @RequestParam("number") Integer number) {
         BranchResponse response = branchService.createByBranchLink(link, number);
         return new RedirectView("/branch/create/profile/%s".formatted(response.getLink()));
+    }
+
+    @GetMapping("/read/{link}")
+    public RedirectView read(@PathVariable("link") String link) {
+        PostShortResponse response = postService.getShortByBranchLink(link);
+        return new RedirectView("/post/read/%s?branch=%s".formatted(response.getWebLink(), link));
     }
 }

@@ -6,20 +6,24 @@ import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostShortResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostUserShortResponse;
-import com.example.semestrovkacourse2sem2oris.exception.BranchNotFoundException;
-import com.example.semestrovkacourse2sem2oris.exception.PostNotFoundException;
-import com.example.semestrovkacourse2sem2oris.exception.PostReadStatusNotFoundException;
+import com.example.semestrovkacourse2sem2oris.exception.*;
 import com.example.semestrovkacourse2sem2oris.mapper.PostMapper;
 import com.example.semestrovkacourse2sem2oris.model.*;
 import com.example.semestrovkacourse2sem2oris.repository.PostRepository;
+import com.example.semestrovkacourse2sem2oris.util.CustomFileWorker;
 import com.example.semestrovkacourse2sem2oris.util.LinkGenerator;
 import com.example.semestrovkacourse2sem2oris.util.ObjectCopier;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.management.AttributeNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +38,10 @@ public class PostServiceImpl implements PostService {
     private final LinkGenerator generator;
     private final ChapterService chapterService;
     private final BranchService branchService;
+    private final ImageGeneratorService imageGeneratorService;
+
+    @Value("${app.upload.dir}")
+    private String uploadDir;
 
     @Override
     public void create(PostRequest request) {
@@ -165,5 +173,30 @@ public class PostServiceImpl implements PostService {
         Map<Integer, List<ChapterResponse>> content = new HashMap<>();
         chapterService.getAllChaptersRecursively(content, branch);
         return content;
+    }
+
+    @Override
+    public String generateImage(String postLink, String text) {
+        PostEntity post = getEntityByLink(postLink);
+
+        byte[] data;
+        try {
+            data = imageGeneratorService.generate(text);
+        } catch (IOException e) {
+            throw new CanNotConnectUrlException();
+        }
+
+        String fileName = "%s.jpeg".formatted(postLink);
+        Path path = Paths.get("%s/post/%s".formatted(uploadDir, fileName));
+
+        try {
+            Files.createDirectories(path.getParent());
+            Files.write(path, data);
+            post.setImagePath(fileName);
+            postRepository.save(post);
+            return fileName;
+        } catch (IOException e) {
+            throw new CouldNotSaveImageException(uploadDir + fileName);
+        }
     }
 }

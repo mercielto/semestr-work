@@ -7,6 +7,7 @@ import com.example.semestrovkacourse2sem2oris.service.ChapterService;
 import com.example.semestrovkacourse2sem2oris.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -25,5 +26,12 @@ public class ChapterController {
         PostShortResponse response = postService.getShortByBranchLink(branchLink);
         return new RedirectView("/post/create/chapters/%s?branch=%s".formatted(response.getWebLink(), branchLink));
     }
-    
+
+    @GetMapping("/{link}")
+    private String getPage(@PathVariable("link") String link,
+                           Model model) {
+        ChapterResponse chapter = chapterService.getByLink(link);
+        model.addAttribute("chapter", chapter);
+        return "normal/chapter";
+    }
 }

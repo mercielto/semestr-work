@@ -224,6 +224,23 @@
       text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8); /* Тень для текста */
     }
 
+    .navbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 100px;
+    }
+
+    .navbar-nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+
+    .navbar-nav a:hover {
+      color: #b0b0b0;
+    }
+
 
   </style>
 
@@ -233,6 +250,11 @@
 <nav class="navbar">
   <div class="navbar-brand">
     <a href="#">StoryBranch</a>
+  </div>
+  <div class="navbar-nav">
+    <a href="#">Search</a>
+    <a href="#">Create</a>
+    <a href="#">My Publications</a>
   </div>
   <div class="navbar-user">
     <img src="/static/images/user-avatar.jpg" alt="User Avatar" class="user-avatar">

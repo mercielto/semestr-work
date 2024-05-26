@@ -114,3 +114,7 @@ a:active {
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
 }
+
+#branch-name {
+    color: #2B6AA1;
+}

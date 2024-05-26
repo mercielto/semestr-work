@@ -37,8 +37,8 @@ body {
 }
 
 #post-image {
-    width: 112px;
-    height: 200px;
+    object-fit: contain;
+    width: 120px;
     border: 1px solid #ccc;
 }
 

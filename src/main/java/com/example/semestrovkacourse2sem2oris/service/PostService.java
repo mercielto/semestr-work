@@ -45,4 +45,6 @@ public interface PostService {
     PostUserShortResponse getUserShortByLink(String link);
 
     Map<Integer, List<ChapterResponse>> getOrderedContentByPostLinkAndBranchLink(String postLink, String branchLink);
+
+    String generateImage(String postLink, String text);
 }

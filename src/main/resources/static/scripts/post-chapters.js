@@ -10,6 +10,12 @@ function changeUrlParameterWithPushState(param, value) {
     history.pushState(stateObj, "", currentUrl);
 }
 
+function changeBranchName(branch) {
+    const a = document.getElementById("branch-name");
+    a.href = "/branch/profile/" + branch["link"];
+    a.innerText = branch["name"];
+}
+
 document.addEventListener("DOMContentLoaded", function() {
 
     const chaptersContainer = document.getElementById('contents');
@@ -86,7 +92,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     console.log(response);
                     const parentLi = chapterSelect.closest("li");
                     removeChaptersAfter(parentLi);
-                    addChapter(response);
+                    addChapter(response["chapters"]);
+                    changeBranchName(response["branch"]);
                 },
                 error: function(xhr, status, error) {
                     console.error('There was a problem:', error);
