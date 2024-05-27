@@ -1,10 +1,11 @@
 <#macro navbar userOptional>
+    <link rel="stylesheet" href="/styles/navbar.css">
     <nav class="navbar">
         <div class="navbar-brand">
             <a href="/main">StoryBranch</a>
         </div>
         <div class="navbar-nav">
-            <a href="/search">Search</a>
+            <a href="/main/search">Search</a>
 
             <#if userOptional.isPresent()>
                 <a href="/post/create/">Create</a>
@@ -35,4 +36,5 @@
             </div>
         </#if>
     </nav>
+    <script src="/scripts/navbar.js"></script>
 </#macro>

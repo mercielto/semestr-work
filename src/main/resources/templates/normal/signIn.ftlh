@@ -1,3 +1,5 @@
+
+<#import "navbar.ftlh" as tools>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +9,8 @@
     <link rel="stylesheet" href="/styles/authentication.css">
 </head>
 <body>
+<@tools.navbar userOptional=navUser/>
+
 <div class="container">
     <div class="form-container">
         <h2>Вход</h2>

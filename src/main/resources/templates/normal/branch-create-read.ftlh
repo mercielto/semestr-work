@@ -1,3 +1,4 @@
+<#import "navbar.ftlh" as tools>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +6,11 @@
     <title>Create</title>
     <link rel="stylesheet" href="/styles/post-create-chapters.css">
     <link rel="stylesheet" href="/styles/post-create-navigation.css">
+    <link rel="stylesheet" href="/styles/navbar.css">
+
 </head>
 <body>
+<@tools.navbar userOptional=navUser/>
 
 <div id="settings-body">
     <button id="overview-btn">Обзор</button>
@@ -35,5 +39,7 @@
 <script src="/scripts/jquery-3.6.0.min.js"></script>
 <script src="/scripts/branch-create-chapters.js"></script>
 <script src="/scripts/branch-create-navigation.js"></script>
+<script src="/scripts/navbar.js"></script>
+
 </body>
 </html>

@@ -1,11 +1,19 @@
+<#import "navbar.ftlh" as tools>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
     <link rel="stylesheet" href="/styles/admin-users.css">
+    <link rel="stylesheet" href="/styles/navbar.css">
+
 </head>
 <body>
+
+<@tools.navbar userOptional=navUser/>
+
     <div id="users-list">
         <#list users as user>
             <div class="user">
@@ -33,5 +41,7 @@
 
     <script src="/scripts/jquery-3.6.0.min.js"></script>
     <script src="/scripts/admin-users.js"></script>
+    <script src="/scripts/navbar.js"></script>
+
 </body>
 </html>

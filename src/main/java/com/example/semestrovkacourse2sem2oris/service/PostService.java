@@ -47,4 +47,6 @@ public interface PostService {
     Map<Integer, List<ChapterResponse>> getOrderedContentByPostLinkAndBranchLink(String postLink, String branchLink);
 
     String generateImage(String postLink, String text);
+
+    List<PostShortResponse> getWithPagination(int page, int size);
 }

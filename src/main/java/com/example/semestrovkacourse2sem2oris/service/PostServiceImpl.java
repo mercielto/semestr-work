@@ -10,13 +10,15 @@ import com.example.semestrovkacourse2sem2oris.exception.*;
 import com.example.semestrovkacourse2sem2oris.mapper.PostMapper;
 import com.example.semestrovkacourse2sem2oris.model.*;
 import com.example.semestrovkacourse2sem2oris.repository.PostRepository;
-import com.example.semestrovkacourse2sem2oris.util.CustomFileWorker;
 import com.example.semestrovkacourse2sem2oris.util.LinkGenerator;
 import com.example.semestrovkacourse2sem2oris.util.ObjectCopier;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.management.AttributeNotFoundException;
@@ -201,5 +203,12 @@ public class PostServiceImpl implements PostService {
         } catch (IOException e) {
             throw new CouldNotSaveImageException(uploadDir + fileName);
         }
+    }
+
+    @Override
+    public List<PostShortResponse> getWithPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<PostEntity> posts = postRepository.findAll(pageable);
+        return posts.stream().map(mapper::toShortResponse).toList();
     }
 }

@@ -23,6 +23,6 @@ public class AdminController {
     public String users(Model model) {
         List<UserResponse> users = adminService.getAllUsers();
         model.addAttribute("users", users);
-        return "admin-users";
+        return "normal/admin-users";
     }
 }

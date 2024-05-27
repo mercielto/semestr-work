@@ -6,6 +6,7 @@ import com.example.semestrovkacourse2sem2oris.model.Role;
 import com.example.semestrovkacourse2sem2oris.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -18,8 +19,8 @@ public class AuthController {
     private final UserService userService;
 
     @GetMapping("/sign-up")
-    public String signUp() {
-        return "signUp";
+    public String signUp(Model model) {
+        return "normal/signUp";
     }
 
     @PostMapping("/sign-up")
@@ -33,20 +34,13 @@ public class AuthController {
     }
 
     @GetMapping("/sign-in")
-    public String signIn() {
-        return "signIn";
+    public String signIn(Model model) {
+        return "normal/signIn";
     }
 
     @PostMapping("/sign-in")
     public RedirectView signIn(@ModelAttribute UserRegistrationRequest request) {
         System.out.println("post method");
         return new RedirectView("profile");
-    }
-
-    @GetMapping("/get-admin")
-    public RedirectView getAdmin() {
-        userService.setRole(Role.ADMIN);
-        System.out.println("ADMIN GAINED");
-        return new RedirectView("/");
     }
 }

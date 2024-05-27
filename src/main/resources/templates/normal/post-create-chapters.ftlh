@@ -1,3 +1,4 @@
+<#import "navbar.ftlh" as tools>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,8 @@
     <link rel="stylesheet" href="/styles/post-create-navigation.css">
 </head>
 <body>
+<@tools.navbar userOptional=navUser/>
+
 <div id="settings-body">
     <button id="settings-button">Настройки</button>
     <button id="chapters-button">Главы</button>

@@ -38,11 +38,11 @@ public class WebSecurityConfig {
                     ).permitAll();
 
                     authorizationManagerRequestMatcherRegistry.requestMatchers(
-                            "/styles/*", "/scripts/*", "/images/*", "/uploads/*"
+                            "/styles/*", "/scripts/*", "/images/*", "/uploads/**"
                     ).permitAll();
 
                     authorizationManagerRequestMatcherRegistry.requestMatchers(
-                            "/admin/**"
+                            "/admin/**", "/swagger-ui/index.html"
                     ).hasAuthority(Role.ADMIN.name());
 
                     authorizationManagerRequestMatcherRegistry.anyRequest().authenticated();

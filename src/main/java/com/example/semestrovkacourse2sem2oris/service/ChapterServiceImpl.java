@@ -246,4 +246,10 @@ public class ChapterServiceImpl implements ChapterService {
         return mapper.toResponse(chapterRepository.findFirstByBranchOrderByNumberAsc(branch)
                 .orElseThrow(() -> new ChapterNotFoundException("first chapter of branch %s".formatted(branchLink))));
     }
+
+    @Override
+    public Long create(ChapterRequest request) {
+        ChapterEntity chapter = mapper.toEntity(request);
+        return chapterRepository.save(chapter).getId();
+    }
 }

@@ -1,3 +1,5 @@
+<#import "navbar.ftlh" as tools>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +8,13 @@
     <title>User Reviews</title>
     <link rel="stylesheet" href="/styles/branch-comments.css">
     <link rel="stylesheet" href="/styles/post-create-navigation.css">
+    <link rel="stylesheet" href="/styles/navbar.css">
+
 </head>
 <body>
+
+<@tools.navbar userOptional=navUser/>
+
 
 <div id="settings-body">
     <button id="overview-btn">Обзор</button>
@@ -20,18 +27,20 @@
     <div class="container">
         <h1>Отзывы</h1>
 
-        <h2>Add Your Review</h2>
-        <form id="review-form">
-            <div>
-                <label for="comment">Your Comment:</label>
-                <textarea id="comment" name="comment" rows="4" required></textarea>
-            </div>
-            <div>
-                <button type="submit">Submit</button>
-            </div>
-        </form>
+        <#if navUser??>
+            <h2>Add Your Review</h2>
+            <form id="review-form">
+                <div>
+                    <label for="comment">Your Comment:</label>
+                    <textarea id="comment" name="comment" rows="4" required></textarea>
+                </div>
+                <div>
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
 
-        <hr>
+            <hr>
+        </#if>
 
         <ul class="reviews" id="reviews-list">
 
@@ -64,5 +73,7 @@
 <script src="/scripts/branch-navigation.js"></script>
 <script src="/scripts/comments-default.js"></script>
 <script src="/scripts/branch-comments.js"></script>
+<script src="/scripts/navbar.js"></script>
+
 </body>
 </html>

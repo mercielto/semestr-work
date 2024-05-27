@@ -26,7 +26,6 @@ public class PostCreateController {
     private final PostService postService;
     private final BranchService branchService;
     private final ChapterService chapterService;
-    private final BranchRateService branchRateService;
 
     @GetMapping({"/", ""})
     public RedirectView create() {

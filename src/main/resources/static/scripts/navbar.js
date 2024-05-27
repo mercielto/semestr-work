@@ -3,6 +3,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const dropdownMenu = document.getElementById('dropdownMenu');
     const userName = document.getElementById('userName');
 
+    if (dropdownToggle == null) {
+        return;
+    }
+
     dropdownToggle.addEventListener('click', function () {
         dropdownMenu.classList.toggle('show');
         dropdownToggle.classList.toggle('active');
@@ -16,10 +20,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-document.getElementById('loginBtn').addEventListener('click', function() {
-    window.location.href = '/authentication/sign-in';
-});
+var login = document.getElementById('loginBtn');
 
-document.getElementById('signupBtn').addEventListener('click', function() {
-    window.location.href = '/authentication/sign-up';
-});
+if (login != null) {
+    login.addEventListener('click', function() {
+        window.location.href = '/authentication/sign-in';
+    });
+
+    document.getElementById('signupBtn').addEventListener('click', function() {
+        window.location.href = '/authentication/sign-up';
+    });
+}

@@ -1,3 +1,5 @@
+<#import "navbar.ftlh" as tools>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +10,7 @@
 </head>
 
 <body>
+<@tools.navbar userOptional=navUser/>
 
 <div class="profile-container">
     <div class="profile-header">

@@ -27,4 +27,15 @@ public class ChapterAjaxController {
     public void deleteChapter(@PathVariable("link") String postLink) {
         chapterService.deleteChapter(postLink);
     }
+
+    @PostMapping("/")
+    public Long post(@RequestBody ChapterRequest request) {
+        return chapterService.create(request);
+    }
+
+    @GetMapping("/{link}")
+    public ChapterResponse get(@PathVariable("link") String link) {
+        return chapterService.getByLink(link);
+    }
+
 }

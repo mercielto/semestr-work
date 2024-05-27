@@ -1,3 +1,4 @@
+<#import "navbar.ftlh" as tools>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="/styles/post-navigation.css">
 </head>
 <body>
+<@tools.navbar userOptional=navUser/>
 
 <div class="post-navigation">
     <button id="post-overview">Обзор</button>
@@ -21,18 +23,20 @@
     <div class="container">
         <h1>Отзывы</h1>
 
-        <h2>Add Your Review</h2>
-        <form id="review-form">
-            <div>
-                <label for="comment">Your Comment:</label>
-                <textarea id="comment" name="comment" rows="4" required></textarea>
-            </div>
-            <div>
-                <button type="submit">Submit</button>
-            </div>
-        </form>
+        <#if navUser??>
+            <h2>Add Your Review</h2>
+            <form id="review-form">
+                <div>
+                    <label for="comment">Your Comment:</label>
+                    <textarea id="comment" name="comment" rows="4" required></textarea>
+                </div>
+                <div>
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
 
-        <hr>
+            <hr>
+        </#if>
 
         <ul class="reviews" id="reviews-list">
 

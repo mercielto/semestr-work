@@ -1,3 +1,5 @@
+
+<#import "navbar.ftlh" as tools>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +9,7 @@
     <link rel="stylesheet" href="/static/styles/post-navigation.css">
 </head>
 <body>
+<@tools.navbar userOptional=navUser/>
 
 <#assign post = postUser.getResponse()>
 <div class="main-div">

@@ -16,7 +16,7 @@
 }
 
 .navbar {
-    width: 100%;
+    width: -moz-available;
     background-color: #111;
     color: white;
     padding: 15px 30px;

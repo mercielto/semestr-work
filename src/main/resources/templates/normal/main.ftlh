@@ -7,7 +7,6 @@
     <title>StoryBranch</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="/styles/navbar.css">
     <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
@@ -43,7 +42,6 @@
     <p>&copy; 2024 StoryBranch. All rights reserved.</p>
 </footer>
 
-<script src="/scripts/navbar.js"></script>
 </body>
 </html>
 

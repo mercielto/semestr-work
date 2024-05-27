@@ -7,6 +7,7 @@ import com.example.semestrovkacourse2sem2oris.dto.response.PostShortResponse;
 import com.example.semestrovkacourse2sem2oris.service.ChapterService;
 import com.example.semestrovkacourse2sem2oris.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,6 @@ import org.springframework.web.servlet.view.RedirectView;
 public class ChapterController {
 
     private final ChapterService chapterService;
-    private final PostService postService;
 
     @PostMapping("/{link}")
     private RedirectView create(@ModelAttribute ChapterRequest chapterRequest,

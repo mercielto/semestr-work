@@ -1,3 +1,4 @@
+<#import "navbar.ftlh" as tools>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,8 @@
     <link rel="stylesheet" href="/styles/error.css">
 </head>
 <body>
+<@tools.navbar userOptional=navUser/>
+
 <div class="error-container">
     <h1>Уууупс! Что-то пошло не так</h1>
     <p>Приносим извинения за причиненные неудобства.</p>

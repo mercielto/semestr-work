@@ -1,3 +1,4 @@
+<#import "navbar.ftlh" as tools>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,8 @@
     <link rel="stylesheet" href="/styles/post-create-navigation.css">
 </head>
 <body>
+<@tools.navbar userOptional=navUser/>
+
 <div id="settings-body">
     <button id="settings-button">Настройки</button>
     <button id="chapters-button">Главы</button>
@@ -14,14 +17,12 @@
 
 <#--TODO: нормальную вставку картинки -->
 
-<form id="main-body" method="post">
+<form id="main-body" method="post" action="/post/create/settings${post.getWebLink()}">
     <input type="text" name="title" id="title-input" placeholder="Title" value="<#if post.getTitle()??>${post.getTitle()}</#if>">
 
     <div id="image-div">
         <div id="image-div-overlay-parent">
-<#--            TODO: сделать ссылку на картинку -->
             <img src="/uploads/post/${post.getImagePath()}" id="post-image">
-<#--            TODO: сделать загрузку изображеня + генерацию-->
             <div id="overlay">
                 <input type="file" id="image-upload" accept="image/*">
                 <button id="upload-button">Загрузить</button>

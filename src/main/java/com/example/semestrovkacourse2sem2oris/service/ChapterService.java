@@ -37,4 +37,6 @@ public interface ChapterService {
     ChapterResponse getLastChapterByBranchLink(String branchLink);
 
     ChapterResponse getFirstChapterByBranchLink(String branchLink);
+
+    Long create(ChapterRequest request);
 }

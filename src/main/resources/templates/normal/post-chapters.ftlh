@@ -1,3 +1,4 @@
+<#import "navbar.ftlh" as tools>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="/styles/post-chapters.css">
 </head>
 <body>
+<@tools.navbar userOptional=navUser/>
 
 <div class="post-navigation">
     <button id="post-overview">Обзор</button>
