@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
+import com.example.semestrovkacourse2sem2oris.annotation.NotRestExceptionAnnotation;
 import com.example.semestrovkacourse2sem2oris.dto.response.UserResponse;
 import com.example.semestrovkacourse2sem2oris.service.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
+@NotRestExceptionAnnotation
 public class AdminController {
 
     private final AdminService adminService;

@@ -152,6 +152,11 @@ public class BranchServiceImpl implements BranchService {
         return content;
     }
 
+    @Override
+    public BranchResponse getByLink(String link) {
+        return mapper.toResponse(getEntityByLink(link));
+    }
+
     // TODO: check
     private BranchEntity findParentBranchRecursively(BranchEntity branch, Integer number) {
         // не включительно, тк ветвление происходит от корневой ветки

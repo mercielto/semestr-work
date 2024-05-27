@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
+import com.example.semestrovkacourse2sem2oris.annotation.RestExceptionAnnotation;
 import com.example.semestrovkacourse2sem2oris.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/image/generate")
+@RestExceptionAnnotation
 public class ImageGenerateController {
 
     private final PostService postService;

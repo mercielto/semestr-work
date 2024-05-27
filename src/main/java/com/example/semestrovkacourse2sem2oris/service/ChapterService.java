@@ -33,4 +33,8 @@ public interface ChapterService {
     void addChaptersFromOneEnd(Map<Integer, List<ChapterResponse>> content, BranchEntity branch);
 
     void getAllChaptersRecursively(Map<Integer, List<ChapterResponse>> content, BranchEntity branch);
+
+    ChapterResponse getLastChapterByBranchLink(String branchLink);
+
+    ChapterResponse getFirstChapterByBranchLink(String branchLink);
 }

@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
+import com.example.semestrovkacourse2sem2oris.annotation.RestExceptionAnnotation;
 import com.example.semestrovkacourse2sem2oris.dto.request.BranchCommentRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.BranchRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.BranchCommentResponse;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/branch/ajax")
 @RequiredArgsConstructor
+@RestExceptionAnnotation
 public class BranchAjaxController {
 
     private final BranchCommentService branchCommentService;

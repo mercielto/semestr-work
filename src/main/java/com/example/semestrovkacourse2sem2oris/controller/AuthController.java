@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
+import com.example.semestrovkacourse2sem2oris.annotation.NotRestExceptionAnnotation;
 import com.example.semestrovkacourse2sem2oris.dto.request.UserRegistrationRequest;
 import com.example.semestrovkacourse2sem2oris.model.Role;
 import com.example.semestrovkacourse2sem2oris.service.UserService;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequestMapping("/authentication")
 @RequiredArgsConstructor
+@NotRestExceptionAnnotation
 public class AuthController {
 
     private final UserService userService;

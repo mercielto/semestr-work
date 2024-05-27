@@ -2,10 +2,7 @@ package com.example.semestrovkacourse2sem2oris.service;
 
 import com.example.semestrovkacourse2sem2oris.dto.request.ChapterRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
-import com.example.semestrovkacourse2sem2oris.exception.BranchNotFoundException;
-import com.example.semestrovkacourse2sem2oris.exception.ChapterNotFoundException;
-import com.example.semestrovkacourse2sem2oris.exception.CouldNotSaveChapterOnDiskException;
-import com.example.semestrovkacourse2sem2oris.exception.NotFoundServiceException;
+import com.example.semestrovkacourse2sem2oris.exception.*;
 import com.example.semestrovkacourse2sem2oris.mapper.ChapterMapper;
 import com.example.semestrovkacourse2sem2oris.model.BranchEntity;
 import com.example.semestrovkacourse2sem2oris.model.ChapterEntity;
@@ -69,7 +66,7 @@ public class ChapterServiceImpl implements ChapterService {
         chapterEntity = chapterRepository.save(chapterEntity);
         branchEntity.getChapters().add(chapterEntity);
         branchRepository.save(branchEntity);
-        chapterRepository.increaseNumber(chapterEntity.getId(), chapterEntity.getNumber());
+        chapterRepository.increaseNumber(chapterEntity.getId(), chapterEntity.getNumber(), branchEntity);
     }
 
     private void saveFileOnDisk(ChapterEntity chapterEntity, String text) {
@@ -107,7 +104,7 @@ public class ChapterServiceImpl implements ChapterService {
         entity.setTitle(chapterRequest.getTitle());
         saveFileOnDisk(entity, chapterRequest.getText());
         chapterRepository.save(entity);
-        chapterRepository.increaseNumber(entity.getId(), entity.getNumber());
+        chapterRepository.increaseNumber(entity.getId(), entity.getNumber(), entity.getBranch());
         return entity.getBranch().getPost().getWebLink();
     }
 
@@ -116,9 +113,19 @@ public class ChapterServiceImpl implements ChapterService {
     public void deleteChapter(String chapterLink) {
         ChapterEntity chapter = getEntityByLink(chapterLink);
         BranchEntity branchEntity = chapter.getBranch();
-        chapterRepository.decreaseNumber(chapter.getId(), chapter.getNumber());
+        chapterRepository.decreaseNumber(chapter.getId(), chapter.getNumber(), branchEntity);
         branchEntity.getChapters().remove(chapter);
-        branchRepository.save(branchEntity);
+
+        if (chapterRepository.doesItHasBranchings(branchEntity, chapter.getNumber())) {
+            throw new CanNotDeleteChapter("Chapter has branchings");
+        }
+
+        if (branchEntity.getChapters().size() == 0) {
+            branchRepository.delete(branchEntity);
+        } else {
+            branchRepository.save(branchEntity);
+        }
+
         chapterRepository.delete(chapter);
     }
 
@@ -222,5 +229,21 @@ public class ChapterServiceImpl implements ChapterService {
         }
 
         getAllChaptersRecursively(content, parentBranch);
+    }
+
+    @Override
+    public ChapterResponse getLastChapterByBranchLink(String branchLink) {
+        BranchEntity branch = branchRepository.findByLink(branchLink)
+                .orElseThrow(() -> new BranchNotFoundException(branchLink));
+        return mapper.toResponse(chapterRepository.findFirstByBranchOrderByNumberDesc(branch)
+                .orElseThrow(() -> new ChapterNotFoundException("last chapter of branch %s".formatted(branchLink))));
+    }
+
+    @Override
+    public ChapterResponse getFirstChapterByBranchLink(String branchLink) {
+        BranchEntity branch = branchRepository.findByLink(branchLink)
+                .orElseThrow(() -> new BranchNotFoundException(branchLink));
+        return mapper.toResponse(chapterRepository.findFirstByBranchOrderByNumberAsc(branch)
+                .orElseThrow(() -> new ChapterNotFoundException("first chapter of branch %s".formatted(branchLink))));
     }
 }

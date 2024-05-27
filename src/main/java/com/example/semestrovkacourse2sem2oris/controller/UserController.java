@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
+import com.example.semestrovkacourse2sem2oris.annotation.NotRestExceptionAnnotation;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostShortResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.UserExtendedResponse;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@NotRestExceptionAnnotation
 public class UserController {
 
     private final UserService userService;

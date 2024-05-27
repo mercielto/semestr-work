@@ -240,8 +240,6 @@
     .navbar-nav a:hover {
       color: #b0b0b0;
     }
-
-
   </style>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -254,11 +252,13 @@
   <div class="navbar-nav">
     <a href="#">Search</a>
     <a href="#">Create</a>
-    <a href="#">My Publications</a>
+<!--    <a href="#">My Publications</a>-->
   </div>
   <div class="navbar-user">
+    <a>
     <img src="/static/images/user-avatar.jpg" alt="User Avatar" class="user-avatar">
     <span class="user-name" id="userName">John Doe</span>
+    </a>
     <div class="dropdown">
       <button class="dropdown-toggle" id="dropdownToggle">
         ▼
@@ -270,6 +270,10 @@
       </div>
     </div>
   </div>
+<!--  <div class="navbar-auth">-->
+<!--    <button class="btn login-btn">Войти</button>-->
+<!--    <button class="btn signup-btn">Зарегистрироваться</button>-->
+<!--  </div>-->
 </nav>
 
 <header class="hero">

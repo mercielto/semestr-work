@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
+import com.example.semestrovkacourse2sem2oris.annotation.NotRestExceptionAnnotation;
 import com.example.semestrovkacourse2sem2oris.dto.request.PostRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.*;
 import com.example.semestrovkacourse2sem2oris.service.BranchRateService;
@@ -12,10 +13,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.List;
+import java.util.Map;
+
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post/create")
+@NotRestExceptionAnnotation
 public class PostCreateController {
 
     private final PostService postService;
@@ -23,7 +28,7 @@ public class PostCreateController {
     private final ChapterService chapterService;
     private final BranchRateService branchRateService;
 
-    @GetMapping("/")
+    @GetMapping({"/", ""})
     public RedirectView create() {
         PostResponse response = postService.create();
         return new RedirectView("settings/%s".formatted(response.getWebLink()));
@@ -52,8 +57,18 @@ public class PostCreateController {
         if (branchLink == null) {
             branchLink = branchService.getMain(postResponse.getBranches()).getLink();
         }
+        Map<Integer, List<ChapterResponse>> content =
+                postService.getOrderedContentByPostLinkAndBranchLink(link, branchLink);
+        BranchShortResponse branch = branchService.getShortByLink(branchLink);
+
+        ChapterResponse lastChapter = chapterService.getLastChapterByBranchLink(branchLink);
+        ChapterResponse firstChapter = chapterService.getFirstChapterByBranchLink(branchLink);
+
+        model.addAttribute("lastNumber", lastChapter.getNumber());
+        model.addAttribute("minNumber", firstChapter.getNumber());
         model.addAttribute("post", postResponse);
-        model.addAttribute("branchLink", branchLink);
+        model.addAttribute("chapters", content);
+        model.addAttribute("branch", branch);
         return  "normal/post-create-chapters";
     }
 
@@ -67,7 +82,11 @@ public class PostCreateController {
     public String chapterAdd(@PathVariable("link") String branchLink,
                              Model model) {
         PostShortResponse response = postService.getShortByBranchLink(branchLink);
+        ChapterResponse lastChapter = chapterService.getLastChapterByBranchLink(branchLink);
+        ChapterResponse firstChapter = chapterService.getFirstChapterByBranchLink(branchLink);
         model.addAttribute("post", response);
+        model.addAttribute("lastNumber", lastChapter.getNumber());
+        model.addAttribute("minNumber", firstChapter.getNumber());
         return "normal/post-create-chapter-add";
     }
 
@@ -79,19 +98,17 @@ public class PostCreateController {
         return "normal/post-create-chapter-add-edit";
     }
 
-    @PostMapping("/settings/{link}")
-    public void publishPost(@PathVariable("link") String link,
-                            @ModelAttribute PostRequest request) {
-        postService.publish(request, link);
-    }
-
     @GetMapping("/chapter/{chapterLink}")
     public String getChapter(@PathVariable("chapterLink") String chapterLink,
                              Model model) {
         ChapterResponse response = chapterService.getByLink(chapterLink);
         PostShortResponse postShortResponse = postService.getByChapterLink(chapterLink);
+        ChapterResponse lastChapter = chapterService.getLastChapterByBranchLink(response.getBranchLink());
+        ChapterResponse firstChapter = chapterService.getFirstChapterByBranchLink(response.getBranchLink());
         model.addAttribute("chapter", response);
         model.addAttribute("post", postShortResponse);
+        model.addAttribute("lastNumber", lastChapter.getNumber());
+        model.addAttribute("minNumber", firstChapter.getNumber());
         return "normal/post-create-chapter-add-edit";
     }
 }

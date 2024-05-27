@@ -12,6 +12,7 @@ import com.example.semestrovkacourse2sem2oris.util.UserParamsChecker;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -44,10 +46,16 @@ public class UserServiceImpl implements UserService {
         return repository.save(user);
     }
 
+    // используется в случае возможной не авторизации
     @Override
     public UserEntity getCurrent() {
-        String login = SecurityContextHolder.getContext().getAuthentication().getName();
-        return getByLogin(login);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()
+                || authentication.getPrincipal().equals("anonymousUser")) {
+            return null;
+        }
+        return getByLogin(authentication.getName());
     }
 
     @Override
@@ -144,6 +152,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<UserResponse> getCurrentUserResponse() {
+        UserEntity userResponse = getCurrent();
+
+        if (userResponse == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(mapper.toResponse(userResponse));
+    }
+
+    @Override
     public UserEntity create(UserRegistrationRequest request) {
         UserEntity user = mapper.toEntity(request);
         // TODO: разобраться, как сделать так, чтобы поля active и role генерировались сами
@@ -177,7 +196,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getCurrentUser() {
-        var login = SecurityContextHolder.getContext().getAuthentication().getName();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        var login = authentication.getName();
         return getByLogin(login);
     }
 

@@ -34,7 +34,7 @@ public class WebSecurityConfig {
 
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
                     authorizationManagerRequestMatcherRegistry.requestMatchers(
-                            "/authentication/**", "/error"
+                            "/authentication/**", "/error", "/main/**", "/main", "/post/**", "/chapter/**"
                     ).permitAll();
 
                     authorizationManagerRequestMatcherRegistry.requestMatchers(
@@ -53,7 +53,7 @@ public class WebSecurityConfig {
                             httpSecurityFormLoginConfigurer.loginPage("/authentication/sign-in");
                             httpSecurityFormLoginConfigurer.usernameParameter("login");
                             httpSecurityFormLoginConfigurer.passwordParameter("password");
-                            httpSecurityFormLoginConfigurer.defaultSuccessUrl("/profile");
+                            httpSecurityFormLoginConfigurer.defaultSuccessUrl("/main");
                             httpSecurityFormLoginConfigurer.failureUrl("/error");
                         }
                 )
@@ -61,7 +61,7 @@ public class WebSecurityConfig {
                 .logout(httpSecurityLogoutConfigurer -> {
                     httpSecurityLogoutConfigurer.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"));
                     httpSecurityLogoutConfigurer.invalidateHttpSession(true);
-                    httpSecurityLogoutConfigurer.logoutSuccessUrl("/authentication/sign-in");
+                    httpSecurityLogoutConfigurer.logoutSuccessUrl("/main");
                     httpSecurityLogoutConfigurer.deleteCookies("JSESSIONID");
                 })
 

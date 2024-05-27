@@ -11,8 +11,7 @@
 
 <div id="settings-body">
     <button id="overview-btn">Обзор</button>
-    <button id="read-btn">Читать</button>
-    <button id="comments-btn">Отзывы</button>
+    <button id="read-btn">Главы</button>
 </div>
 
 <div class="body">
@@ -23,8 +22,8 @@
         </h1>
 
         <#assign creator = branch.getCreator()>
-        <a class="user-info" href="/user/${creator.getLink()}">
-            <img src="/uploads/post/${creator.getImageName()}" id="user-image">
+        <a class="user-info" href="/user/profile/${creator.getLink()}">
+            <img src="/uploads/user/${creator.getImageName()}" id="user-image">
             <p>${creator.getUsername()}</p>
         </a>
 
@@ -34,8 +33,7 @@
         </div>
 
         <textarea><#if branch.getDescription()??>${branch.getDescription()}</#if></textarea>
-        <p>Моя оценка:</p>
-        <div class="rating">
+        <div class="rating" style="display: none">
             <#assign numbers = 1..10>
             <#list numbers as number>
                 <#assign r = 11 - number>
@@ -52,7 +50,7 @@
 
 </div>
 <script src="/scripts/jquery-3.6.0.min.js"></script>
-<script src="/scripts/branch-navigation.js"></script>
+<script src="/scripts/branch-create-navigation.js"></script>
 <script src="/scripts/branch-profile.js"></script>
 <script src="/scripts/post-create-branch-profile.js"></script>
 </body>

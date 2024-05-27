@@ -1,12 +1,15 @@
 package com.example.semestrovkacourse2sem2oris.service;
 
+import com.example.semestrovkacourse2sem2oris.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.rmi.ServerException;
 
 @Service
 @Slf4j
@@ -24,7 +27,6 @@ public class ImageGeneratorServiceImpl implements ImageGeneratorService {
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("POST");
 
-
         con.setRequestProperty("Authorization", "Bearer " + token);
         con.setRequestProperty("Content-Type", "application/json");
 
@@ -36,6 +38,7 @@ public class ImageGeneratorServiceImpl implements ImageGeneratorService {
         }
 
         int responseCode = con.getResponseCode();
+
         if (responseCode == HttpURLConnection.HTTP_OK) {
             try (InputStream inputStream = con.getInputStream();
                  ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
@@ -51,6 +54,6 @@ public class ImageGeneratorServiceImpl implements ImageGeneratorService {
                 return outputStream.toByteArray();
             }
         }
-        return new byte[0];
+        throw new ServiceException("Response code is not OK, received -> " + responseCode, HttpStatus.BAD_REQUEST);
     }
 }

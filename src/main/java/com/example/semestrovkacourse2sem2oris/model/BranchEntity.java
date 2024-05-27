@@ -17,7 +17,8 @@ import java.util.List;
 public class BranchEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "common_generator")
+    @SequenceGenerator(name = "common_generator", sequenceName = "common_sequence", initialValue = 1000)
     private Long branchId;
     // TODO: сделать проверку на доступ пользователям, не являющимся создателями
     @Builder.Default
@@ -52,7 +53,7 @@ public class BranchEntity {
     @OrderBy("number ASC")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "branch")
     @Builder.Default
-    private List<ChapterEntity> chapters = new ArrayList<>();       // главы в ветке
+    private List<ChapterEntity> chapters = new ArrayList<>();
 
     @Formula("(SELECT COALESCE(avg(rate.rating), 0) FROM branch_rate rate WHERE rate.branch_id = branch_id)")
     @Builder.Default

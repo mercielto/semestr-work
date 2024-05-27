@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
+import com.example.semestrovkacourse2sem2oris.annotation.RestExceptionAnnotation;
 import com.example.semestrovkacourse2sem2oris.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/ajax")
+@RestExceptionAnnotation
 public class AdminAjaxController {
 
     private final AdminService adminService;

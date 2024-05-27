@@ -182,7 +182,10 @@ public class PostServiceImpl implements PostService {
         byte[] data;
         try {
             data = imageGeneratorService.generate(text);
-        } catch (IOException e) {
+        } catch (ServiceException e) {
+            throw e;
+        }
+        catch (IOException e) {
             throw new CanNotConnectUrlException();
         }
 

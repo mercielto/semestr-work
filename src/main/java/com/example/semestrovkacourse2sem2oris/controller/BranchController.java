@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
+import com.example.semestrovkacourse2sem2oris.annotation.NotRestExceptionAnnotation;
 import com.example.semestrovkacourse2sem2oris.dto.response.*;
 import com.example.semestrovkacourse2sem2oris.service.BranchCommentService;
 import com.example.semestrovkacourse2sem2oris.service.BranchRateService;
@@ -19,6 +20,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/branch")
+@NotRestExceptionAnnotation
 public class BranchController {
 
     private final BranchService branchService;
@@ -54,6 +56,16 @@ public class BranchController {
         model.addAttribute("branch", response);
         model.addAttribute("rating", rate);
         return "normal/post-create-branch-profile";
+    }
+
+    @GetMapping("/create/read/{link}")
+    public String getBranchContent(@PathVariable("link") String link,
+                                   Model model) {
+        BranchResponse branchResponse = branchService.getByLink(link);
+        PostShortResponse postShortResponse = postService.getShortByBranchLink(link);
+        model.addAttribute("branch", branchResponse);
+        model.addAttribute("post", postShortResponse);
+        return "normal/branch-create-read";
     }
 
     @GetMapping("/create/profile")

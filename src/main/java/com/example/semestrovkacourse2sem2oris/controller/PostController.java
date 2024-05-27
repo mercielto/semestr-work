@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
+import com.example.semestrovkacourse2sem2oris.annotation.NotRestExceptionAnnotation;
 import com.example.semestrovkacourse2sem2oris.dto.response.*;
 import com.example.semestrovkacourse2sem2oris.model.SortType;
 import com.example.semestrovkacourse2sem2oris.service.BranchService;
@@ -21,6 +22,7 @@ import java.util.Map;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post")
+@NotRestExceptionAnnotation
 public class PostController {
 
     private final PostService postService;

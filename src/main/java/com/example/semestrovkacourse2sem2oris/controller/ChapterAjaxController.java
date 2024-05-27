@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
+import com.example.semestrovkacourse2sem2oris.annotation.RestExceptionAnnotation;
 import com.example.semestrovkacourse2sem2oris.dto.request.BranchRateRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.ChapterRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/chapter/ajax")
+@RestExceptionAnnotation
 public class ChapterAjaxController {
 
     private final ChapterService chapterService;

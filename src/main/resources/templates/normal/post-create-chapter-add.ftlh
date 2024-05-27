@@ -9,8 +9,8 @@
 </head>
 <body>
 <div id="settings-body">
-    <button id="settings-button">Настройки</button>
-    <button id="chapters-button">Главы</button>
+    <button id="overview-btn">Настройки</button>
+    <button id="read-btn">Главы</button>
 </div>
 
 <div id="main-body">
@@ -19,7 +19,7 @@
             <h1><#if post.getTitle()??>${post.getTitle()}<#else >Title</#if></h1>
         </a>
         <div class="chapter-param">
-            <input id="number" name="number" value="1" type="number" required>
+            <input id="number" name="number" type="number" required>
             <input id="title" value="Название главы" name="title" type="text" required>
         </div>
         <textarea id="text" name="text" placeholder="Введите текст главы..."></textarea>
@@ -27,9 +27,22 @@
     </form>
 </div>
 
+<script>
+    var num = document.getElementById('number');
+    num.innerText = ${minNumber};
+    num.addEventListener('input', function() {
+        const minValue = ${minNumber};
+        const maxValue = ${lastNumber} + 1;
+        const inputValue = parseInt(this.value);
+
+        if (isNaN(inputValue) || inputValue < minValue || inputValue > maxValue) {
+            this.value = '';
+        }
+    });
+</script>
 <script src="/scripts/chapter-add-default.js"></script>
 <script src="/scripts/jquery-3.6.0.min.js"></script>
-<script src="/scripts/post-create-navigation.js"></script>
+<script src="/scripts/branch-create-navigation.js"></script>
 <script src="/scripts/chapter-add.js"></script>
 </body>
 </html>

@@ -45,6 +45,7 @@
 
     </ul>
 
+    <label for="chapter-number-input" id="label-for-chapter-number-input"></label>
     <input id="chapter-number-input" type="number" min="1" max="4" placeholder="Номер главы">
     <button id="create-branch-button">Создать новую ветку</button>
 </div>

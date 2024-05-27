@@ -12,7 +12,7 @@
 
 <div class="profile-container">
     <div class="profile-header">
-        <div class="profile-avatar" id="avatarContainer" onmouseover="showUploadButton()" onmouseout="hideUploadButton()">
+        <div class="profile-avatar" id="avatarContainer">
             <img id='avatar' src="/uploads/user/${user.getImageName()}" alt="Avatar">
             <div class="upload-avatar" id="uploadButton">
                 <label for="image-upload">
@@ -62,7 +62,7 @@
                     <img src="/uploads/post/${post.getImagePath()}" alt="Post 1">
                     <div class="recent-post-content">
                         <h3 class="recent-post-title"><a href="/post/profile/${post.getWebLink()}">${post.getTitle()}</a></h3>
-                        <p class="recent-post-description">${post.getDescription()}</p>
+                        <p class="recent-post-description"><#if post.getDescription()??>${post.getDescription()}</#if></p>
                     </div>
                 </div>
             </#list>

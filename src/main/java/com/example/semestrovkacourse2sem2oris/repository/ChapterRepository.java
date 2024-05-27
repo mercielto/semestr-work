@@ -19,13 +19,27 @@ public interface ChapterRepository extends JpaRepository<ChapterEntity, Long> {
 
     @Modifying
     @Transactional
-    @Query("update ChapterEntity c set c.number = c.number + 1 where c.id != :id and c.number >= :addedNumber")
-    void increaseNumber(@Param("id")Long id, @Param("addedNumber") Integer number);
+    @Query("update ChapterEntity c set c.number = c.number + 1 where c.id != :id" +
+            " and c.number >= :addedNumber and c.branch = :branch")
+    void increaseNumber(@Param("id")Long id, @Param("addedNumber") Integer number,
+                        @Param("branch") BranchEntity branch);
 
     @Modifying
     @Transactional
-    @Query("update ChapterEntity c set c.number = c.number - 1 where c.id != :id and c.number >= :addedNumber")
-    void decreaseNumber(@Param("id")Long id, @Param("addedNumber") Integer number);
+    @Query("update ChapterEntity c set c.number = c.number - 1 where c.id != :id " +
+            "and c.number >= :addedNumber and c.branch = :branch")
+    void decreaseNumber(@Param("id")Long id, @Param("addedNumber") Integer number,
+                        @Param("branch") BranchEntity branch);
 
     Optional<ChapterEntity> findFirstByBranchOrderByNumberAsc(BranchEntity branch);
+
+    Optional<ChapterEntity> findFirstByBranchOrderByNumberDesc(BranchEntity branch);
+
+    @Transactional
+    @Query("SELECT COUNT(ch) > 1 " +
+            "FROM ChapterEntity ch " +
+            "WHERE ch.number = (SELECT MIN(c.number) FROM ChapterEntity c WHERE c.branch = :branch) " +
+            "AND ch.branch = :branch " +
+            "AND ch.number = :number")
+    boolean doesItHasBranchings(@Param("branch") BranchEntity branch, @Param("number") Integer number);
 }

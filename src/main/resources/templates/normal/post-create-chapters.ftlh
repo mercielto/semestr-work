@@ -16,28 +16,60 @@
 <div id="main-body">
     <h1><#if post.getTitle()??>${post.getTitle()}<#else >Title</#if></h1>
 
-    <#assign branch = post.getBranches()[0]>
-    <#list post.getBranches() as br>
-        <#if br.getLink() == branchLink>
-            <#assign branch = br>
-        </#if>
-    </#list>
-
     <h4>
-        <a id="branchName" href="/branch/create/branch/profile/${branch.getLink()}"><#if branch.getName()??>${branch.getName()}<#else >Branch name</#if></a>
+        <a id="branchName" href="/branch/create/profile/${branch.getLink()}"><#if branch.getName()??>${branch.getName()}<#else >Branch name</#if></a>
     </h4>
-    <#list branch.getChapters() as chapter>
-        <div class="chapter">
-            <a class="chapter-name" href="/post/create/chapter/${chapter.getLink()}">
-                <p>${chapter.getNumber()}. ${chapter.getTitle()}</p>
-            </a>
-            <button class="delete-chapter-btn">Delete</button>
-        </div>
-    </#list>
 
-    <input type="submit" id="chapter-add-main" class="chapter-add" value="Новая глава">
+    <div class="contents" id="contents">
+
+        <#list chapters as key, chaptersList>
+            <#assign selected = chaptersList[0]>
+
+            <div class="chapter">
+                <a class="chapter-name" data-number="${selected.getNumber()}" href="/post/create/chapter/${selected.getLink()}">Глава ${selected.getNumber()}:</a>
+                <#if chaptersList?size != 1>
+                    <select class="chapter-select">
+
+                        <#list chaptersList as chapter>
+
+                            <option data-link="${chapter.getBranchLink()}" data-chapterLink="${chapter.getLink()}"->${chapter.getTitle()}</option>
+
+                        </#list>
+
+                    </select>
+                <#else>
+                    ${selected.getTitle()}
+                </#if>
+                <button class="delete-chapter-btn" <#if chaptersList?size != 1 || chapters?size == 1>
+                    style="visibility: hidden"
+                </#if>>Delete</button>
+
+            </div>
+
+        </#list>
+
+    </div>
+
+    <label for="branchNumber" id="label-for-chapter-number-input"></label>
+    <input id="branchNumber" type="number">
+    <input type="submit" id="create-branch-button" class="chapter-add" value="Новая ветка">
 </div>
 
+<script>
+    var num = document.getElementById('branchNumber');
+    var label = document.getElementById("label-for-chapter-number-input")
+    num.value = ${minNumber};
+    num.addEventListener('input', function() {
+        const minValue = ${minNumber};
+        const maxValue = ${lastNumber} + 1;
+        const inputValue = parseInt(this.value);
+        label.innerText = "Укажите главу";
+        label.visibility = true;
+        if (isNaN(inputValue) || inputValue < minValue || inputValue > maxValue) {
+            this.value = '';
+        }
+    });
+</script>
 <script src="/scripts/jquery-3.6.0.min.js"></script>
 <script src="/scripts/post-create-chapters.js"></script>
 <script src="/scripts/post-create-navigation.js"></script>

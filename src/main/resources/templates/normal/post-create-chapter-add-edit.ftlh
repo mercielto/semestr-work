@@ -31,5 +31,18 @@
 <script src="/scripts/jquery-3.6.0.min.js"></script>
 <script src="/scripts/post-create-navigation.js"></script>
 <script src="/scripts/chapter-edit.js"></script>
+
+<script>
+    document.getElementById('number').addEventListener('input', function() {
+        const minValue = ${minNumber};
+        const maxValue = ${lastNumber} + 1;
+        const inputValue = parseInt(this.value);
+
+        if (isNaN(inputValue) || inputValue < minValue || inputValue > maxValue) {
+            this.value = '';
+        }
+    });
+</script>
+</script>
 </body>
 </html>

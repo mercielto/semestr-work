@@ -37,4 +37,6 @@ public interface BranchService {
     BranchResponse createByBranchLink(String link, Integer number);
 
     Map<Integer, List<ChapterResponse>> getOrderedContentByBranchLink(String branchLink);
+
+    BranchResponse getByLink(String link);
 }

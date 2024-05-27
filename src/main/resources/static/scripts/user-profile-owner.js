@@ -1,10 +1,10 @@
-function showUploadButton() {
-    document.getElementById("uploadButton").style.display = "flex";
-}
-
-function hideUploadButton() {
-    document.getElementById("uploadButton").style.display = "none";
-}
+// function showUploadButton() {
+//     document.getElementById("uploadButton").style.display = "flex";
+// }
+//
+// function hideUploadButton() {
+//     document.getElementById("uploadButton").style.display = "none";
+// }
 
 function deletePost(element) {
     var postElement = element.closest('.recent-post');

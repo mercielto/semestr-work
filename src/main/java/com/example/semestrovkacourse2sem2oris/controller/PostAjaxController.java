@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
+import com.example.semestrovkacourse2sem2oris.annotation.NotRestExceptionAnnotation;
 import com.example.semestrovkacourse2sem2oris.dto.request.PostCommentRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.PostRateRequest;
 import com.example.semestrovkacourse2sem2oris.dto.request.PostReadRequest;
@@ -23,6 +24,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post/ajax")
+@NotRestExceptionAnnotation
 public class PostAjaxController {
 
     private final PostService postService;

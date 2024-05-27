@@ -11,8 +11,8 @@ function changeUrlParameterWithPushState(param, value) {
 }
 
 function changeBranchName(branch) {
-    const a = document.getElementById("branch-name");
-    a.href = "/branch/profile/" + branch["link"];
+    const a = document.getElementById("branchName");
+    a.href = "/branch/create/profile/" + branch["link"];
     a.innerText = branch["name"];
 }
 
@@ -109,6 +109,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const createBranchButton = document.getElementById("create-branch-button");
 
     createBranchButton.addEventListener("click", function() {
+        if (chapterNumberInput.value.length === 0) {
+            var label = document.getElementById("label-for-chapter-number-input");
+            label.innerText = "Заполните поле";
+            return;
+        }
+
         window.location.href = "/branch/create/profile?branchLink="
             + getUrlParameter("branch") + "&number=" + chapterNumberInput.value;
     });

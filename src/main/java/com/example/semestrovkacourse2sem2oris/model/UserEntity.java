@@ -18,7 +18,8 @@ import java.util.List;
 public class UserEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "common_generator")
+    @SequenceGenerator(name = "common_generator", sequenceName = "common_sequence", initialValue = 1000)
     private Long userId;
 
     @Builder.Default

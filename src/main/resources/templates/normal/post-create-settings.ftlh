@@ -59,6 +59,8 @@
         <button id="save-btn">Сохранить</button>
         <input type="submit" value="Создать" id="create-btn">
     </div>
+
+    <div id="success-message" class="success-message hidden">Успех! Ваши данные сохранены.</div>
 </form>
 
 <script src="/scripts/jquery-3.6.0.min.js"></script>

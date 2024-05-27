@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
+import com.example.semestrovkacourse2sem2oris.annotation.RestExceptionAnnotation;
 import com.example.semestrovkacourse2sem2oris.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/user/ajax")
 @RequiredArgsConstructor
+@RestExceptionAnnotation
 public class UserAjaxController {
 
     private final UserService userService;

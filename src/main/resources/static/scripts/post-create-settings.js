@@ -3,6 +3,16 @@ function getLink() {
     return link.split('?')[0];
 }
 
+function showSuccessMessage() {
+    const successMessage = document.getElementById('success-message');
+    successMessage.classList.remove('hidden');
+    successMessage.classList.add('show');
+
+    setTimeout(() => {
+        successMessage.classList.remove('show');
+        successMessage.classList.add('hidden');
+    }, 3000);
+}
 function collectData() {
     var formData = {};
 
@@ -43,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
             data: description,
             contentType: "application/json",
             success: function(response) {
-                console.log("Success");
+                showSuccessMessage();
                 document.getElementById("post-image").src = "/uploads/post/" + response;
             },
             error: function(status, error) {
@@ -65,7 +75,7 @@ $(document).ready(function() {
             data: data,
             contentType: "application/json",
             success: function() {
-                console.log("Success");
+                showSuccessMessage();
             },
             error: function(xhr, status, error) {
                 console.error("Error:", error);

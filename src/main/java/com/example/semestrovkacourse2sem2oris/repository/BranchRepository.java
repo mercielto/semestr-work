@@ -1,6 +1,7 @@
 package com.example.semestrovkacourse2sem2oris.repository;
 
 import com.example.semestrovkacourse2sem2oris.model.BranchEntity;
+import com.example.semestrovkacourse2sem2oris.model.ChapterEntity;
 import com.example.semestrovkacourse2sem2oris.model.PostEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -31,22 +32,8 @@ public interface BranchRepository extends JpaRepository<BranchEntity, Long> {
     Page<BranchEntity> findAllByPostAndPublishedOrderByAverageRatingDesc(PostEntity post,
                                                                         Pageable pageable, boolean published);
 
-//    @Transactional
-//    @Query("SELECT b FROM BranchEntity b JOIN b.branchRates br where b.post = :post " +
-//            "and b.published = :published GROUP BY b ORDER BY SIZE(br) DESC")
-//    Page<BranchEntity> findAllOrderByBranchRatesSizeDesc(@Param("post") PostEntity post,
-//                                                         Pageable pageable,
-//                                                         @Param("published") boolean published);
-
     Page<BranchEntity> findAllByPostAndPublishedOrderByRatesCountDesc(PostEntity post,
                                                                        Pageable pageable, boolean published);
-
-//    @Transactional
-//    @Query("SELECT b FROM BranchEntity b JOIN b.branchRates br where b.post = :post " +
-//            "and b.published = :published GROUP BY b ORDER BY SIZE(br) asc")
-//    Page<BranchEntity> findAllOrderByBranchRatesSizeAsc(@Param("post") PostEntity post,
-//                                                         Pageable pageable,
-//                                                         @Param("published") boolean published);
 
     Page<BranchEntity> findAllByPostAndPublishedOrderByRatesCountAsc(PostEntity post,
                                                                       Pageable pageable, boolean published);

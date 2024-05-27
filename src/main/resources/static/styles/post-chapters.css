@@ -118,3 +118,7 @@ a:active {
 #branch-name {
     color: #2B6AA1;
 }
+
+#label-for-chapter-number-input {
+    color: red;
+}

@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
+import com.example.semestrovkacourse2sem2oris.annotation.NotRestExceptionAnnotation;
 import com.example.semestrovkacourse2sem2oris.dto.request.ChapterRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.ChapterResponse;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostShortResponse;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/chapter")
+@NotRestExceptionAnnotation
 public class ChapterController {
 
     private final ChapterService chapterService;
@@ -23,8 +25,7 @@ public class ChapterController {
     private RedirectView create(@ModelAttribute ChapterRequest chapterRequest,
                                 @PathVariable("link") String branchLink) {
         chapterService.add(chapterRequest, branchLink);
-        PostShortResponse response = postService.getShortByBranchLink(branchLink);
-        return new RedirectView("/post/create/chapters/%s?branch=%s".formatted(response.getWebLink(), branchLink));
+        return new RedirectView("/branch/create/read/%s".formatted(branchLink));
     }
 
     @GetMapping("/{link}")

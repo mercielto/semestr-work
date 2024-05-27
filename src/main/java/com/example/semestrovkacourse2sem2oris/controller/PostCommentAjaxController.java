@@ -1,5 +1,6 @@
 package com.example.semestrovkacourse2sem2oris.controller;
 
+import com.example.semestrovkacourse2sem2oris.annotation.RestExceptionAnnotation;
 import com.example.semestrovkacourse2sem2oris.dto.request.PostCommentRequest;
 import com.example.semestrovkacourse2sem2oris.dto.response.PostCommentResponse;
 import com.example.semestrovkacourse2sem2oris.service.PostCommentService;
@@ -11,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/post/comment/ajax/")
 @RestController
+@RestExceptionAnnotation
 public class PostCommentAjaxController {
 
     private final PostCommentService postCommentService;

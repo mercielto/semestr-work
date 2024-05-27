@@ -22,8 +22,7 @@ h1 {
 }
 
 .chapter {
-    width: 100%;
-    max-width: 600px;
+    width: 500px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -66,17 +65,16 @@ h1 {
 }
 
 .chapter-add {
-    display: none;
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    position: absolute;
     top: -15%;
     left: 50%;
     transform: translateX(-50%);
+    margin-left: 7rem;
 }
 
 #chapter-add-main {
