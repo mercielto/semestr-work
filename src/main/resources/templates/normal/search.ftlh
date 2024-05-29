@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="/styles/navbar.css">
 </head>
 <body>
-    <@navbar.navbar userOptional=userNav></@navbar.navbar>
-    <div class="body">
+    <@navbar.navbar userOptional=navUser></@navbar.navbar>
+    <div id="body">
 
 
 
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="post-description">
-                    <p><#if post.getDescription()??>post.getDescription()<#else >EMPTY</#if></p>
+                    <p><#if post.getDescription()??>${post.getDescription()}<#else >EMPTY</#if></p>
                 </div>
                 <div class="post-rating">
                     <p>Rating: ${post.getRating()}</p>

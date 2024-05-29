@@ -1,11 +1,11 @@
 -- Вставка данных в таблицу account
 INSERT INTO account (user_id, active, bio, email, image_name, link, login, password, role, username)
 VALUES
-    (1, true, 'Bio for user 1', 'user1@example.com', 'image1.jpg', 'user1123', 'user1', 'password1', 'USER', 'User1'),
-    (2, true, 'Bio for user 2', 'user2@example.com', 'image2.jpg', 'user2123', 'user2', 'password2', 'ADMIN', 'User2'),
-    (3, true, 'Bio for user 3', 'user3@example.com', 'image3.jpg', 'user3123', 'user3', 'password3', 'USER', 'User3'),
-    (4, true, 'Bio for user 4', 'user4@example.com', 'image4.jpg', 'user4123', 'user4', 'password4', 'USER', 'User4'),
-    (5, true, 'Bio for user 5', 'user5@example.com', 'image5.jpg', 'user5123', 'user5', 'password5', 'ADMIN', 'User5');
+    (1, true, 'Bio for user 1', 'user1@example.com', 'default.png', 'user1123', 'user1', md5('1'), 'USER', 'User1'),
+    (2, true, 'Bio for user 2', 'user2@example.com', 'default.png', 'user2123', 'user2', md5('1'), 'ADMIN', 'User2'),
+    (3, true, 'Bio for user 3', 'user3@example.com', 'default.png', 'user3123', 'user3', md5('1'), 'USER', 'User3'),
+    (4, true, 'Bio for user 4', 'user4@example.com', 'default.png', 'user4123', 'user4', md5('1'), 'USER', 'User4'),
+    (5, true, 'Bio for user 5', 'user5@example.com', 'default.png', 'user5123', 'user5', md5('1'), 'ADMIN', 'User5');
 
 -- Вставка данных в таблицу followers
 INSERT INTO followers (follower_id, following_id)
@@ -29,20 +29,20 @@ VALUES
 -- Вставка данных в таблицу post
 INSERT INTO post (post_id, published, read_count, user_id, creator_comment, description, image_path, status, title, universe, web_link)
 VALUES
-    (1, false, 0, 1, 'Comment by creator 1', 'Description 1', 'image1.png', 'PUBLIC', 'Title 1', 'Universe 1', 'post1111'),
-    (2, false, 0, 1, 'Comment by creator 2', 'Description 2', 'image2.png', 'PRIVATE', 'Title 2', 'Universe 2', 'post2222'),
-    (3, false, 0, 2, 'Comment by creator 3', 'Description 3', 'image3.png', 'PUBLIC_WITH_LIMITS', 'Title 3', 'Universe 3', 'post33'),
-    (4, false, 0, 3, 'Comment by creator 4', 'Description 4', 'image4.png', 'PUBLIC', 'Title 4', 'Universe 4', 'post114'),
-    (5, false, 0, 3, 'Comment by creator 5', 'Description 5', 'image5.png', 'PRIVATE', 'Title 5', 'Universe 5', 'post532');
+    (1, true, 0, 1, 'Comment by creator 1', 'Description 1', 'default.png', 'PUBLIC', 'Title 1', 'Universe 1', 'post1111'),
+    (2, true, 0, 1, 'Comment by creator 2', 'Description 2', 'default.png', 'PRIVATE', 'Title 2', 'Universe 2', 'post2222'),
+    (3, true, 0, 2, 'Comment by creator 3', 'Description 3', 'default.png', 'PUBLIC_WITH_LIMITS', 'Title 3', 'Universe 3', 'post33'),
+    (4, true, 0, 3, 'Comment by creator 4', 'Description 4', 'default.png', 'PUBLIC', 'Title 4', 'Universe 4', 'post114'),
+    (5, true, 0, 3, 'Comment by creator 5', 'Description 5', 'default.png', 'PRIVATE', 'Title 5', 'Universe 5', 'post532');
 
 -- Вставка данных в таблицу branch
-INSERT INTO branch (branch_id, published, post_id, user_id, description, link, name)
+INSERT INTO branch (branch_id, published, post_id, user_id, description, link, name, parent_branch_id)
 VALUES
-    (1, true, 1, 1, 'Description for branch 1', 'branch12', 'Branch 1'),
-    (2, false, 1, 2, 'Description for branch 2', 'branch23', 'Branch 2'),
-    (3, true, 2, 1, 'Description for branch 3', 'branch34', 'Branch 3'),
-    (4, false, 3, 3, 'Description for branch 4', 'branch45', 'Branch 4'),
-    (5, true, 3, 4, 'Description for branch 5', 'branch56', 'Branch 5');
+    (1, true, 1, 1, 'Description for branch 1', 'branch12', 'Branch 1', null),
+    (2, true, 1, 2, 'Description for branch 2', 'branch23', 'Branch 2', 1),
+    (3, true, 1, 3, 'Description for branch 3', 'branch34', 'Branch 3', 2),
+    (4, true, 3, 3, 'Description for branch 4', 'branch45', 'Branch 4', null),
+    (5, true, 3, 4, 'Description for branch 5', 'branch56', 'Branch 5', 4);
 
 -- Вставка данных в таблицу branch_comment
 INSERT INTO branch_comment (id, date, branch_id, user_id, comment)
@@ -75,16 +75,16 @@ VALUES
 -- Вставка данных в таблицу chapter
 INSERT INTO chapter (id, number, branch_id, link, title)
 VALUES
-    (1, 1, 1, 'chapter15553535', 'Chapter 1'),
-    (2, 2, 1, 'chapter25553535', 'Chapter 2'),
-    (3, 3, 2, 'chapter35553535', 'Chapter 3'),
-    (4, 4, 2, 'chapter45553535', 'Chapter 4'),
-    (5, 5, 3, 'chapter55553535', 'Chapter 5'),
-    (6, 6, 3, 'chapter65553535', 'Chapter 6'),
-    (7, 7, 4, 'chapter75553535', 'Chapter 7'),
-    (8, 8, 4, 'chapter85553535', 'Chapter 8'),
-    (9, 9, 5, 'chapter95553535', 'Chapter 9'),
-    (10, 10, 5, 'chapter10124', 'Chapter 10');
+    (1, 1, 1, 'chapter15553535', 'Chapter'),
+    (2, 2, 1, 'chapter25553535', 'Chapter'),
+    (3, 3, 1, 'chapter35553535', 'Chapter'),
+    (4, 2, 2, 'chapter45553535', 'Chapter'),
+    (5, 3, 2, 'chapter55553535', 'Chapter'),
+    (6, 4, 2, 'chapter65553535', 'Chapter'),
+    (7, 4, 3, 'chapter75553535', 'Chapter'),
+    (8, 5, 3, 'chapter85553535', 'Chapter'),
+    (9, 6, 3, 'chapter95553535', 'Chapter'),
+    (10, 7, 3, 'chapter10124', 'Chapter');
 
 -- Вставка данных в таблицу post_comment
 INSERT INTO post_comment (id, date, post_id, user_id, comment)

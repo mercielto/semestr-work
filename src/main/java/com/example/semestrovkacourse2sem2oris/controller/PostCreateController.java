@@ -43,7 +43,7 @@ public class PostCreateController {
 
     @PostMapping("/settings/{link}")
     public RedirectView publish(@PathVariable("link") String link,
-                                @RequestBody PostRequest postRequest) {
+                                @ModelAttribute PostRequest postRequest) {
         postService.publish(postRequest, link);
         return new RedirectView("/post/profile/" + link);
     }

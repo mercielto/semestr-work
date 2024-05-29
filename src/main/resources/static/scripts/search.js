@@ -75,6 +75,7 @@ document.addEventListener("DOMContentLoaded", function() {
     loadMoreButton.addEventListener('click', function() {
 
         const mainElement = document.getElementById('main');
+        const body = document.getElementById("body");
         const postElements = mainElement.getElementsByClassName('post');
         const postCount = postElements.length;
         const size = 9;
@@ -84,11 +85,11 @@ document.addEventListener("DOMContentLoaded", function() {
             success: function(response) {
                 console.log("Success");
                 console.log(response);
-                if (response.length < size) {
-                    mainElement.removeChild(loadMoreButton);
-                }
-
                 addPosts(response);
+
+                if (response.length < size) {
+                    body.removeChild(loadMoreButton);
+                }
             },
             error: function(xhr, status, error) {
                 console.log("Error: " + status)

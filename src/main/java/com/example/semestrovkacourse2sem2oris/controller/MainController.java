@@ -32,9 +32,14 @@ public class MainController {
 
     @GetMapping("/search")
     public String getSearch(Model model) {
-        Optional<UserResponse> userResponse = userService.getCurrentUserResponse();
         List<PostShortResponse> posts = postService.getWithPagination(0, 9);
-        model.addAttribute("userNav", userResponse);
+        model.addAttribute("posts", posts);
+        return "normal/search";
+    }
+
+    @GetMapping("/publications")
+    public String getPublications(Model model) {
+        List<PostShortResponse> posts = postService.getByUserWithPagination(0, 9);
         model.addAttribute("posts", posts);
         return "normal/search";
     }

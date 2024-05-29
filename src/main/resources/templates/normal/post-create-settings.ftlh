@@ -17,7 +17,7 @@
 
 <#--TODO: нормальную вставку картинки -->
 
-<form id="main-body" method="post" action="/post/create/settings${post.getWebLink()}">
+<form id="main-body" method="post" action="/post/create/settings/${post.getWebLink()}">
     <input type="text" name="title" id="title-input" placeholder="Title" value="<#if post.getTitle()??>${post.getTitle()}</#if>">
 
     <div id="image-div">

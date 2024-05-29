@@ -49,4 +49,6 @@ public interface PostService {
     String generateImage(String postLink, String text);
 
     List<PostShortResponse> getWithPagination(int page, int size);
+
+    List<PostShortResponse> getByUserWithPagination(int page, int size);
 }

@@ -1,6 +1,7 @@
 package com.example.semestrovkacourse2sem2oris.repository;
 
 import com.example.semestrovkacourse2sem2oris.model.PostEntity;
+import com.example.semestrovkacourse2sem2oris.model.UserEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,4 +22,6 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     void deleteByWebLink(String link);
 
     Page<PostEntity> findAll(Pageable pageable);
+
+    Page<PostEntity> findAllByCreator(Pageable pageable, UserEntity user);
 }

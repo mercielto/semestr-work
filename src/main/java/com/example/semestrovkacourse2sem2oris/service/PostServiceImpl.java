@@ -211,4 +211,12 @@ public class PostServiceImpl implements PostService {
         Page<PostEntity> posts = postRepository.findAll(pageable);
         return posts.stream().map(mapper::toShortResponse).toList();
     }
+
+    @Override
+    public List<PostShortResponse> getByUserWithPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        UserEntity user = userService.getCurrentUser();
+        Page<PostEntity> posts = postRepository.findAllByCreator(pageable, user);
+        return posts.stream().map(mapper::toShortResponse).toList();
+    }
 }

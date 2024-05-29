@@ -42,7 +42,7 @@ public class WebSecurityConfig {
                     ).permitAll();
 
                     authorizationManagerRequestMatcherRegistry.requestMatchers(
-                            "/admin/**", "/swagger-ui/index.html"
+                            "/admin/**"
                     ).hasAuthority(Role.ADMIN.name());
 
                     authorizationManagerRequestMatcherRegistry.anyRequest().authenticated();

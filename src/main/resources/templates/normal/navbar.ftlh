@@ -24,7 +24,7 @@
                         ▼
                     </button>
                     <div class="dropdown-menu" id="dropdownMenu">
-                        <a href="/publications">My Stories</a>
+                        <a href="/main/publications">My Stories</a>
                         <a href="/logout">Logout</a>
                     </div>
                 </div>
